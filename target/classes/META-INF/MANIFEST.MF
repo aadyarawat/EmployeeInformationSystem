@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: aadya.rawat
-=======
-Built-By: nikhilesh.sadhav
->>>>>>> 7dcebf3aba3cc4043416711178893e174ed6e748
+Built-By: ram.somani
 Build-Jdk: 1.8.0_45
 Created-By: Maven Integration for Eclipse
 
