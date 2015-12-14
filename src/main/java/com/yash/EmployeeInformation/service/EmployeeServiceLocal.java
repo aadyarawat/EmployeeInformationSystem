@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import com.yash.EmployeeInformation.domain.Employee;
+import com.yash.EmployeeInformation.domain.Project;
 
 @Local
 public interface EmployeeServiceLocal {
@@ -12,5 +13,7 @@ public interface EmployeeServiceLocal {
 	List<Employee> getAllEmployees();
 
 	List<Employee> searchEmployeeByName(String searchValueText);
+	
+	void createNewProject(Project project);
 
 }
