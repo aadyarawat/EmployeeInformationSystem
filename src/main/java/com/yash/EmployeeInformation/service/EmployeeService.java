@@ -1,4 +1,4 @@
-package com.yash.EmployeeInformation.Service;
+package com.yash.EmployeeInformation.service;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;

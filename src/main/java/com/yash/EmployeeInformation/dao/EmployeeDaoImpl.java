@@ -16,10 +16,12 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	@Resource(lookup="java:jboss/datasources/EIS")
 	DataSource source;
 	
-	
 	/**
 	 * 
-	 * this method will return connection from data source
+	 * @return Connection
+	 * 
+	 * This method will return connection from data source
+	 *
 	 */
 	@Override
 	public Connection getConnection(){
@@ -35,5 +37,9 @@ public class EmployeeDaoImpl implements EmployeeDao{
 		
 		return connection;
 	}
+	
+	
+	
+	
 	
 }
