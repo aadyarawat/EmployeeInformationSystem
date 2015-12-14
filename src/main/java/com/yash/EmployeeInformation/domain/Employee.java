@@ -3,6 +3,7 @@ package com.yash.EmployeeInformation.domain;
 import java.util.List;
 
 public class Employee {
+	private int employeedetails_id;
 	private int employeeId;
 	private String firstName;
 	private String lastName;
@@ -13,6 +14,16 @@ public class Employee {
 	private String mobile;
 	private String alternate_mobile;
 	private List<Project> projects;
+
+	
+	
+	public int getEmployeedetails_id() {
+		return employeedetails_id;
+	}
+
+	public void setEmployeedetails_id(int employeedetails_id) {
+		this.employeedetails_id = employeedetails_id;
+	}
 
 	public int getEmployeeId() {
 		return employeeId;
@@ -93,5 +104,7 @@ public class Employee {
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
+
+	
 
 }
