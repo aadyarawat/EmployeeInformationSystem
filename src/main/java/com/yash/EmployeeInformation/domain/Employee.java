@@ -13,67 +13,85 @@ public class Employee {
 	private String mobile;
 	private String alternate_mobile;
 	private List<Project> projects;
-	 
+
 	public int getEmployeeId() {
-	return employeeId;
+		return employeeId;
 	}
+
 	public void setEmployeeId(int employeeId) {
-	this.employeeId = employeeId;
+		this.employeeId = employeeId;
 	}
+
 	public String getFirstName() {
-	return firstName;
+		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
-	this.firstName = firstName;
+		this.firstName = firstName;
 	}
+
 	public String getLastName() {
-	return lastName;
+		return lastName;
 	}
+
 	public void setLastName(String lastName) {
-	this.lastName = lastName;
+		this.lastName = lastName;
 	}
+
 	public String getEmail() {
-	return email;
+		return email;
 	}
+
 	public void setEmail(String email) {
-	this.email = email;
+		this.email = email;
 	}
+
 	public String getAddress() {
-	return address;
+		return address;
 	}
+
 	public void setAddress(String address) {
-	this.address = address;
+		this.address = address;
 	}
+
 	public String getState() {
-	return state;
+		return state;
 	}
+
 	public void setState(String state) {
-	this.state = state;
+		this.state = state;
 	}
+
 	public String getCity() {
-	return city;
+		return city;
 	}
+
 	public void setCity(String city) {
-	this.city = city;
+		this.city = city;
 	}
+
 	public String getMobile() {
-	return mobile;
+		return mobile;
 	}
+
 	public void setMobile(String mobile) {
-	this.mobile = mobile;
+		this.mobile = mobile;
 	}
+
 	public String getAlternate_mobile() {
-	return alternate_mobile;
+		return alternate_mobile;
 	}
+
 	public void setAlternate_mobile(String alternate_mobile) {
-	this.alternate_mobile = alternate_mobile;
+		this.alternate_mobile = alternate_mobile;
 	}
+
 	public List<Project> getProjects() {
 		return projects;
 	}
+
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
-	
-	
+
 }
