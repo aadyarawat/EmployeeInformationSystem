@@ -1,6 +1,7 @@
 package com.yash.TestBean;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -58,8 +59,8 @@ public class HelloBean {
 		dir.mkdirs();
 		
 		// Read Sample contents
-		URL url = new URL("file://D:/ejb wildfly/wildfly-8.2.0.Final/wildfly-8.2.0.Final/standalone/deployments/sample"+ URL);
-		InputStream InputStream = url.openStream();
+		File url = new File(dir.getPath()+"\\"+ URL);
+		InputStream InputStream = new FileInputStream(url.getPath());
 		// Read contents and write them to the output
 		byte[] bytesBuffer = new byte[2048];
 		int bytesRead;
