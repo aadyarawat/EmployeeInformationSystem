@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+<ui:composition template="/template/template.xhtml">
+ 
+<ui:define name="content">
+  <h:form prependId="false">
+  <table>
+  <tr>
+  <td> <h:inputText value="#{managerBean.searchValueText}" id="searchValueText"  p:placeholder="Search Here.." /> </td>
+  <td><h:commandButton value="Search" action="#{managerBean.searchEmployeeByName}" /> </td>
+  <td><span id="spanSearchValueText"/> </td> 
+  </tr>
+  </table>
+  <table>
+  <tr align="center">
+  <td>Employee Name </td>
+  <td>Employee ID </td>
+  <td>Email </td>
+  <td>Contact</td>
+  <td colspan="2">Action</td>
+  </tr>
+  <ui:repeat var="employees" value="#{managerBean.employees}">
+  <tr align="center">
+  <td>#{employees.firstName} #{employees.lastName}</td>
+  <td>#{employees.employeeId}</td>
+  <td>#{employees.email}</td>
+  <td>#{employees.mobile}</td>
+  <td><h:commandButton value="Download">
+  <f:setPropertyActionListener value="#{employees.email}" target=""></f:setPropertyActionListener>
+  </h:commandButton> </td>
+  <td><h:commandButton value="View Details"/> </td>
+  </tr>
+  </ui:repeat>
+</table>  
+  </h:form>
+</ui:define>
+ 
+</ui:composition>
+</html>
