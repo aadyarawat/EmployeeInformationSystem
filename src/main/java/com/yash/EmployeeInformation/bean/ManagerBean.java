@@ -1,10 +1,14 @@
 package com.yash.EmployeeInformation.bean;
 
-import javax.annotation.ManagedBean;
-import javax.enterprise.context.SessionScoped;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
 
 @ManagedBean
 @SessionScoped
 public class ManagerBean {
 
+	
+	
 }

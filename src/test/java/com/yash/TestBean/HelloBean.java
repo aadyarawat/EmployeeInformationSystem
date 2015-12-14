@@ -50,10 +50,15 @@ public class HelloBean {
 		// Open response output stream
 		OutputStream responseOutputStream = response.getOutputStream();
 
-		String realpath = facesContext.getExternalContext().getRealPath("");
+		
+		String realpath = (String)FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+		int index = realpath.lastIndexOf("\\");
+		String path = realpath.substring(0, index+1);
+		File dir = new File(path+"sample");
+		dir.mkdirs();
 		
 		// Read Sample contents
-		URL url = new URL("file:///C:/Users/Deepak.Vishwakarma/Documents/GitHub/EmployeeInformationSystem/WebContent/resources/sample/" + URL);
+		URL url = new URL("file://D:/ejb wildfly/wildfly-8.2.0.Final/wildfly-8.2.0.Final/standalone/deployments/sample"+ URL);
 		InputStream InputStream = url.openStream();
 		// Read contents and write them to the output
 		byte[] bytesBuffer = new byte[2048];
@@ -86,7 +91,7 @@ public class HelloBean {
 		String path = realpath.substring(0, index+1);
 		File dir = new File(path+"sample");
 		dir.mkdirs();
-		this.message="---->"+dir.getPath()+"-->";
+		this.message="---->"+dir.getPath()+"-->"+dir.exists();
 		return null;
 	}
 }

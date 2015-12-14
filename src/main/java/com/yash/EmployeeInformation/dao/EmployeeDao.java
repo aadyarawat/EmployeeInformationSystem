@@ -1,5 +1,9 @@
 package com.yash.EmployeeInformation.dao;
 
-public interface EmployeeDao {
+import java.sql.Connection;
 
+public interface EmployeeDao {
+	
+	public Connection getConnection();
+	
 }
