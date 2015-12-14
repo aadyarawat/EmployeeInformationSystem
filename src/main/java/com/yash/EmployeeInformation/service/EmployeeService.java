@@ -27,7 +27,7 @@ public class EmployeeService implements EmployeeServiceLocal {
     
     /**
      * @author prakhar.jain
-     * @return List<Employee>
+     * @return List<Employee> all employees
      * 
      */
     @Override
@@ -37,6 +37,11 @@ public class EmployeeService implements EmployeeServiceLocal {
 		return employees;
 	}
 
+    /**
+     * @author pratik.sethia
+     * 
+     * @return List of Employees with perticular name
+     */
 	@Override
 	public List<Employee> searchEmployeeByName(String searchValueText) {
 		String sql = "SELECT * FROM EMPLOYEEDETAILS WHERE FIRSTNAME LIKE '" + searchValueText + "%' OR LASTNAME LIKE '"+ searchValueText + "%'";

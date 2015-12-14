@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: mayank.yadav
-=======
-Built-By: nikhilesh.sadhav
->>>>>>> refs/remotes/aadyarawat/master
-Build-Jdk: 1.8.0_45
+Built-By: prakhar.jain
+Build-Jdk: 1.8.0_66
 Created-By: Maven Integration for Eclipse
 

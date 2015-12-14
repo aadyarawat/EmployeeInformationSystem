@@ -3,7 +3,6 @@ package com.yash.EmployeeInformation.bean;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
@@ -49,7 +48,11 @@ public class ManagerBean {
 	}
 
 
-
+	/**
+	 * @author prakhar.jain
+	 * 
+	 * @return List of all employees
+	 */
 	public String getAllEmployees(){
 		employees=employeeService.getAllEmployees();
 		for(Employee employee:employees){
@@ -61,7 +64,11 @@ public class ManagerBean {
 		return "test.xhtml?faces-redirect=true";
 	}
 	
-	
+	/**
+	 * 
+	 * @author pratik.sethia
+	 * @return List of employee with perticular name
+	 */
 	public String searchEmployeeByName(){
 		if(searchValueText.equalsIgnoreCase("")){
 			employees=employeeService.getAllEmployees();
