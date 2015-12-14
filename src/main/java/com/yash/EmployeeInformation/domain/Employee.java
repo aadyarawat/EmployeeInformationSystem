@@ -13,6 +13,7 @@ public class Employee {
 	private String city;
 	private String mobile;
 	private String alternate_mobile;
+	private int resume_id;
 	private List<Project> projects;
 
 	
@@ -105,6 +106,15 @@ public class Employee {
 		this.projects = projects;
 	}
 
+	public int getResume_id() {
+		return resume_id;
+	}
+
+	public void setResume_id(int resume_id) {
+		this.resume_id = resume_id;
+	}
+
+	
 	
 
 }

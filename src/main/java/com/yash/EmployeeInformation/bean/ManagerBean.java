@@ -52,7 +52,7 @@ public class ManagerBean {
 	 * @author prakhar.jain
 	 * 
 	 * @return List of all employees
-	 */
+	 *//*
 	public String getAllEmployees(){
 		employees=employeeService.getAllEmployees();
 		for(Employee employee:employees){
@@ -62,7 +62,7 @@ public class ManagerBean {
 			}
 		}
 		return "test.xhtml?faces-redirect=true";
-	}
+	}*/
 	
 	/**
 	 * 
@@ -77,8 +77,7 @@ public class ManagerBean {
 		}
 		 
 		return null;
-		 
-		 
+	
 		}
 	
 	

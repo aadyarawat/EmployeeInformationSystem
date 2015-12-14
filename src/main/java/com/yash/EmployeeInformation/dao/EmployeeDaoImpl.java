@@ -76,6 +76,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 				employee.setCity(resultSet.getString(8));
 				employee.setMobile(resultSet.getString(9));
 				employee.setAlternate_mobile(resultSet.getString(10));
+				employee.setResume_id(resultSet.getInt(11));
 					String querry="SELECT * FROM `projectallocationdetails` pa INNER JOIN `projectdetails` pd ON pa.`projectDetails_Id`=pd.`projectDetails_Id` WHERE pa.`employeeId`=?";
 					PreparedStatement preparedStatement2=connection.prepareStatement(querry);
 					preparedStatement2.setInt(1, employee.getEmployeeId());
