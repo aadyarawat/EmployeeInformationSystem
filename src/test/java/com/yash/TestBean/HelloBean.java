@@ -1,6 +1,7 @@
 package com.yash.TestBean;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -50,11 +51,16 @@ public class HelloBean {
 		// Open response output stream
 		OutputStream responseOutputStream = response.getOutputStream();
 
-		String realpath = facesContext.getExternalContext().getRealPath("");
+		
+		String realpath = (String)FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+		int index = realpath.lastIndexOf("\\");
+		String path = realpath.substring(0, index+1);
+		File dir = new File(path+"sample");
+		dir.mkdirs();
 		
 		// Read Sample contents
-		URL url = new URL("file:///C:/Users/Deepak.Vishwakarma/Documents/GitHub/EmployeeInformationSystem/WebContent/resources/sample/" + URL);
-		InputStream InputStream = url.openStream();
+		File url = new File(dir.getPath()+"\\"+ URL);
+		InputStream InputStream = new FileInputStream(url.getPath());
 		// Read contents and write them to the output
 		byte[] bytesBuffer = new byte[2048];
 		int bytesRead;
@@ -86,7 +92,7 @@ public class HelloBean {
 		String path = realpath.substring(0, index+1);
 		File dir = new File(path+"sample");
 		dir.mkdirs();
-		this.message="---->"+dir.getPath()+"-->";
+		this.message="---->"+dir.getPath()+"-->"+dir.exists();
 		return null;
 	}
 }
