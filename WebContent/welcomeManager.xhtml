@@ -40,9 +40,9 @@
 						<td>#{employees.employeeId}</td>
 						<td>#{employees.email}</td>
 						<td>#{employees.mobile}</td>
-						<td><h:commandButton value="Download">
+						<td><h:commandButton value="Download" action="#{managerBean.downloadFile}">
 								<f:setPropertyActionListener value="#{employees.email}"
-									target=""></f:setPropertyActionListener>
+									target="#{managerBean.recievedEmail}"></f:setPropertyActionListener>
 							</h:commandButton></td>
 						<td><h:commandButton value="View Details" /></td>
 					</tr>
