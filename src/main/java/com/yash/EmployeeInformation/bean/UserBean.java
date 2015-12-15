@@ -1,4 +1,4 @@
-package com.yash.TestBean;
+package com.yash.EmployeeInformation.bean;
 
 import java.util.Hashtable;
 
