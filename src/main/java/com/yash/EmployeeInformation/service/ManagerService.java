@@ -67,4 +67,12 @@ public class ManagerService implements ManagerServiceLocal {
 		managerDao.saveNewProject(project);
 	}
 
+	@Override
+	public String checkAuthorization(String name) {
+		// TODO Auto-generated method stub
+		String check="";
+		check=managerDao.checkAuthorization(name);
+		return check;
+	}
+
 }

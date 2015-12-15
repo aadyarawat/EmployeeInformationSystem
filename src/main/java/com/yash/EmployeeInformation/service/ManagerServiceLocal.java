@@ -16,4 +16,7 @@ public interface ManagerServiceLocal {
 	
 	void createNewProject(Project project);
 
+	String checkAuthorization(String name);
+
+
 }

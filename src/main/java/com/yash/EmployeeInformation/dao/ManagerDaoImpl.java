@@ -162,4 +162,23 @@ public class ManagerDaoImpl implements ManagerDao {
 		}
 		return resultSet;
 	}
+
+	@Override
+	public String checkAuthorization(String name) {
+		// TODO Auto-generated method stub
+		String check="";
+		String sql="select * from managerdetails where managerEmailId='"+name+"'";
+		ResultSet resultSet=select(sql);
+		try {
+			while(resultSet.next()){
+				if(name.equals(resultSet.getString("managerEmailId"))){
+					check="manager";
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return check;
+	}
 }
