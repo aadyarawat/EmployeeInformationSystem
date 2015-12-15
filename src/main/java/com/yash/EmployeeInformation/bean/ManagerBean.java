@@ -77,7 +77,7 @@ public class ManagerBean {
 	 */
 	public String searchEmployeeByName() {
 		if (searchValueText.equalsIgnoreCase("")) {
-			employees = managerService.getAllEmployees();
+			employees = null;
 		} else {
 			employees = managerService.searchEmployeeByName(searchValueText);
 		}
@@ -109,6 +109,11 @@ public class ManagerBean {
 		employees = managerService.getAllEmployees();
 		setEmployees(employees);
 
+	}
+	
+	public String showAllEmployee(){
+		employees = managerService.getAllEmployees();
+		return null;
 	}
 
 }
