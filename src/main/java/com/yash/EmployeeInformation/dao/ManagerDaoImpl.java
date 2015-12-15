@@ -12,10 +12,13 @@ import javax.inject.Inject;
 import com.yash.EmployeeInformation.domain.Address;
 import com.yash.EmployeeInformation.domain.BaseLineInput;
 import com.yash.EmployeeInformation.domain.Employee;
+import com.yash.EmployeeInformation.domain.FeedBack;
 import com.yash.EmployeeInformation.domain.Project;
+import com.yash.EmployeeInformation.domain.Skill;
 import com.yash.EmployeeInformation.util.ConnectionUtil;
 
 /**
+ * This class Manages all the operations of done on employee
  * 
  * @author prakhar.jain
  *
@@ -26,6 +29,39 @@ public class ManagerDaoImpl implements ManagerDao {
 	ConnectionUtil connectionUtil;
 	
 	
+	
+	/**
+	 * This method Returns feedback of employee
+	 * @author prakhar.jain
+	 * @param employeedetails_id
+	 * @return
+	 */
+	public FeedBack getEmployeeFeedback(int employeedetails_id){
+		FeedBack feedBack=new FeedBack();
+		String sql="SELECT * FROM  `feedbackdetails` fb INNER JOIN `managerdetails` md ON fb.`lastUpdatedManagerId`=md.`managerDetails_Id` WHERE employeedetails_id="+employeedetails_id;
+		try {
+			ResultSet resultSet=select(sql);
+			while(resultSet.next()){
+				feedBack.setFeedback_id(resultSet.getInt(1));
+				feedBack.setFeedbackComment(resultSet.getString(2));
+				feedBack.setLastUpdatedManager(resultSet.getString(6));
+				feedBack.setEmployeedetails_id(resultSet.getInt(4));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return feedBack;
+	}
+	
+	/**
+	 * 
+	 *  This method Returns BaseLine input  of employee
+	 * @author prakhar.jain
+	 * @param employeedetails_id
+	 * @return
+	 */
 	public BaseLineInput getBaseLineInputDetails(int employeedetails_id){
 		BaseLineInput baseLineInput=new BaseLineInput();
 		String sql="SELECT * FROM baselineinputdetails WHERE employeedetails_id="+employeedetails_id;
@@ -45,6 +81,8 @@ public class ManagerDaoImpl implements ManagerDao {
 
 	/**
 	 * 
+	 * This method Returns Address of employee
+	 * @author prakhar.jain
 	 * @param employeedetails_id
 	 * @return
 	 */
@@ -73,10 +111,12 @@ public class ManagerDaoImpl implements ManagerDao {
 	
 	/**
 	 * 
+	 *  This method Returns Projects of employee
+	 * 
 	 * @param employeedetails_id
 	 * @return
 	 */
-	public List<Project> getprojects(int employeedetails_id){
+	public List<Project> getEmployeeprojects(int employeedetails_id){
 		List<Project> projects;
 		String querry = "SELECT * FROM `projectallocationdetails` pa INNER JOIN `projectdetails` pd ON pa.`projectDetails_Id`=pd.`projectDetails_Id` WHERE pa.employeedetails_id="+employeedetails_id;
 		Project project = null;
@@ -97,11 +137,10 @@ public class ManagerDaoImpl implements ManagerDao {
 		return projects;
 	}
 
-	 /**
-	 * 
+	/**
+	 * This method return All  Employees
 	 * @author prakhar.jain
-	 * @return List<Employee>
-	 * 
+	 * @return employees
 	 * 
 	 */
 	@Override
@@ -120,8 +159,10 @@ public class ManagerDaoImpl implements ManagerDao {
 				employee.setMobile(resultSet.getString(6));
 				employee.setAlternate_mobile(resultSet.getString(7));
 				employee.setAddress(getEmployeeAddress(employee.getEmployeedetails_id()));
-				employee.setProjects(getprojects(employee.getEmployeedetails_id()));
+				employee.setProjects(getEmployeeprojects(employee.getEmployeedetails_id()));
 				employee.setBaseLineInput(getBaseLineInputDetails(employee.getEmployeedetails_id()));
+				employee.setFeedBack(getEmployeeFeedback(employee.getEmployeedetails_id()));
+				employee.setSkills(getEmployeeSkills(employee.getEmployeedetails_id()));
 				employees.add(employee);
 			}
 		} catch (SQLException e) {
@@ -129,6 +170,42 @@ public class ManagerDaoImpl implements ManagerDao {
 			e.printStackTrace();
 		}
 		return employees;
+	}
+
+	/**
+	 * this method returns skills of employees
+	 * @param employeedetails_id
+	 * @return
+	 */
+	private List<Skill> getEmployeeSkills(int employeedetails_id) {
+		List<Skill> skills=new ArrayList<>();
+		Skill skill;
+		String sql="SELECT * FROM employeeskill";
+		try {
+			ResultSet  resultSet=select(sql);
+			while (resultSet.next()) {
+				skill=new Skill();
+				sql="SELECT * FROM skill where skill_id="+resultSet.getInt(2);
+				ResultSet resultSet2=select(sql);
+				while(resultSet2.next()){
+					skill.setSkillName(resultSet2.getString(2));
+				}
+				
+				sql="SELECT * FROM skillefficiency where skillefficiency_id="+resultSet.getInt(4);
+				ResultSet resultSet3=select(sql);
+				while(resultSet3.next()){
+					skill.setEfficiencyType(resultSet3.getString(2));
+				}
+			skills.add(skill);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return skills;
 	}
 
 	/**
@@ -141,9 +218,8 @@ public class ManagerDaoImpl implements ManagerDao {
 	@Override
 	public void saveNewProject(Project project) {
 		
-		String sql = "insert into projectDetails(projectName , projectDuration) values('" + project.getProjectName()
-				+ "','" + project.getProjectDuration() + "')";
-				update(sql);
+		String sql = "insert into projectDetails(projectName , projectDuration) values('" + project.getProjectName()+ "','" + project.getProjectDuration() + "')";
+		update(sql);
 	}
 	
 	/**
