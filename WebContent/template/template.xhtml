@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 
 
@@ -9,40 +9,22 @@
 <title><ui:insert name="title">Default title</ui:insert></title>
 
 <link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+	href="//code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css"></link>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="/resources/demos/style.css"></link>
 
-<script>
-	$(function() {
-		var icons = {
-			header : "ui-icon-circle-arrow-e",
-			activeHeader : "ui-icon-circle-arrow-s"
-		};
-		$("#accordion").accordion({
-			icons : icons
-		});
-		$("#toggle").button().click(function() {
-			if ($("#accordion").accordion("option", "icons")) {
-				$("#accordion").accordion("option", "icons", null);
-			} else {
-				$("#accordion").accordion("option", "icons", icons);
-			}
-		});
-	});
-</script>
+
+<script src="jquery/welcome.js"></script>
 
 </head>
 
 <body style="background-color: #F3F9FF;">
-	<ui:debug hotkey="x"
-		rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}" />
 
 	<div id="header">
 		<ui:insert name="header">
 
-			<ui:include src="header.xhtml" />
+			<ui:include src="/template/header.xhtml" />
 		</ui:insert>
 	</div>
 
@@ -59,7 +41,7 @@
 		<ui:insert name="footer">
 
 
-			<ui:include src="footer.xhtml" />
+			<ui:include src="/template/footer.xhtml" />
 		</ui:insert>
 	</div>
 
