@@ -79,9 +79,9 @@ public class ManagerDaoImpl implements ManagerDao {
 				employee.setCity(resultSet.getString(8));
 				employee.setMobile(resultSet.getString(9));
 				employee.setAlternate_mobile(resultSet.getString(10));
-				employee.setResume_id(resultSet.getInt(11));
-				String querry = "SELECT * FROM `projectallocationdetails` pa INNER JOIN `projectdetails` pd ON pa.`projectDetails_Id`=pd.`projectDetails_Id` WHERE pa.`employeeId`='"
-						+ employee.getEmployeeId() + "'";
+				
+				String querry = "SELECT * FROM `projectallocationdetails` pa INNER JOIN `projectdetails` pd ON pa.`projectDetails_Id`=pd.`projectDetails_Id` WHERE pa.`employeedetails_id`='"
+						+ employee.getEmployeedetails_id() + "'";
 				/*
 				 * PreparedStatement preparedStatement2 =
 				 * connection.prepareStatement(querry);
@@ -161,5 +161,24 @@ public class ManagerDaoImpl implements ManagerDao {
 			e.printStackTrace();
 		}
 		return resultSet;
+	}
+
+	@Override
+	public String checkAuthorization(String name) {
+		// TODO Auto-generated method stub
+		String check="";
+		String sql="select * from managerdetails where managerEmailId='"+name+"'";
+		ResultSet resultSet=select(sql);
+		try {
+			while(resultSet.next()){
+				if(name.equals(resultSet.getString("managerEmailId"))){
+					check="manager";
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return check;
 	}
 }

@@ -16,6 +16,7 @@ xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
   <tr>
   <td> <h:inputText value="#{managerBean.searchValueText}" id="searchValueText"  p:placeholder="Search Here.." /> </td>
   <td><h:commandButton value="Search" action="#{managerBean.searchEmployeeByName}" /> </td>
+  <td><h:commandButton value="Show All" action="#{managerBean.showAllEmployee}"/> </td>
   <td><span id="spanSearchValueText"/> </td> 
   </tr>
   </table>

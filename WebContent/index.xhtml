@@ -11,92 +11,72 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script
 		src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+	<link rel="stylesheet" type="text/css" href="css/index.css"></link>
 	<title>Login</title>
 
-	<style>
-.wrapper {
-	width: 360px;
-	height: 250px;
-	background-color: #BDE2FF;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
-	border-radius: 25px;
-}
 
-.header {
-	width: 360px;
-	height: 60px;
-	background-color: #1B4D77;
-	color: white;
-	padding-left: 10px;
-	font-family: sans-serif;
-	border-radius: 25px 25px 0px 0px;
-}
-
-.login {
-	width: 280px;
-	height: 200px;
-	margin-left: 25px;
-	margin-top: 20px;
-	font-family: sans-serif;
-}
-</style>
 
 </h:head>
-<h:body style="background-color:#F3F9FF;">
+<h:body>
+	<div class="outerwrapper">
 
-	<div class="wrapper">
+	<div class="border">
 
-		<div class="header">
-			<table>
-				<tr>
-					<td align="center"><h3>Employee Information System</h3></td>
-				</tr>
-			</table>
-		</div>
+		<div class="wrapper">
 
-		<div class="login">
-			<h:form>
-
-				<table height="150px" width="400px">
-
-
+			<div class="header">
+				<table style="text-align: center; width: 100%;">
 					<tr>
-				
-					<td>#{param.error}</td>
-				
+						<td><h3>Employee Information System</h3></td>
 					</tr>
-
-					<tr>
-						<td>User Name</td>
-						<td><h:inputText id="username" required="true" value="#{userBean.name}"></h:inputText></td>
-						<td><h:message for="username"></h:message></td>
-					</tr>
-
-					<tr>
-						<td>Password</td>
-						<td><h:inputSecret id="password" required="true" value="#{userBean.password}"></h:inputSecret>
-						</td>
-						<td><h:message for="password"></h:message></td>
-					</tr>
-
-					<tr>
-						<td colspan="2" align="left"><h:commandButton
-								class="btn btn-primary" type="submit" value="Login" action="#{userBean.authenticate}"></h:commandButton></td>
-					</tr>
-
 				</table>
+			</div>
+
+			<div class="login">
+				<h:form prependId="false">
+
+					<table style="height: 150px; width: 410px; text-align: center;">
+						
+						<tr>
+							<td colspan="2" align="center" style="color : red;">#{param.error}</td>
+						</tr>
+						<tr>
+							<td>User Name</td>
+							<td><h:inputText id="username" required="true"
+									requiredMessage="Please enter user name" value="#{userBean.name}"></h:inputText></td>
+
+						</tr>
+
+						<tr>
+							<td colspan="2"><h:message style="color:red;" for="username"></h:message></td>
+						</tr>
 
 
-			</h:form>
+						<tr>
+							<td>Password</td>
+							<td><h:inputSecret id="password" required="true"
+									requiredMessage="Please enter password" value="#{userBean.password}"></h:inputSecret></td>
+
+						</tr>
+
+						<tr>
+							<td colspan="2"><h:message style="color:red;" for="password"></h:message></td>
+						</tr>
+
+						<tr>
+							<td colspan="2" align="center"><h:commandButton
+									class="btn btn-primary" type="submit" value="Login" action="#{userBean.authenticate}"></h:commandButton></td>
+						</tr>
+
+					</table>
+
+
+				</h:form>
+			</div>
+
 		</div>
-
+		
+		</div>
 	</div>
-
 </h:body>
 </html>

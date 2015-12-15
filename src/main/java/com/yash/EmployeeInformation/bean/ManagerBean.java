@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.inject.Inject;
+
 
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Project;
@@ -57,27 +57,13 @@ public class ManagerBean {
 	}
 
 	/**
-	 * @author prakhar.jain
-	 * 
-	 * @return List of all employees
-	 *//*
-		 * public String getAllEmployees(){
-		 * employees=employeeService.getAllEmployees(); for(Employee
-		 * employee:employees){ System.out.println(employee.getFirstName()+" "
-		 * +employee.getLastName()); for(Project
-		 * project:employee.getProjects()){
-		 * System.out.println(project.getProjectName()); } } return
-		 * "test.xhtml?faces-redirect=true"; }
-		 */
-
-	/**
 	 * 
 	 * @author pratik.sethia
-	 * @return List of employee with perticular name
+	 * @return List of employee with particular name
 	 */
 	public String searchEmployeeByName() {
 		if (searchValueText.equalsIgnoreCase("")) {
-			employees = managerService.getAllEmployees();
+			employees = null;
 		} else {
 			employees = managerService.searchEmployeeByName(searchValueText);
 		}
@@ -107,8 +93,11 @@ public class ManagerBean {
 	@PostConstruct
 	public void getAllEmployeesList() {
 		employees = managerService.getAllEmployees();
-		setEmployees(employees);
-
+		}
+	
+	public String showAllEmployee(){
+		employees = managerService.getAllEmployees();
+		return null;
 	}
 
 }

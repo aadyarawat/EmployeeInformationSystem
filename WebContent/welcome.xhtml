@@ -1,11 +1,151 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Insert title here</title>
-</head>
-<body>
-<h1>Hello Pratik</h1>
-</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="content">
+
+		<div>
+			<div id="accordion"
+				style="width: 1000px; height: 500px; margin: auto; margin-top: 10px;">
+				
+				<h3>Guidelines</h3>
+				<div>
+					<table>
+
+						<tr>
+							<td>Download the Yash Format for resume:</td>
+							<td><a href="#">Sample resume.docx</a></td>
+						</tr>
+
+
+
+						
+
+					</table>
+				</div>
+				
+				<h3>Employee Details</h3>
+				<div>
+					<h:form prependId="false">
+						<table>
+
+							<tr>
+								<td>Enter Name :</td>
+								<td><h:inputText id="firstname" size="20" required="true"
+										requiredMessage="Please enter first name"
+										p:placeholder="First name">
+									</h:inputText></td>
+								<td><h:inputText id="lastname" size="20" required="true"
+										requiredMessage="Please enter last name"
+										p:placeholder="Last name"></h:inputText></td>
+							</tr>
+
+							<tr>
+								<td></td>
+								<td><h:message for="firstname" style="color: red;"></h:message></td>
+								<td><h:message for="lastname" style="color: red;"></h:message></td>
+							</tr>
+
+							<tr>
+								<td>Enter Email :</td>
+								<td colspan="2" align="left"><h:inputText id="email"
+										size="43" required="true"
+										requiredMessage="Please enter your email id."
+										p:placeholder="Eg:xyz@yash.com"></h:inputText></td>
+								<td><h:message for="email" style="color: red;"></h:message>
+								</td>
+							</tr>
+							<tr>
+								<td>Enter Yash_Emp Id :</td>
+								<td colspan="2" align="left"><h:inputText id="yash_emp_id"
+										size="43" required="true"
+										requiredMessage="Please enter yash ID" p:placeholder="100XXXX"></h:inputText></td>
+								<td><h:message for="yash_emp_id" style="color: red;"></h:message>
+								</td>
+
+							</tr>
+							<tr>
+								<td>Enter Address :</td>
+								<td colspan="2" align="left"><h:inputTextarea id="address"
+										rows="5" cols="44" required="true"
+										requiredMessage="Please enter your address"  p:placeholder="Enter your address"></h:inputTextarea></td>
+								<td><h:message for="address" style="color: red;"></h:message>
+								</td>
+							</tr>
+							<tr>
+								<td>Enter State :</td>
+								<td colspan="2" align="left"><h:inputText id="state"
+										size="43" required="true" requiredMessage="Please enter state"  p:placeholder="Enter State"></h:inputText>
+								</td>
+								<td><h:message for="state" style="color: red;"></h:message>
+								</td>
+
+							</tr>
+							<tr>
+								<td>Enter City :</td>
+								<td colspan="2" align="left"><h:inputText id="city"
+										size="43" required="true" requiredMessage="Please enter city"  p:placeholder="Enter City"></h:inputText></td>
+								<td><h:message for="city" style="color: red;"></h:message>
+								</td>
+							</tr>
+							<tr>
+								<td>Enter Mobile No.:</td>
+								<td colspan="2" align="left"><h:inputText id="mobileNumber"
+										size="43" required="true"
+										requiredMessage="Please enter mobile number"
+										validatorMessage="10 digits are requried"  p:placeholder="XXX9878XXX">
+										<f:validateLength minimum="10" maximum="10" />
+									</h:inputText></td>
+								<td><h:message for="mobileNumber" style="color: red;"></h:message>
+								</td>
+							</tr>
+							<tr>
+								<td>Enter Alternate No. :</td>
+								<td colspan="2" align="left"><h:inputText size="43"  p:placeholder="XXX9878XXX"></h:inputText>
+								</td>
+							</tr>
+
+							<tr>
+								<td colspan="3" align="center"><h:commandButton
+										value="SAVE"></h:commandButton></td>
+							</tr>
+						</table>
+					</h:form>
+				</div>
+				<h3>Upload</h3>
+				<div>
+					<table>
+
+						<tr>
+							<td>Download the Yash Format for resume:</td>
+							<td><a href="#">Sample resume.docx</a></td>
+						</tr>
+
+
+
+						<tr>
+							<td>Upload here:</td>
+							<td><input type="file" name="img"></input></td>
+						</tr>
+
+					</table>
+				</div>
+
+				<h3>Skills</h3>
+				<div>
+					<p>Here skills of the employees will be displayed.</p>
+
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>
 </html>

@@ -2,7 +2,7 @@ package com.yash.TestBean;
 
 import java.util.Hashtable;
 
-
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -12,6 +12,8 @@ import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 import javax.servlet.http.HttpSession;
 
+import com.yash.EmployeeInformation.service.ManagerServiceLocal;
+
 
 
 @ManagedBean
@@ -20,6 +22,9 @@ public class UserBean {
 	private Boolean check;
 	private String name;
 	private String password;
+	
+	@EJB
+	ManagerServiceLocal managerService;
 	
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
@@ -43,7 +48,11 @@ public class UserBean {
 	}
 	else{	
 		session.setAttribute("SessionEmail", name);
-		
+		String checkAuthorize=managerService.checkAuthorization(name);
+		if("manager".equalsIgnoreCase(checkAuthorize)){
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>hello"+name);
+			return "welcomeManager.xhtml";
+		}
 		return "welcome.xhtml";
 	}
 	
