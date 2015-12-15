@@ -6,7 +6,7 @@ import java.util.List;
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Project;
 
-public interface EmployeeDao {
+public interface ManagerDao {
 
 	List<Employee> getAllEmployees(String sql);
 

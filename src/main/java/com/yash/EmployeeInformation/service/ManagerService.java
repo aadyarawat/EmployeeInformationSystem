@@ -6,7 +6,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import com.yash.EmployeeInformation.dao.EmployeeDao;
+import com.yash.EmployeeInformation.dao.ManagerDao;
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Project;
 
@@ -15,15 +15,15 @@ import com.yash.EmployeeInformation.domain.Project;
  */
 @Stateless
 @LocalBean
-public class EmployeeService implements EmployeeServiceLocal {
+public class ManagerService implements ManagerServiceLocal {
 
 	@Inject
-	EmployeeDao employeeDao;
+	ManagerDao managerDao;
 
 	/**
 	 * Default constructor.
 	 */
-	public EmployeeService() {
+	public ManagerService() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -35,7 +35,7 @@ public class EmployeeService implements EmployeeServiceLocal {
 	@Override
 	public List<Employee> getAllEmployees() {
 		String sql = "SELECT * FROM employeedetails";
-		List<Employee> employees = employeeDao.getAllEmployees(sql);
+		List<Employee> employees = managerDao.getAllEmployees(sql);
 		return employees;
 	}
 
@@ -48,7 +48,7 @@ public class EmployeeService implements EmployeeServiceLocal {
 	public List<Employee> searchEmployeeByName(String searchValueText) {
 		String sql = "SELECT * FROM EMPLOYEEDETAILS WHERE FIRSTNAME LIKE '" + searchValueText + "%' OR LASTNAME LIKE '"
 				+ searchValueText + "%'";
-		List<Employee> employees = employeeDao.getAllEmployees(sql);
+		List<Employee> employees = managerDao.getAllEmployees(sql);
 		System.out.println(employees);
 		return employees;
 	}
@@ -64,7 +64,7 @@ public class EmployeeService implements EmployeeServiceLocal {
 	@Override
 	public void createNewProject(Project project) {
 		// TODO Auto-generated method stub
-		employeeDao.saveNewProject(project);
+		managerDao.saveNewProject(project);
 	}
 
 }

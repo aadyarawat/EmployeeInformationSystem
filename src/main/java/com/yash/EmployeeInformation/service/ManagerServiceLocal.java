@@ -8,7 +8,7 @@ import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Project;
 
 @Local
-public interface EmployeeServiceLocal {
+public interface ManagerServiceLocal {
 
 	List<Employee> getAllEmployees();
 

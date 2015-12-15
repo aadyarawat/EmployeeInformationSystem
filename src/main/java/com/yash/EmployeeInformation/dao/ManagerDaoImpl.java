@@ -21,7 +21,7 @@ import com.yash.EmployeeInformation.util.ConnectionUtil;
  * @author prakhar.jain
  *
  */
-public class EmployeeDaoImpl implements EmployeeDao {
+public class ManagerDaoImpl implements ManagerDao {
 
 	@Inject
 	ConnectionUtil connectionUtil;

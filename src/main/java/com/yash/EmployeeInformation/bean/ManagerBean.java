@@ -10,14 +10,14 @@ import javax.inject.Inject;
 
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Project;
-import com.yash.EmployeeInformation.service.EmployeeServiceLocal;
+import com.yash.EmployeeInformation.service.ManagerServiceLocal;
 
 @ManagedBean
 @SessionScoped
 public class ManagerBean {
 
 	@EJB
-	EmployeeServiceLocal employeeService;
+	ManagerServiceLocal managerService;
 
 	private List<Employee> employees;
 	private String searchValueText;
@@ -77,9 +77,9 @@ public class ManagerBean {
 	 */
 	public String searchEmployeeByName() {
 		if (searchValueText.equalsIgnoreCase("")) {
-			employees = employeeService.getAllEmployees();
+			employees = managerService.getAllEmployees();
 		} else {
-			employees = employeeService.searchEmployeeByName(searchValueText);
+			employees = managerService.searchEmployeeByName(searchValueText);
 		}
 
 		return null;
@@ -94,7 +94,7 @@ public class ManagerBean {
 	 */
 	public String saveProject() {
 		Project project = new Project(0, projectName, projectDuration);
-		employeeService.createNewProject(project);
+		managerService.createNewProject(project);
 		return "projectDetails.xhtml?faces-redirect=true";
 	}
 
@@ -106,7 +106,7 @@ public class ManagerBean {
 	 */
 	@PostConstruct
 	public void getAllEmployeesList() {
-		employees = employeeService.getAllEmployees();
+		employees = managerService.getAllEmployees();
 		setEmployees(employees);
 
 	}
