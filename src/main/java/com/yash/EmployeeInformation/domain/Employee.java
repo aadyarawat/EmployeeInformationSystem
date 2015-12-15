@@ -8,14 +8,14 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String address;
-	private String state;
-	private String city;
+	private Address address;
 	private String mobile;
 	private String alternate_mobile;
-	private int resume_id;
 	private List<Project> projects;
-
+	private BaseLineInput baseLineInput;
+	private FeedBack feedBack;
+	private List<Skill> skills;
+	
 	
 	
 	public int getEmployeedetails_id() {
@@ -58,28 +58,12 @@ public class Employee {
 		this.email = email;
 	}
 
-	public String getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
 	}
 
 	public String getMobile() {
@@ -106,15 +90,30 @@ public class Employee {
 		this.projects = projects;
 	}
 
-	public int getResume_id() {
-		return resume_id;
+	public BaseLineInput getBaseLineInput() {
+		return baseLineInput;
 	}
 
-	public void setResume_id(int resume_id) {
-		this.resume_id = resume_id;
+	public void setBaseLineInput(BaseLineInput baseLineInput) {
+		this.baseLineInput = baseLineInput;
 	}
 
-	
-	
+	public FeedBack getFeedBack() {
+		return feedBack;
+	}
 
+	public void setFeedBack(FeedBack feedBack) {
+		this.feedBack = feedBack;
+	}
+
+	public List<Skill> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+	
+	
+	
 }
