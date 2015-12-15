@@ -8,8 +8,6 @@ import com.yash.EmployeeInformation.domain.Project;
 
 public interface EmployeeDao {
 
-	public Connection getConnection();
-
 	List<Employee> getAllEmployees(String sql);
 
 	void saveNewProject(Project project);

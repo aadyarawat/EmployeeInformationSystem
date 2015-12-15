@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
+import com.sun.org.apache.bcel.internal.generic.Select;
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Project;
 import com.yash.EmployeeInformation.util.ConnectionUtil;
@@ -22,38 +23,38 @@ import com.yash.EmployeeInformation.util.ConnectionUtil;
  */
 public class EmployeeDaoImpl implements EmployeeDao {
 
-	@Resource(lookup = "java:jboss/datasources/EIS")
-	DataSource source;
+	@Inject
+	ConnectionUtil connectionUtil;
 
-	/**
+	/*
+	 * @Resource(lookup = "java:jboss/datasources/EIS") DataSource source;
 	 * 
-	 * @return Connection
+	 *//**
+		 * 
+		 * @return Connection
+		 * 
+		 *         This method will return connection from data source
+		 *
+		 */
+
+	/*
+	 * @Override public Connection getConnection() {
 	 * 
-	 *         This method will return connection from data source
-	 *
-	 */
-	@Override
-	public Connection getConnection() {
-
-		Connection connection = null;
-
-		try {
-			connection = source.getConnection();
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-
-		return connection;
-	}
-
-	/**
+	 * Connection connection = null;
 	 * 
-	 * @author prakhar.jain
-	 * @return List<Employee>
+	 * try { connection = source.getConnection(); } catch (SQLException e) {
 	 * 
+	 * e.printStackTrace(); }
 	 * 
-	 */
+	 * return connection; }
+	 * 
+	 */ /**
+		 * 
+		 * @author prakhar.jain
+		 * @return List<Employee>
+		 * 
+		 * 
+		 */
 
 	@Override
 	public List<Employee> getAllEmployees(String sql) {
@@ -61,10 +62,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		List<Project> projects;
 		Employee employee = null;
 		Project project = null;
-		Connection connection = getConnection();
+		// Connection connection = getConnection();
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery();
+			// PreparedStatement preparedStatement =
+			// connection.prepareStatement(sql);
+			ResultSet resultSet = select(sql);
 			while (resultSet.next()) {
 				employee = new Employee();
 				employee.setEmployeedetails_id(resultSet.getInt(1));
@@ -78,10 +80,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				employee.setMobile(resultSet.getString(9));
 				employee.setAlternate_mobile(resultSet.getString(10));
 				employee.setResume_id(resultSet.getInt(11));
-				String querry = "SELECT * FROM `projectallocationdetails` pa INNER JOIN `projectdetails` pd ON pa.`projectDetails_Id`=pd.`projectDetails_Id` WHERE pa.`employeeId`=?";
-				PreparedStatement preparedStatement2 = connection.prepareStatement(querry);
-				preparedStatement2.setInt(1, employee.getEmployeeId());
-				ResultSet resultSet2 = preparedStatement2.executeQuery();
+				String querry = "SELECT * FROM `projectallocationdetails` pa INNER JOIN `projectdetails` pd ON pa.`projectDetails_Id`=pd.`projectDetails_Id` WHERE pa.`employeeId`='"
+						+ employee.getEmployeeId() + "'";
+				/*
+				 * PreparedStatement preparedStatement2 =
+				 * connection.prepareStatement(querry);
+				 * preparedStatement2.setInt(1, employee.getEmployeeId());
+				 */
+				ResultSet resultSet2 = select(querry);
 				projects = new ArrayList<>();
 				while (resultSet2.next()) {
 					project = new Project();
@@ -99,9 +105,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return employees;
 	}
 
-	@Inject
-	ConnectionUtil connectionUtil;
-
 	/**
 	 * @author kushagra.bhargava
 	 * 
@@ -114,14 +117,49 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO Auto-generated method stub
 		String sql = "insert into projectDetails(projectName , projectDuration) values('" + project.getProjectName()
 				+ "','" + project.getProjectDuration() + "')";
+		/*
+		 * Connection connection = connectionUtil.getConnection();
+		 * PreparedStatement preparedStatement; try { preparedStatement =
+		 * connection.prepareStatement(sql); preparedStatement.execute(); }
+		 * catch (SQLException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
+
+		update(sql);
+	}
+	
+	/**
+	 * @author kushagra.bhargava
+	 * 	This method will take a sql string and process the query for insert and update
+	 * @param sql
+	 */
+	public void update(String sql) {
 		Connection connection = connectionUtil.getConnection();
-		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = connection.prepareStatement(sql);
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * @author kushagra.bhargava
+	 * 	This method will take a sql string and process the query for selection
+	 * @param sql
+	 */
+	public ResultSet select(String sql) {
+		Connection connection = connectionUtil.getConnection();
+		ResultSet resultSet = null;
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			resultSet = preparedStatement.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultSet;
 	}
 }
