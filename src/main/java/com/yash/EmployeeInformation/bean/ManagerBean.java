@@ -99,5 +99,7 @@ public class ManagerBean {
 		employees = managerService.getAllEmployees();
 		return null;
 	}
+	
+	
 
 }

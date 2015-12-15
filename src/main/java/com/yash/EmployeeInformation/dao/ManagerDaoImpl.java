@@ -7,11 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.sql.DataSource;
 
-import com.sun.org.apache.bcel.internal.generic.Select;
+import com.yash.EmployeeInformation.domain.Address;
+import com.yash.EmployeeInformation.domain.BaseLineInput;
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Project;
 import com.yash.EmployeeInformation.util.ConnectionUtil;
@@ -25,47 +24,91 @@ public class ManagerDaoImpl implements ManagerDao {
 
 	@Inject
 	ConnectionUtil connectionUtil;
+	
+	
+	public BaseLineInput getBaseLineInputDetails(int employeedetails_id){
+		BaseLineInput baseLineInput=new BaseLineInput();
+		String sql="SELECT * FROM baselineinputdetails WHERE employeedetails_id="+employeedetails_id;
+		try {
+			ResultSet resultSet=select(sql);
+			while(resultSet.next()){
+				baseLineInput.setBaselineInputdetail(resultSet.getString(2));
+				baseLineInput.setEmployeedetails_id(resultSet.getInt(3));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return baseLineInput;
+	}
 
-	/*
-	 * @Resource(lookup = "java:jboss/datasources/EIS") DataSource source;
+	/**
 	 * 
-	 *//**
-		 * 
-		 * @return Connection
-		 * 
-		 *         This method will return connection from data source
-		 *
-		 */
+	 * @param employeedetails_id
+	 * @return
+	 */
+	public Address getEmployeeAddress(int employeedetails_id){
+		Address address=new Address();
+		String sql="SELECT * FROM ADDRESS WHERE employeedetails_id="+employeedetails_id;
+		
+		try {
+			ResultSet resultSet=select(sql);
+			while(resultSet.next()){
+				address.setAddress_id(resultSet.getInt(1));
+				address.setHouseNo(resultSet.getInt(2));
+				address.setStreetName(resultSet.getString(3));
+				address.setCity(resultSet.getString(4));
+				address.setState(resultSet.getString(5));
+				address.setPincode(resultSet.getString(6));
+				address.setEmployeedetails_id(resultSet.getInt(7));
+				
+			}
+		} catch (SQLException e) {
+			}
+		
+		return address;
+		
+	}
+	
+	/**
+	 * 
+	 * @param employeedetails_id
+	 * @return
+	 */
+	public List<Project> getprojects(int employeedetails_id){
+		List<Project> projects;
+		String querry = "SELECT * FROM `projectallocationdetails` pa INNER JOIN `projectdetails` pd ON pa.`projectDetails_Id`=pd.`projectDetails_Id` WHERE pa.employeedetails_id="+employeedetails_id;
+		Project project = null;
+		ResultSet resultSet = select(querry);
+		projects = new ArrayList<>();
+		try {
+			while (resultSet.next()) {
+				project = new Project();
+				project.setProjectDetails_Id(resultSet.getInt(2));
+				project.setProjectName(resultSet.getString(5));
+				project.setProjectDuration(resultSet.getString(6));
+				projects.add(project);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return projects;
+	}
 
-	/*
-	 * @Override public Connection getConnection() {
+	 /**
 	 * 
-	 * Connection connection = null;
+	 * @author prakhar.jain
+	 * @return List<Employee>
 	 * 
-	 * try { connection = source.getConnection(); } catch (SQLException e) {
 	 * 
-	 * e.printStackTrace(); }
-	 * 
-	 * return connection; }
-	 * 
-	 */ /**
-		 * 
-		 * @author prakhar.jain
-		 * @return List<Employee>
-		 * 
-		 * 
-		 */
-
+	 */
 	@Override
 	public List<Employee> getAllEmployees(String sql) {
 		List<Employee> employees = new ArrayList<>();
-		List<Project> projects;
 		Employee employee = null;
-		Project project = null;
-		// Connection connection = getConnection();
 		try {
-			// PreparedStatement preparedStatement =
-			// connection.prepareStatement(sql);
 			ResultSet resultSet = select(sql);
 			while (resultSet.next()) {
 				employee = new Employee();
@@ -74,28 +117,11 @@ public class ManagerDaoImpl implements ManagerDao {
 				employee.setFirstName(resultSet.getString(3));
 				employee.setLastName(resultSet.getString(4));
 				employee.setEmail(resultSet.getString(5));
-				employee.setAddress(resultSet.getString(6));
-				employee.setState(resultSet.getString(7));
-				employee.setCity(resultSet.getString(8));
-				employee.setMobile(resultSet.getString(9));
-				employee.setAlternate_mobile(resultSet.getString(10));
-				
-				String querry = "SELECT * FROM `projectallocationdetails` pa INNER JOIN `projectdetails` pd ON pa.`projectDetails_Id`=pd.`projectDetails_Id` WHERE pa.`employeedetails_id`='"
-						+ employee.getEmployeedetails_id() + "'";
-				/*
-				 * PreparedStatement preparedStatement2 =
-				 * connection.prepareStatement(querry);
-				 * preparedStatement2.setInt(1, employee.getEmployeeId());
-				 */
-				ResultSet resultSet2 = select(querry);
-				projects = new ArrayList<>();
-				while (resultSet2.next()) {
-					project = new Project();
-					project.setProjectDetails_Id(resultSet2.getInt(2));
-					project.setProjectName(resultSet2.getString(5));
-					projects.add(project);
-				}
-				employee.setProjects(projects);
+				employee.setMobile(resultSet.getString(6));
+				employee.setAlternate_mobile(resultSet.getString(7));
+				employee.setAddress(getEmployeeAddress(employee.getEmployeedetails_id()));
+				employee.setProjects(getprojects(employee.getEmployeedetails_id()));
+				employee.setBaseLineInput(getBaseLineInputDetails(employee.getEmployeedetails_id()));
 				employees.add(employee);
 			}
 		} catch (SQLException e) {
@@ -114,18 +140,10 @@ public class ManagerDaoImpl implements ManagerDao {
 
 	@Override
 	public void saveNewProject(Project project) {
-		// TODO Auto-generated method stub
+		
 		String sql = "insert into projectDetails(projectName , projectDuration) values('" + project.getProjectName()
 				+ "','" + project.getProjectDuration() + "')";
-		/*
-		 * Connection connection = connectionUtil.getConnection();
-		 * PreparedStatement preparedStatement; try { preparedStatement =
-		 * connection.prepareStatement(sql); preparedStatement.execute(); }
-		 * catch (SQLException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
-
-		update(sql);
+				update(sql);
 	}
 	
 	/**
