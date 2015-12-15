@@ -180,7 +180,7 @@ public class ManagerDaoImpl implements ManagerDao {
 	private List<Skill> getEmployeeSkills(int employeedetails_id) {
 		List<Skill> skills=new ArrayList<>();
 		Skill skill;
-		String sql="SELECT * FROM employeeskill";
+		String sql="SELECT * FROM employeeskill where employeedetails_id="+employeedetails_id;
 		try {
 			ResultSet  resultSet=select(sql);
 			while (resultSet.next()) {
