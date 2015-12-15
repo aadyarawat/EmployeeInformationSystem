@@ -70,20 +70,20 @@
 
 					<tr>
 						<td>User Name</td>
-						<td><h:inputText id="username" required="true"></h:inputText></td>
+						<td><h:inputText id="username" required="true" value="#{userBean.name}"></h:inputText></td>
 						<td><h:message for="username"></h:message></td>
 					</tr>
 
 					<tr>
 						<td>Password</td>
-						<td><h:inputSecret id="password" required="true"></h:inputSecret>
+						<td><h:inputSecret id="password" required="true" value="#{userBean.password}"></h:inputSecret>
 						</td>
 						<td><h:message for="password"></h:message></td>
 					</tr>
 
 					<tr>
 						<td colspan="2" align="left"><h:commandButton
-								class="btn btn-primary" type="submit" value="Login"></h:commandButton></td>
+								class="btn btn-primary" type="submit" value="Login" action="#{userBean.authenticate}"></h:commandButton></td>
 					</tr>
 
 				</table>
