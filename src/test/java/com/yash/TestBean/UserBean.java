@@ -43,7 +43,7 @@ public class UserBean {
 	}
 	else{	
 		session.setAttribute("SessionEmail", name);
-		return "Welcome.xhtml";
+		return "welcome.xhtml";
 	}
 	
 	}
