@@ -35,11 +35,13 @@ xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
   <td>#{employees.employeeId}</td>
   <td>#{employees.email}</td>
   <td>#{employees.mobile}</td>
-  <td><h:commandButton value="Download">
-  <f:setPropertyActionListener value="#{employees.email}" target=""></f:setPropertyActionListener>
-  </h:commandButton> </td>
+   <td>
+  <h:commandButton value="Download" action="#{managerBean.downloadFile}">
+  <f:setPropertyActionListener value="#{employees.email}" target="#{managerBean.recievedEmail}"></f:setPropertyActionListener>
+  </h:commandButton> 
+  </td>
   <td>
-  <h:commandButton value="View Details" action="#{managerBean.employee1}">
+  <h:commandButton value="View Details" >
   	<f:setPropertyActionListener target="#{managerBean.employee}" value="#{employees}" />
   </h:commandButton>
    </td>
