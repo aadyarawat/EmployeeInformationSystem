@@ -1,12 +1,17 @@
 package com.yash.EmployeeInformation.bean;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Project;
@@ -23,6 +28,16 @@ public class ManagerBean {
 	private String searchValueText;
 	private String projectName;
 	private String projectDuration;
+	private String recievedEmail;
+	
+	
+	public String getRecievedEmail() {
+		return recievedEmail;
+	}
+
+	public void setRecievedEmail(String recievedEmail) {
+		this.recievedEmail = recievedEmail;
+	}
 
 	public String getProjectName() {
 		return projectName;
@@ -100,6 +115,62 @@ public class ManagerBean {
 		return null;
 	}
 	
+	public String downloadFile() throws Exception {
+		
+		System.out.println("File name>>>>>>>>>>>>>>>>>>" +recievedEmail);
+		String PDF_URL = "file://///YITRNG06DT/uploaded/"+ recievedEmail+".doc";
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+
+		
+		
+		// Set response headers
+		response.reset(); // Reset the response in the first place
+		response.setHeader("Content-Disposition", "attachment;filename=" + recievedEmail); 
+		response.setContentType("application/msword");
+		// Set
+		// only
+		// the
+		// content type
+
+		// Open response output stream
+		OutputStream responseOutputStream = response.getOutputStream();
+
+		 
+		/*String realpath = (String)FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
+		int index = realpath.lastIndexOf("\\");
+		String path = realpath.substring(0, index+1);
+		File dir = new File(path+"sample");
+		dir.mkdirs();*/
+		 
+		// Read Sample contents
+		URL url = new URL(PDF_URL);
+		InputStream InputStream = url.openStream();
+				//new FileInputStream(url.getPath());
+		// Read contents and write them to the output
+		byte[] bytesBuffer = new byte[8192];
+		int bytesRead;
+		while ((bytesRead = InputStream.read(bytesBuffer)) > 0) {
+		responseOutputStream.write(bytesBuffer, 0, bytesRead);
+		}
+
+		// Make sure that everything is out
+		responseOutputStream.flush();
+
+		// Close both streams
+		InputStream.close();
+		responseOutputStream.close();
+
+		// JSF doc:
+		// Signal the JavaServer Faces implementation that the HTTP response for
+		// this request has already been generated
+		// (such as an HTTP redirect), and that the request processing lifecycle
+		// should be terminated
+		// as soon as the current phase is completed.
+		facesContext.responseComplete();
+
+		return null;
+	}
 	
 
 }
