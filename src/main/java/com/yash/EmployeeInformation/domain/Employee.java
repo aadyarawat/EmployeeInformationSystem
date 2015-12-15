@@ -8,7 +8,7 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Address address;
+	private Address address=new Address();
 	private String mobile;
 	private String alternate_mobile;
 	private List<Project> projects;
