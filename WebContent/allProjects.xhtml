@@ -9,7 +9,27 @@
 <ui:composition template="/template/template.xhtml">
 
 	<ui:define name="content">
-	    Add your content here or delete to use the default
+		<div align="center">
+			<div style="font-size: 30px;">
+				<b>Projects</b>
+			</div>
+			<div>
+			<h:form prependId="false">
+				<table>
+					<tr>
+						<th>Project Name</th>
+						<th>Duration</th>
+						<td>Action</td>
+					</tr>
+					<tr>
+						<td><h:outputText value="#{managerBean.projectName}"/></td>
+						<td><h:outputText value="#{managerBean.projectDuration}"/></td>
+						<td><h:commandButton value="Add Members" action="#{managerBean.addEmployeeToProject}"/></td>
+					</tr>
+				</table>
+				</h:form>
+			</div>
+		</div>
 	</ui:define>
 
 </ui:composition>

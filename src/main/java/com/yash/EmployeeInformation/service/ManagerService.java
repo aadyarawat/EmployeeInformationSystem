@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import com.yash.EmployeeInformation.dao.ManagerDao;
 import com.yash.EmployeeInformation.domain.Employee;
+import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
 
 /**
@@ -34,7 +35,7 @@ public class ManagerService implements ManagerServiceLocal {
 	 */
 	@Override
 	public List<Employee> getAllEmployees() {
-		String sql = "SELECT * FROM EMPLOYEE";
+		String sql = "SELECT * FROM employee";
 		List<Employee> employees = managerDao.getAllEmployees(sql);
 		return employees;
 	}
@@ -68,11 +69,27 @@ public class ManagerService implements ManagerServiceLocal {
 	}
 
 	@Override
-	public String checkAuthorization(String name) {
+	public Manager checkAuthorization(String name) {
 		// TODO Auto-generated method stub
-		String check="";
-		check=managerDao.checkAuthorization(name);
-		return check;
+		Manager manager=managerDao.checkAuthorization(name);
+		return manager;
+	}
+
+	@Override
+	public List<Project> getAllProjects() {
+		// TODO Auto-generated method stub
+		System.out.println("inside service");
+		String sql="Select * from projectDetails";
+		List<Project> projects=managerDao.getAllProjects(sql);
+		return projects;
+	}
+
+	@Override
+	public void allocateProject(int projectDetails_Id, int employeedetails_id) {
+		// TODO Auto-generated method stub
+		String sql="insert into projectallocationdetails  (projectDetails_id,employeedetails_id) values('"+projectDetails_Id+"','"+employeedetails_id+"')";
+		managerDao.saveAllotedProject(sql);
+		
 	}
 
 }

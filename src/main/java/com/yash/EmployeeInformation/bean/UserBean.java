@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.service.ManagerServiceLocal;
 import com.yash.EmployeeInformation.service.UserServiceLocal;
 
@@ -69,6 +70,13 @@ public class UserBean {
 			return "index.xhtml?faces-redirect=true&error=Invalid UserName And Password";
 		} else {
 			session.setAttribute("eusername", name);
+			Manager manager = managerService.checkAuthorization(name);
+			if (manager != null) {
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>hello" + name);
+				session.setAttribute("manager", manager);
+
+				return "welcomeManager.xhtml";
+			}
 			return "welcome.xhtml";
 		}
 
@@ -114,14 +122,15 @@ public class UserBean {
 		httpSession.invalidate();
 		return "index.xhtml";
 	}
-	
+
 	/***
 	 * @author deepak.vishwakarma
 	 */
-	
-	
+
 	public String downloadFile() throws IOException {
-		FacesContext facesContext = FacesContext.getCurrentInstance(); // Get HTTP response
+		FacesContext facesContext = FacesContext.getCurrentInstance(); // Get
+																		// HTTP
+																		// response
 		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
 		response.setHeader("Content-Disposition", "attachment;filename=" + "SampleResume.docx");
 		response.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
@@ -135,30 +144,29 @@ public class UserBean {
 		response.setHeader("Content-Disposition", "attachment;filename=" + "SampleResume.doc");
 		OutputStream responseOutputStream = response.getOutputStream();
 		String realpath = (String) FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-		
-		
-		//-----------------RND Begin-----------------
-		
-		//String contextpathfilepath = (String) FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+
+		// -----------------RND Begin-----------------
+
+		// String contextpathfilepath = (String)
+		// FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
 		URL realfilepath = this.getClass().getResource("");
-		String newpath = realfilepath.getPath().substring(0, realfilepath.getPath().length()-1);
+		String newpath = realfilepath.getPath().substring(0, realfilepath.getPath().length() - 1);
 		String newpath1 = newpath;
-		int i1=0;
-		if(-1!=newpath.lastIndexOf("\\"))
-		i1= newpath.lastIndexOf("\\");
+		int i1 = 0;
+		if (-1 != newpath.lastIndexOf("\\"))
+			i1 = newpath.lastIndexOf("\\");
 		newpath1 = newpath.substring(0, i1);
-		//File newfile = new File(contextpathfilepath);
-		System.out.println("-------context path----->"+newpath1);
-		
-		//-----------------RND End-----------------
-		
-		
+		// File newfile = new File(contextpathfilepath);
+		System.out.println("-------context path----->" + newpath1);
+
+		// -----------------RND End-----------------
+
 		int index = realpath.lastIndexOf("\\");
 		String path = realpath.substring(0, index + 1);
 		File dir = new File(path + "sample");
 		dir.mkdirs();
 		// Read Sample contents
-		File url = new File(dir.getAbsolutePath()+ "\\" + filename);
+		File url = new File(dir.getAbsolutePath() + "\\" + filename);
 		InputStream inputStream = new FileInputStream(url.getPath());
 		// Read contents and write them to the output
 		byte[] bytesBuffer = new byte[8192];
@@ -184,7 +192,7 @@ public class UserBean {
 	 */
 	@EJB
 	UserServiceLocal userService;
-	
+
 	public String uploadFile() {
 		Part uploadedFile = getFile();
 		if (uploadedFile == null) {
@@ -210,8 +218,8 @@ public class UserBean {
 			filename = (String) session.getAttribute("eusername");
 		int index = filename.lastIndexOf("@");
 		String finalfilename = filename;
-		if (index != -1) 
-				finalfilename = filename.substring(0, index);
+		if (index != -1)
+			finalfilename = filename.substring(0, index);
 		final Path destination = Paths.get(dir.getAbsolutePath() + "/" + finalfilename + ".doc");
 		InputStream bytes = null;
 		if (null != uploadedFile) {
@@ -224,7 +232,7 @@ public class UserBean {
 					Files.copy(bytes, destination);
 				}
 				String useremail = filename;
-				userService.addResumeDetail(finalfilename,useremail);
+				userService.addResumeDetail(finalfilename, useremail);
 				return "upload succesfull";
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -245,5 +253,5 @@ public class UserBean {
 		}
 		return null;
 	}
-	
+
 }

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="content">
+		<div>
+			<div id="accordion"
+				style="width: 1000px; height: 500px; margin: auto; margin-top: 10px;">
+				<h3>Personal Details</h3>
+				<div>
+					<h:form prependId="false">
+						<h4>
+							Personal Details Code here
+							<h:commandLink value="#{managerBean.employee}" />
+						</h4>
+
+					</h:form>
+				</div>
+				<h3>Add Baseline Input</h3>
+				<div>
+					<table>
+
+						<tr>
+							<td>BaseLine Input here</td>
+
+						</tr>
+					</table>
+				</div>
+
+				<h3>Add Feedback</h3>
+				<div>
+					<p>Add feedback code here</p>
+
+				</div>
+				<h3>Project Allocation</h3>
+				<div>
+					<h:form>
+						<h:selectOneMenu value="#{managerBean.projectDetails_Id}">
+							<f:selectItems value="#{managerBean.projects}"
+								var="projectdisplay" itemLabel="#{projectdisplay.projectName}"
+								itemValue="#{projectdisplay.projectDetails_Id}" />
+
+						</h:selectOneMenu>
+
+						<h:commandButton class="btn btn-info" value="Submit"
+							action="#{managerBean.allotProject}"></h:commandButton>
+					</h:form>
+					<p>Add Project Allocation code here</p>
+
+				</div>
+
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>
+</html>
