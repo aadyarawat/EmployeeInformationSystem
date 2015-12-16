@@ -29,7 +29,7 @@ public class ManagerBean {
 	private String searchValueText;
 	private String projectName;
 	private String projectDuration;
-	private String recievedEmail;
+	private String fileName;
 	private List<Project> projects;
 	private int projectDetails_Id;
 
@@ -59,12 +59,14 @@ public class ManagerBean {
 		this.employee = employee;
 	}
 
-	public String getRecievedEmail() {
-		return recievedEmail;
+	
+
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setRecievedEmail(String recievedEmail) {
-		this.recievedEmail = recievedEmail;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	public String getProjectName() {
@@ -170,22 +172,22 @@ public class ManagerBean {
 	public String downloadFile() {
 
 		String exception;
-		String finalrecievedEmail = null;
+		String finalFinalName = null;
 		try {
 
-			System.out.println("File name>>>>>>>>>>>>>>>>>>" + recievedEmail);
+			System.out.println("File name>>>>>>>>>>>>>>>>>>" + fileName);
 
-			int index = recievedEmail.lastIndexOf("@");
-			finalrecievedEmail = recievedEmail.substring(0, index);
-			System.out.println(finalrecievedEmail);
+			int index = fileName.lastIndexOf("@");
+			finalFinalName = fileName.substring(0, index);
+			System.out.println(finalFinalName);
 
-			String PDF_URL = "file://///YITRNG06DT/uploaded/" + finalrecievedEmail + ".doc";
+			String PDF_URL = "file://///YITRNG06DT/uploaded/" + finalFinalName + ".doc";
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
 
 			// Set response headers
 			response.reset(); // Reset the response in the first place
-			response.setHeader("Content-Disposition", "attachment;filename=" + finalrecievedEmail);
+			response.setHeader("Content-Disposition", "attachment;filename=" + finalFinalName);
 			response.setContentType("application/msword");
 			// Set
 			// only
@@ -224,7 +226,7 @@ public class ManagerBean {
 
 			return "welcomeManager.xhtml?faces-redirect=true";
 		} catch (Exception ex) {
-			exception = "Resume is not uploaded by " + finalrecievedEmail;
+			exception = "Resume is not uploaded by " + finalFinalName;
 		}
 		return "welcomeManager.xhtml?faces-redirect=true&error=" + exception;
 	}
