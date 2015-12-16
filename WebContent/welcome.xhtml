@@ -10,6 +10,12 @@
 <ui:composition template="/template/template.xhtml">
 
 	<ui:define name="content">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				if ('#{param.uploadmessage}' != '')
+					alert('#{param.uploadmessage}');
+			});
+		</script>
 		<div id="dialog" style="display: none;">
 			<h3>Guidelines</h3>
 			<div>
@@ -225,10 +231,6 @@
 									</h:inputFile></td>
 								<td><h:commandButton action="#{userBean.uploadFile}"
 										value="Upload"></h:commandButton></td>
-							</tr>
-							<tr>
-								<td colspan="3"><h:outputText
-										value="#{param.uploadmessage}"></h:outputText></td>
 							</tr>
 						</table>
 					</h:form>

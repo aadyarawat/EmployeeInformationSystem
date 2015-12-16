@@ -1,6 +1,7 @@
 package com.yash.EmployeeInformation.dao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.inject.Inject;
 
@@ -13,15 +14,17 @@ public class UserDaoImpl implements UserDao {
 	
 	
 	@Override
-	public boolean addResumeDetail(String finalfilename, String useremail) {
+	public String addResumeDetail(String finalfilename, String useremail) {
 		String query = "INSERT INTO RESUME (RESUMENAME,EMPLOYEEEMAIL) VALUES ('"+finalfilename+"','"+useremail+"')";
 		Connection connection = connectionUtil.getConnection();
 		try {
 			connection.prepareStatement(query).executeUpdate();
-			return true;
+			return "Uploaded succesfull";
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+			//e.printStackTrace();
+			if(e.getClass().getName().equalsIgnoreCase("com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException"))
+			System.out.println("Already Existed File Updated for"+finalfilename);
+			return "Already Existed File Updated ";
 		}
 	}
 }
