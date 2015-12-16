@@ -42,7 +42,7 @@ $(document).ready(function() {
         }
         else
         {
-        e.preventDefault();
+        //e.preventDefault();
         $('#firstnamemessage').text('Enter Alphabets');
         return false;
         }
@@ -57,7 +57,7 @@ $(document).ready(function() {
         }
         else
         {
-        e.preventDefault();
+       // e.preventDefault();
         $('#lastnamemessage').text('Enter Alphabets');
         return false;
         }

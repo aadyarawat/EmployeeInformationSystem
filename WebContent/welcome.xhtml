@@ -80,11 +80,11 @@
 								<td>Enter Name : <sup style="color: red;">*</sup></td>
 								<td><h:inputText id="firstname" size="20" required="true"
 										requiredMessage="Please enter first name"
-										p:placeholder="First name">
+										p:placeholder="First name" value="#{employeeBean.firstname}">
 									</h:inputText></td>
 								<td><h:inputText id="lastname" size="20" required="true"
 										requiredMessage="Please enter last name"
-										p:placeholder="Last name"></h:inputText></td>
+										p:placeholder="Last name" value="#{employeeBean.lastname}"></h:inputText></td>
 							</tr>
 
 							<tr>
@@ -101,7 +101,7 @@
 								<td colspan="2" align="left"><h:inputText id="email"
 										size="43" required="true"
 										requiredMessage="Please enter your email id."
-										p:placeholder="Eg:xyz@yash.com"></h:inputText></td>
+										p:placeholder="Eg:xyz@yash.com" value="#{employeeBean.email}"></h:inputText></td>
 								<td><h:message for="email" style="color: red;"></h:message>
 								</td>
 							</tr>
@@ -110,7 +110,7 @@
 								<td colspan="2" align="left"><h:inputText id="yash_emp_id"
 										name="empId" size="43" required="true"
 										requiredMessage="Please enter yash ID" p:placeholder="100XXXX"
-										validatorMessage="Enter 7 digits ">
+										validatorMessage="Enter 7 digits " value="#{employeeBean.employeeId}">
 										<f:validateLength minimum="7" maximum="7" />
 									</h:inputText></td>
 								<td><h:message for="yash_emp_id" style="color: red;"></h:message><span
@@ -127,13 +127,13 @@
 								</td> </tr>-->
 							<tr>
 								<td>Address:</td>
-								<td><h:inputText size="20" p:placeholder="House No"></h:inputText>
+								<td><h:inputText size="20" p:placeholder="House No" value="#{employeeBean.houseNo}"></h:inputText>
 								</td>
 
 
 								<td><h:inputText id="street" required="true"
 										requiredMessage="Please enter Street Name"
-										p:placeholder="Street Name"></h:inputText></td>
+										p:placeholder="Street Name" value="#{employeeBean.streetName}"></h:inputText></td>
 								<td><h:message for="street" style="color: red;"></h:message></td>
 							</tr>
 
@@ -143,10 +143,10 @@
 								<td>Enter City :<sup style="color: red;">*</sup></td>
 								<td colspan="1" align="left"><h:inputText id="city"
 										required="true" requiredMessage="Please enter city"
-										p:placeholder="Enter City"></h:inputText></td>
+										p:placeholder="Enter City" value="#{employeeBean.city}"></h:inputText></td>
 
 								<td><h:inputText id="pincode" required="true"
-										requiredMessage="Please enter pincode" validatorMessage="Please enter 6 digit pincode" p:placeholder="45XXXX"><f:validateLength minimum="6" maximum="6" />
+										requiredMessage="Please enter pincode" validatorMessage="Please enter 6 digit pincode" p:placeholder="45XXXX" value = "#{employeeBean.pincode}"><f:validateLength minimum="6" maximum="6" />
 									</h:inputText></td>
 							</tr>
 
@@ -165,7 +165,7 @@
 								<td>Enter State :<sup style="color: red;">*</sup></td>
 								<td colspan="2" align="left"><h:inputText id="state"
 										size="43" required="true" requiredMessage="Please enter state"
-										p:placeholder="Enter State"></h:inputText></td>
+										p:placeholder="Enter State" value="#{employeeBean.state}"></h:inputText></td>
 								<td style="color: red"><h:message id="statemessage"
 										for="state" style="color: red;"></h:message></td>
 
@@ -184,7 +184,7 @@
 										size="43" required="true"
 										requiredMessage="Please enter mobile number"
 										validatorMessage="10 digits are requried"
-										p:placeholder="XXX9878XXX">
+										p:placeholder="XXX9878XXX" value="#{employeeBean.mobile}">
 										<f:validateLength minimum="10" maximum="10" />
 									</h:inputText></td>
 								<td><h:message for="mobileNumber" style="color: red;"></h:message><span
@@ -193,14 +193,14 @@
 							<tr>
 								<td>Enter Alternate No. :</td>
 								<td colspan="2" align="left"><h:inputText size="43"
-										p:placeholder="XXX9878XXX"></h:inputText></td>
+										p:placeholder="XXX9878XXX"  value="#{employeeBean.alternate_mobile}"></h:inputText></td>
 							</tr>
 							
 							<tr></tr>
 							
 							<tr>
 								<td colspan="4" align="center"><h:commandButton
-										class="myButton" value="SAVE" ></h:commandButton></td>
+										class="myButton" value="SAVE" action="#{employeeBean.dataSave}" ></h:commandButton></td>
 							</tr>
 						</table>
 					</h:form>

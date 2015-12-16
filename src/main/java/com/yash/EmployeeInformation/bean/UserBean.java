@@ -48,7 +48,7 @@ public class UserBean {
 		if (check == false) {
 			return "index.xhtml?faces-redirect=true&error=Invalid UserName And Password";
 		} else {
-			session.setAttribute("SessionEmail", name);
+			session.setAttribute("eusername", name);
 			return "welcome.xhtml";
 		}
 
