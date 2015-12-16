@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Employee {
 	private int employeedetails_id;
-	private int employeeId;
+	private int yashEmployeeId;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -26,12 +26,12 @@ public class Employee {
 		this.employeedetails_id = employeedetails_id;
 	}
 
-	public int getEmployeeId() {
-		return employeeId;
+	public int getYashEmployeeId() {
+		return yashEmployeeId;
 	}
 
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
+	public void setYashEmployeeId(int yashEmployeeId) {
+		this.yashEmployeeId = yashEmployeeId;
 	}
 
 	public String getFirstName() {
