@@ -34,7 +34,7 @@ public class ManagerService implements ManagerServiceLocal {
 	 */
 	@Override
 	public List<Employee> getAllEmployees() {
-		String sql = "SELECT * FROM employeedetails";
+		String sql = "SELECT * FROM EMPLOYEE";
 		List<Employee> employees = managerDao.getAllEmployees(sql);
 		return employees;
 	}
@@ -46,7 +46,7 @@ public class ManagerService implements ManagerServiceLocal {
 	 */
 	@Override
 	public List<Employee> searchEmployeeByName(String searchValueText) {
-		String sql = "SELECT * FROM EMPLOYEEDETAILS WHERE FIRSTNAME LIKE '" + searchValueText + "%' OR LASTNAME LIKE '"
+		String sql = "SELECT * FROM EMPLOYEE WHERE FIRSTNAME LIKE '" + searchValueText + "%' OR LASTNAME LIKE '"
 				+ searchValueText + "%'";
 		List<Employee> employees = managerDao.getAllEmployees(sql);
 		System.out.println(employees);

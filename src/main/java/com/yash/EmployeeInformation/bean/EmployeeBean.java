@@ -172,7 +172,7 @@ public class EmployeeBean {
 		employee.setLastName(lastname);
 		employee.setAlternate_mobile(alternate_mobile);
 		employee.setEmail(email);
-		employee.setEmployeeId(employeeId);
+		employee.setYashEmployeeId(employeeId);
 		employee.setMobile(mobile);
 		employeeServiceLocal.register(employee);
 		employee.getAddress().setCity(city);

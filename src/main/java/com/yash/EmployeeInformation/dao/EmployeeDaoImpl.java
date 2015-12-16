@@ -24,8 +24,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public void getRegister(Employee employee) {
 		// TODO Auto-generated method stub
-		String query = "INSERT INTO EMPLOYEEDETAILS (EMPLOYEEID,FIRSTNAME,LASTNAME,EMAIL,MOBILE,ALTERNATE_MOBILE) VALUES "
-				+ "('" + employee.getEmployeeId() + "','" + employee.getFirstName() + "','" + employee.getLastName()
+		String query = "INSERT INTO EMPLOYEE (EMPLOYEEID,FIRSTNAME,LASTNAME,EMAIL,MOBILE,ALTERNATE_MOBILE) VALUES "
+				+ "('" + employee.getYashEmployeeId() + "','" + employee.getFirstName() + "','" + employee.getLastName()
 				+ "'," + "'" + employee.getEmail() + "','" + employee.getMobile() + "','"
 				+ employee.getAlternate_mobile() + "')";
 
@@ -44,7 +44,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public int getEmpidService(String attribute) {
 		int receivedId = 0;
-		String query = "SELECT EMPLOYEEDETAILS_ID FROM EMPLOYEEDETAILS WHERE EMAIL ='" + attribute + "'";
+		String query = "SELECT EMPLOYEEDETAILS_ID FROM EMPLOYEE WHERE EMAIL ='" + attribute + "'";
 		try {
 
 			Connection connection = (Connection) dataSource.getConnection();

@@ -152,7 +152,7 @@ public class ManagerDaoImpl implements ManagerDao {
 			while (resultSet.next()) {
 				employee = new Employee();
 				employee.setEmployeedetails_id(resultSet.getInt(1));
-				employee.setEmployeeId(resultSet.getInt(2));
+				employee.setYashEmployeeId(resultSet.getInt(2));
 				employee.setFirstName(resultSet.getString(3));
 				employee.setLastName(resultSet.getString(4));
 				employee.setEmail(resultSet.getString(5));

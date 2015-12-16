@@ -100,16 +100,6 @@ public class ManagerBean {
 		return "projectDetails.xhtml?faces-redirect=true";
 	}
 
-	/**
-	 * @author pratik.sethia
-	 * 
-	 *         This method will populate the list of the employee on the loading
-	 *         of the page.
-	 */
-	@PostConstruct
-	public void getAllEmployeesList() {
-		employees = managerService.getAllEmployees();
-		}
 	
 	public String showAllEmployee(){
 		employees = managerService.getAllEmployees();
