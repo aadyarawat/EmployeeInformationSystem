@@ -48,7 +48,10 @@
 					</tr>
 
 					<tr>
-						<td><a href="#">Sample resume.docx</a></td>
+						<td><h:commandButton value="Download from project"
+								action="#{userBean.downloadFile}"></h:commandButton>&nbsp;&nbsp;&nbsp;&nbsp;
+							<h:outputLink
+								value="https://raw.githubusercontent.com/deepak-vishwakarma-at-yash/sample/master/SampleResume.doc"> Sample Resume </h:outputLink></td>
 					</tr>
 				</table>
 			</div>
@@ -110,7 +113,8 @@
 								<td colspan="2" align="left"><h:inputText id="yash_emp_id"
 										name="empId" size="43" required="true"
 										requiredMessage="Please enter yash ID" p:placeholder="100XXXX"
-										validatorMessage="Enter 7 digits " value="#{employeeBean.employeeId}">
+										validatorMessage="Enter 7 digits "
+										value="#{employeeBean.employeeId}">
 										<f:validateLength minimum="7" maximum="7" />
 									</h:inputText></td>
 								<td><h:message for="yash_emp_id" style="color: red;"></h:message><span
@@ -127,8 +131,8 @@
 								</td> </tr>-->
 							<tr>
 								<td>Address:</td>
-								<td><h:inputText size="20" p:placeholder="House No" value="#{employeeBean.houseNo}"></h:inputText>
-								</td>
+								<td><h:inputText size="20" p:placeholder="House No"
+										value="#{employeeBean.houseNo}"></h:inputText></td>
 
 
 								<td><h:inputText id="street" required="true"
@@ -146,7 +150,10 @@
 										p:placeholder="Enter City" value="#{employeeBean.city}"></h:inputText></td>
 
 								<td><h:inputText id="pincode" required="true"
-										requiredMessage="Please enter pincode" validatorMessage="Please enter 6 digit pincode" p:placeholder="45XXXX" value = "#{employeeBean.pincode}"><f:validateLength minimum="6" maximum="6" />
+										requiredMessage="Please enter pincode"
+										validatorMessage="Please enter 6 digit pincode"
+										p:placeholder="45XXXX" value="#{employeeBean.pincode}">
+										<f:validateLength minimum="6" maximum="6" />
 									</h:inputText></td>
 							</tr>
 
@@ -155,7 +162,8 @@
 								<td></td>
 								<td style="color: red"><h:message id="citymessage"
 										for="city" style="color: red;"></h:message></td>
-								<td><h:message for="pincode" style="color: red;"></h:message><span id="pincodemessage"></span></td>
+								<td><h:message for="pincode" style="color: red;"></h:message><span
+									id="pincodemessage"></span></td>
 								<td></td>
 
 							</tr>
@@ -193,27 +201,37 @@
 							<tr>
 								<td>Enter Alternate No. :</td>
 								<td colspan="2" align="left"><h:inputText size="43"
-										p:placeholder="XXX9878XXX"  value="#{employeeBean.alternate_mobile}"></h:inputText></td>
+										p:placeholder="XXX9878XXX"
+										value="#{employeeBean.alternate_mobile}"></h:inputText></td>
 							</tr>
-							
+
 							<tr></tr>
-							
+
 							<tr>
 								<td colspan="4" align="center"><h:commandButton
-										class="myButton" value="SAVE" action="#{employeeBean.dataSave}" ></h:commandButton></td>
+										class="myButton" value="SAVE"
+										action="#{employeeBean.dataSave}"></h:commandButton></td>
 							</tr>
 						</table>
 					</h:form>
 				</div>
 				<h3>Upload</h3>
 				<div>
-					<table>
-						<tr>
-							<td>Upload here:</td>
-							<td><input type="file" name="img"></input></td>
-						</tr>
-
-					</table>
+					<h:form enctype="multipart/form-data" prependId="false">
+						<table>
+							<tr>
+								<td>Upload here(NOTE - Upload Only Word Document):</td>
+								<td><h:inputFile value="#{userBean.file}">
+									</h:inputFile></td>
+								<td><h:commandButton action="#{userBean.uploadFile}"
+										value="Upload"></h:commandButton></td>
+							</tr>
+							<tr>
+								<td colspan="3"><h:outputText
+										value="#{param.uploadmessage}"></h:outputText></td>
+							</tr>
+						</table>
+					</h:form>
 				</div>
 
 				<h3>Skills</h3>
