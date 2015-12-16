@@ -1,6 +1,5 @@
 package com.yash.EmployeeInformation.dao;
 
-import com.yash.EmployeeInformation.domain.Address;
 import com.yash.EmployeeInformation.domain.Employee;
 
 public interface EmployeeDao {

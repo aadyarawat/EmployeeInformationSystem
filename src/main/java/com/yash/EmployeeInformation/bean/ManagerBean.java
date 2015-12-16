@@ -11,10 +11,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.yash.EmployeeInformation.domain.Employee;
+import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
-import com.yash.EmployeeInformation.domain.Skill;
 import com.yash.EmployeeInformation.service.ManagerServiceLocal;
 
 @ManagedBean
@@ -32,6 +33,24 @@ public class ManagerBean {
 	private String fileName;
 	private List<Project> projects;
 	private int projectDetails_Id;
+	private String feedbackcomment;
+	
+	
+	
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+	
+	
+	
+	
+	
+	public String getFeedbackcomment() {
+		return feedbackcomment;
+	}
+
+	public void setFeedbackcomment(String feedbackcomment) {
+		this.feedbackcomment = feedbackcomment;
+	}
 
 	public List<Project> getProjects() {
 		projects = managerService.getAllProjects();
@@ -58,8 +77,6 @@ public class ManagerBean {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-
-	
 
 	public String getFileName() {
 		return fileName;
@@ -151,8 +168,7 @@ public class ManagerBean {
 	}
 
 	/**
-	 * @author mayank.yadav 
-	 *	allotproject will assign the project to the employee
+	 * @author mayank.yadav allotproject will assign the project to the employee
 	 * @return
 	 */
 	public String allotProject() {
@@ -165,8 +181,8 @@ public class ManagerBean {
 	}
 
 	/**
-	 * @author pratik.sethia
-	 * 	download a particular employees resume file for a manager
+	 * @author pratik.sethia download a particular employees resume file for a
+	 *         manager
 	 * @return
 	 */
 	public String downloadFile() {
@@ -230,4 +246,50 @@ public class ManagerBean {
 		}
 		return "welcomeManager.xhtml?faces-redirect=true&error=" + exception;
 	}
+
+	/***
+	 * 
+	 * @author phalguni.vatsa
+	 */
+	public String retrieveEmployeeDetail() {
+		Employee employee = (Employee) managerService.getAllEmployees();
+		System.out.println(employee);
+		return "ShowEmployeeDetails.xhtml";
+	}
+
+	/***
+	 * 
+	 * @author phalguni.vatsa
+	 */
+	public String addBaseLineInput() {
+		managerService.addBaseLineInput(employee);
+		return null;
+	}
+
+	/**
+	 * Method Used to save feedBack for the particular employee
+	 * 
+	 * @author prakhar.jain
+	 * @return
+	 */
+	public String saveFeedBack() {
+		if (employee.getFeedBack().getFeedbackComment() == null) {
+			Manager manager = (Manager) session.getAttribute("manager");
+			employee.getFeedBack().setFeedbackComment(feedbackcomment);
+			employee.getFeedBack().setLastUpdatedManagerId(manager.getManagerId());
+			employee = managerService.saveFeedBack(employee);
+			employees = managerService.getAllEmployees();
+			feedbackcomment = "";
+		} else {
+			Manager manager = (Manager) session.getAttribute("manager");
+			employee.getFeedBack()
+					.setFeedbackComment(employee.getFeedBack().getFeedbackComment().concat(", " + feedbackcomment));
+			employee.getFeedBack().setLastUpdatedManagerId(manager.getManagerId());
+			employee = managerService.updateFeedBack(employee);
+			employees = managerService.getAllEmployees();
+			feedbackcomment = "";
+		}
+		return null;
+	}
+
 }

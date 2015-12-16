@@ -91,5 +91,69 @@ public class ManagerService implements ManagerServiceLocal {
 		managerDao.saveAllotedProject(sql);
 		
 	}
+	
 
+	/***
+	 * @author phalguni.vatsa
+	 */
+	@Override
+	public void addBaseLineInput(Employee employee) {
+		managerDao.addBaseLineInput(employee);
+		
+	}
+	
+
+/**
+	 * 
+	 * This method save the feedBack of employee........
+	 * 
+	 * @return Employee
+	 * 
+	 * @param Employee
+	 * @author prakhar.jain
+	 */
+	@Override
+	public Employee saveFeedBack(Employee employee) {
+		Employee updatedEmployee=null;
+		managerDao.saveFeedBack(employee);
+		updatedEmployee=getEmployee(employee.getEmployeedetails_id());
+		return updatedEmployee;
+	}
+
+	/**
+	 * 
+	 * This method retrieve complete object of employee
+	 * 
+	 * @return Employee
+	 * 
+	 * @param employeedetails_id
+	 * @author prakhar.jain
+	 */
+	@Override
+	public Employee getEmployee(int employeedetails_id) {
+		Employee updatedEmployee=null;
+		String sql="SELECT * FROM employee WHERE employeedetails_id="+employeedetails_id;
+		List<Employee> employees=managerDao.getAllEmployees(sql);
+		for(Employee employee:employees){
+			updatedEmployee=employee;
+		}
+		return updatedEmployee;
+	}
+
+	/**
+	 * 
+	 * This method Update the feedBack of employee........
+	 * 
+	 * @return Employee
+	 * 
+	 * @param Employee
+	 * @author prakhar.jain
+	 */
+	@Override
+	public Employee updateFeedBack(Employee employee) {
+		managerDao.updateFeedBack(employee);
+		Employee updatedEmployee=getEmployee(employee.getEmployeedetails_id());
+		return updatedEmployee;
+	}
+	
 }

@@ -30,7 +30,7 @@ public class ManagerDaoImpl implements ManagerDao {
 	ConnectionUtil connectionUtil;
 
 	/**
-	 * This method Returns feedback of employee
+	 * This method Returns feedback of employee // replace this method
 	 * 
 	 * @author prakhar.jain
 	 * @param employeedetails_id
@@ -46,6 +46,7 @@ public class ManagerDaoImpl implements ManagerDao {
 				feedBack.setFeedback_id(resultSet.getInt(1));
 				feedBack.setFeedbackComment(resultSet.getString(2));
 				feedBack.setLastUpdatedManager(resultSet.getString(6));
+				feedBack.setLastUpdatedManagerId(resultSet.getInt(5));
 				feedBack.setEmployeedetails_id(resultSet.getInt(4));
 			}
 		} catch (SQLException e) {
@@ -268,12 +269,12 @@ public class ManagerDaoImpl implements ManagerDao {
 		int check = 0;
 		String sql = "select * from managerdetails where managerEmailId='" + name + "'";
 		ResultSet resultSet = select(sql);
-		Manager manager=null;
+		Manager manager = null;
 		try {
 			while (resultSet.next()) {
-				
+
 				if (name.equals(resultSet.getString("managerEmailId"))) {
-					manager=new Manager();
+					manager = new Manager();
 					manager.setManagerId(resultSet.getInt(1));
 					manager.setManagerName(resultSet.getString(2));
 					manager.setManagerEmailId(resultSet.getString(3));
@@ -316,4 +317,48 @@ public class ManagerDaoImpl implements ManagerDao {
 		update(sql);
 
 	}
+
+	/***
+	 * @author phalguni.vatsa
+	 */
+	@Override
+	public void addBaseLineInput(Employee employee) {
+		String query = "Insert into baselineinputdetails (baselineInput, employeedetails_id) values('"
+				+ employee.getBaseLineInput().getBaselineInputdetail() + "', '" + employee.getEmployeedetails_id()
+				+ "')";
+		System.out.println(query);
+		update(query);
+	}
+
+	/**
+	 * 
+	 * Method to save the feedBack of employee
+	 * 
+	 * @author prakhar.jain
+	 * @param Employee
+	 * 
+	 * 
+	 */
+	@Override
+	public void saveFeedBack(Employee employee) {
+		String sql = "INSERT INTO feedbackdetails (feedback,lastUpdatedManagerId,employeedetails_id) values('"
+				+ employee.getFeedBack().getFeedbackComment() + "'," + employee.getFeedBack().getLastUpdatedManagerId()
+				+ "," + employee.getEmployeedetails_id() + ")";
+		update(sql);
+	}
+
+	/**
+	 * Method to Update the feedBack of employee if given by another manager or
+	 * the same manager
+	 * 
+	 * @param Employee
+	 * @author prakhar.jain
+	 */
+	@Override
+	public void updateFeedBack(Employee employee) {
+		String sql = "UPDATE feedbackdetails SET feedback ='" + employee.getFeedBack().getFeedbackComment()
+				+ "', lastUpdatedManagerId="+employee.getFeedBack().getLastUpdatedManagerId()+" WHERE `employeedetails_id`=" + employee.getEmployeedetails_id();
+		update(sql);
+	}
+
 }

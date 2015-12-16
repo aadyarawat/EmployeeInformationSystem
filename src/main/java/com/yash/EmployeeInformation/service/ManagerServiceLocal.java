@@ -14,7 +14,7 @@ public interface ManagerServiceLocal {
 	List<Employee> getAllEmployees();
 
 	List<Employee> searchEmployeeByName(String searchValueText);
-	
+
 	void createNewProject(Project project);
 
 	Manager checkAuthorization(String name);
@@ -23,5 +23,12 @@ public interface ManagerServiceLocal {
 
 	void allocateProject(int projectDetails_Id, int employeedetails_id);
 
+	void addBaseLineInput(Employee employee);
+
+	Employee saveFeedBack(Employee employee);
+
+	Employee getEmployee(int employeedetails_id);
+
+	Employee updateFeedBack(Employee employee);
 
 }
