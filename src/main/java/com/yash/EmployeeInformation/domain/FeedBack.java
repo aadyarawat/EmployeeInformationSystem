@@ -1,10 +1,23 @@
 package com.yash.EmployeeInformation.domain;
 
+/**
+ * @author prakhar.jain
+ *
+ */
+/**
+ * @author prakhar.jain
+ *
+ */
+/**
+ * @author prakhar.jain
+ *
+ */
 public class FeedBack {
 	
 	private int feedback_id;
 	private String feedbackComment;
 	private String lastUpdatedManager;
+	private int lastUpdatedManagerId;
 	private int employeedetails_id;
 	
 	
@@ -32,6 +45,14 @@ public class FeedBack {
 	public void setLastUpdatedManager(String lastUpdatedManager) {
 		this.lastUpdatedManager = lastUpdatedManager;
 	}
+	public int getLastUpdatedManagerId() {
+		return lastUpdatedManagerId;
+	}
+	public void setLastUpdatedManagerId(int lastUpdatedManagerId) {
+		this.lastUpdatedManagerId = lastUpdatedManagerId;
+	}
+
+	
 	
 	
 

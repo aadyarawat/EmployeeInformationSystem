@@ -232,8 +232,8 @@ public class UserBean {
 					Files.copy(bytes, destination);
 				}
 				String useremail = filename;
-				userService.addResumeDetail(finalfilename, useremail);
-				return "upload succesfull";
+				//userService.addResumeDetail(finalfilename, useremail);
+					return userService.addResumeDetail(finalfilename, useremail);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return "error occured please try again after sometime";

@@ -25,7 +25,7 @@ public class UserService implements UserServiceLocal {
     }
 
     @Override
-	public void addResumeDetail(String finalfilename, String useremail) {
-		userDao.addResumeDetail(finalfilename,useremail);
+	public String addResumeDetail(String finalfilename, String useremail) {
+		return userDao.addResumeDetail(finalfilename,useremail);
 	}
 }
