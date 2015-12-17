@@ -57,7 +57,6 @@ public class ManagerBean {
 		this.selectedEmployees = selectedEmployees;
 	}
 
-
 	public String getFeedbackcomment() {
 		return feedbackcomment;
 	}
@@ -157,7 +156,7 @@ public class ManagerBean {
 	public String saveProject() {
 		Project project = new Project(0, projectName, projectDuration);
 		managerService.createNewProject(project);
-		return "projectDetails.xhtml?faces-redirect=true";
+		return "allProjects.xhtml?faces-redirect=true";
 	}
 
 	/**

@@ -2,16 +2,17 @@ package com.yash.EmployeeInformation.bean;
 
 
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import javax.servlet.http.HttpSession;
 
 import com.yash.EmployeeInformation.domain.Address;
 import com.yash.EmployeeInformation.domain.Employee;
-
+import com.yash.EmployeeInformation.domain.Skill;
 import com.yash.EmployeeInformation.service.EmployeeServiceLocal;
 
 /**
@@ -42,6 +43,49 @@ public class EmployeeBean {
 	private String city;
 	private String state;
 	private String pincode;
+	private String skillName;
+	private String skillEfficiency;
+	private List<Skill> skillList;
+	private List<Skill> skillEfficiencyList;
+	
+	
+	@EJB
+	EmployeeServiceLocal employeeServiceLocal;
+	
+	public String getSkillName() {
+		return skillName;
+	}
+
+	public void setSkillName(String skillName) {
+		this.skillName = skillName;
+	}
+
+	public String getSkillEfficiency() {
+		return skillEfficiency;
+	}
+
+	public void setSkillEfficiency(String skillEfficiency) {
+		this.skillEfficiency = skillEfficiency;
+	}
+
+	public List<Skill> getSkillList() {
+		skillList = employeeServiceLocal.getSkillList();
+		return skillList;
+	}
+
+	public void setSkillList(List<Skill> skillList) {
+		this.skillList = skillList;
+	}
+
+	public List<Skill> getSkillEfficiencyList() {
+		skillEfficiencyList = employeeServiceLocal.getSkillEfficiencyList();
+		return skillEfficiencyList;
+	}
+
+	public void setSkillEfficiencyList(List<Skill> skillEfficiencyList) {
+		this.skillEfficiencyList = skillEfficiencyList;
+	}
+
 	public int getHouseNo() {
 		return houseNo;
 	}
@@ -111,8 +155,6 @@ public class EmployeeBean {
 
 	Employee employee = new Employee();
 
-	@EJB
-	EmployeeServiceLocal employeeServiceLocal;
 
 	public String getFirstname() {
 		return firstname;
@@ -188,6 +230,16 @@ public class EmployeeBean {
 		
 		employeeServiceLocal.saveEmployeeAddress(recId,employee);
 		return null;
+	}
+	
+	public String addSkillAndEfficiency(){
+		System.out.println("ADD AND EFFIC +CELLED");
+		System.out.println("SKILL NAME ---------" +skillName);
+		System.out.println("SKILL Efficiency NAME ---------" +skillEfficiency);
+		System.out.println("SKILL ID FROM EMAIL ---------" +recId);
+		employeeServiceLocal.addEmployeeSkillAndEfficiency(skillName,skillEfficiency,recId);
+		return null;
+		
 	}
 
 }

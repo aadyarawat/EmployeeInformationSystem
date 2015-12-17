@@ -34,7 +34,7 @@ $(document).ready(function() {
 	
 	
 	$('#firstname').keypress(function (e) {
-        var regex = new RegExp("^[a-zA-Z]+$");
+        var regex = new RegExp("^[a-zA-Z/b]+$");
         var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
         if (regex.test(str)) {
         	$('#firstnamemessage').fadeOut(1000);
@@ -49,7 +49,7 @@ $(document).ready(function() {
     });
 	
 	$('#lastname').keypress(function (e) {
-        var regex = new RegExp("^[a-zA-Z]+$");
+        var regex = new RegExp("^[a-zA-Z/b]+$");
         var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
         if (regex.test(str)) {
         	$('#lastnamemessage').fadeOut(1000);
@@ -64,7 +64,7 @@ $(document).ready(function() {
     });
 	
 	$('#city').keypress(function (e) {
-        var regex = new RegExp("^[a-zA-Z]+$");
+        var regex = new RegExp("^[a-zA-Z/b]+$");
         var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
         if (regex.test(str)) {
         	$('#citymessage').fadeOut(1000);
@@ -79,7 +79,7 @@ $(document).ready(function() {
     });
 	
 	$('#state').keypress(function (e) {
-        var regex = new RegExp("^[a-zA-Z]+$");
+        var regex = new RegExp("^[a-zA-Z/b]+$");
         var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
         if (regex.test(str)) {
         	$('#statemessage').fadeOut(1000);
