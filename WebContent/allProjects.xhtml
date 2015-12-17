@@ -56,7 +56,7 @@
 						<thead>
 							<tr align="center"
 								style="background-color: rgb(4, 82, 134); color: white; height: 46px;">
-								<th style="height: 46px; width: 180px;">Action</th>
+								<th style="height: 46px; width: 180px;">Assign</th>
 								<th style="width: 190px;">Employee Name</th>
 								<th>Employee Id</th>
 								<th>Email</th>
@@ -65,11 +65,10 @@
 						</thead>
 						<ui:repeat var="employee" value="#{managerBean.employees}">
 							<tr align="center">
-								<td><h:commandButton value="Assign"
-										action="#{managerBean.assignProjectToEmployee}">
-										<f:setPropertyActionListener value="#{employee}"
-											target="#{managerBean.employee}" />
-									</h:commandButton></td>
+								<td><h:commandLink 	action="#{managerBean.assignProjectToEmployee}">
+										<h:graphicImage value="images/Active_icon.jpg" height="30px" width="30px"/>
+										<f:setPropertyActionListener value="#{employee}" target="#{managerBean.employee}" />
+									</h:commandLink></td>
 								<td>#{employee.firstName} #{employee.lastName}</td>
 								<td>#{employee.yashEmployeeId}</td>
 								<td>#{employee.email}</td>

@@ -318,7 +318,7 @@ public class ManagerBean {
 
 	public void getUnallocatedProjectEmployees(ValueChangeEvent event) {
 		projectDetails_Id = Integer.parseInt(event.getNewValue().toString());
-		if (projectDetails_Id != 0) {
+		if (projectDetails_Id != -1) {
 			employees = managerService.getUnallocatedProjectEmployees(projectDetails_Id);
 		} else {
 			employees = null;
