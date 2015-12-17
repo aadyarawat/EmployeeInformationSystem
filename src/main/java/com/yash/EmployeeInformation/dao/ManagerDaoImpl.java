@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import com.yash.EmployeeInformation.domain.Address;
 import com.yash.EmployeeInformation.domain.BaseLineInput;
@@ -26,8 +28,14 @@ import com.yash.EmployeeInformation.util.ConnectionUtil;
  */
 public class ManagerDaoImpl implements ManagerDao {
 
-	@Inject
-	ConnectionUtil connectionUtil;
+	/*@Inject
+	ConnectionUtil connectionUtil;*/
+	
+	@Resource(lookup = "java:jboss/datasources/EIS")
+	DataSource source;
+	
+	Connection connection = null;
+
 
 	/**
 	 * This method Returns feedback of employee // replace this method
@@ -52,6 +60,14 @@ public class ManagerDaoImpl implements ManagerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return feedBack;
@@ -77,6 +93,14 @@ public class ManagerDaoImpl implements ManagerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return baseLineInput;
@@ -107,6 +131,14 @@ public class ManagerDaoImpl implements ManagerDao {
 
 			}
 		} catch (SQLException e) {
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return address;
@@ -138,6 +170,14 @@ public class ManagerDaoImpl implements ManagerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return projects;
 	}
@@ -174,6 +214,14 @@ public class ManagerDaoImpl implements ManagerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return employees;
 	}
@@ -208,6 +256,14 @@ public class ManagerDaoImpl implements ManagerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return skills;
@@ -222,10 +278,22 @@ public class ManagerDaoImpl implements ManagerDao {
 
 	@Override
 	public void saveNewProject(Project project) {
-
-		String sql = "insert into projectDetails(projectName , projectDuration) values('" + project.getProjectName()
-				+ "','" + project.getProjectDuration() + "')";
-		update(sql);
+		try {
+			
+			String sql = "insert into projectDetails(projectName , projectDuration) values('" + project.getProjectName()
+			+ "','" + project.getProjectDuration() + "')";
+			update(sql);
+		} catch (Exception e) {
+		}
+		finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -234,8 +302,9 @@ public class ManagerDaoImpl implements ManagerDao {
 	 * @param sql
 	 */
 	public void update(String sql) {
-		Connection connection = connectionUtil.getConnection();
 		try {
+			//Connection connection = connectionUtil.getConnection();
+			connection = source.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.execute();
 		} catch (SQLException e) {
@@ -250,12 +319,14 @@ public class ManagerDaoImpl implements ManagerDao {
 	 * @param sql
 	 */
 	public ResultSet select(String sql) {
-		Connection connection = connectionUtil.getConnection();
 		ResultSet resultSet = null;
 		try {
+			//Connection connection = connectionUtil.getConnection();
+			connection = source.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
 			resultSet = preparedStatement.executeQuery();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -271,6 +342,7 @@ public class ManagerDaoImpl implements ManagerDao {
 		ResultSet resultSet = select(sql);
 		Manager manager = null;
 		try {
+			if(resultSet!=null)
 			while (resultSet.next()) {
 
 				if (name.equals(resultSet.getString("managerEmailId"))) {
@@ -284,6 +356,14 @@ public class ManagerDaoImpl implements ManagerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return manager;
 	}
@@ -306,6 +386,14 @@ public class ManagerDaoImpl implements ManagerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return projects;
@@ -314,7 +402,20 @@ public class ManagerDaoImpl implements ManagerDao {
 	@Override
 	public void saveAllotedProject(String sql) {
 		// TODO Auto-generated method stub
-		update(sql);
+		try {
+			update(sql);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 
@@ -323,11 +424,24 @@ public class ManagerDaoImpl implements ManagerDao {
 	 */
 	@Override
 	public void addBaseLineInput(Employee employee) {
-		String query = "Insert into baselineinputdetails (baselineInput, employeedetails_id) values('"
-				+ employee.getBaseLineInput().getBaselineInputdetail() + "', '" + employee.getEmployeedetails_id()
-				+ "')";
-		System.out.println(query);
-		update(query);
+			
+		try {
+			String query = "Insert into baselineinputdetails (baselineInput, employeedetails_id) values('"
+					+ employee.getBaseLineInput().getBaselineInputdetail() + "', '" + employee.getEmployeedetails_id()
+					+ "')";
+			System.out.println(query);
+			update(query);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -341,10 +455,23 @@ public class ManagerDaoImpl implements ManagerDao {
 	 */
 	@Override
 	public void saveFeedBack(Employee employee) {
-		String sql = "INSERT INTO feedbackdetails (feedback,lastUpdatedManagerId,employeedetails_id) values('"
-				+ employee.getFeedBack().getFeedbackComment() + "'," + employee.getFeedBack().getLastUpdatedManagerId()
-				+ "," + employee.getEmployeedetails_id() + ")";
-		update(sql);
+		try {
+			String sql = "INSERT INTO feedbackdetails (feedback,lastUpdatedManagerId,employeedetails_id) values('"
+					+ employee.getFeedBack().getFeedbackComment() + "'," + employee.getFeedBack().getLastUpdatedManagerId()
+					+ "," + employee.getEmployeedetails_id() + ")";
+			update(sql);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -356,9 +483,22 @@ public class ManagerDaoImpl implements ManagerDao {
 	 */
 	@Override
 	public void updateFeedBack(Employee employee) {
-		String sql = "UPDATE feedbackdetails SET feedback ='" + employee.getFeedBack().getFeedbackComment()
-				+ "', lastUpdatedManagerId="+employee.getFeedBack().getLastUpdatedManagerId()+" WHERE `employeedetails_id`=" + employee.getEmployeedetails_id();
-		update(sql);
+		try {
+			String sql = "UPDATE feedbackdetails SET feedback ='" + employee.getFeedBack().getFeedbackComment()
+					+ "', lastUpdatedManagerId="+employee.getFeedBack().getLastUpdatedManagerId()+" WHERE `employeedetails_id`=" + employee.getEmployeedetails_id();
+			update(sql);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			try {
+				if(connection!=null)
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

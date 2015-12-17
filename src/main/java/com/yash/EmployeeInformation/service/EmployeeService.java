@@ -57,6 +57,20 @@ public class EmployeeService implements EmployeeServiceLocal {
 		employeeDaoIntf.saveSkillAndEfficiency(skillName,skillEfficiency,recId);
 		
 	}
+	@Override
+	public Employee getEmployeeDetail(String emailID) {
+		return employeeDaoIntf.getEmployee(emailID);
+		
+	}
+	@Override
+	public void updateEmployee(Employee employee) {
+		employeeDaoIntf.updateEmployeeDetail(employee);
+		
+	}
+	@Override
+	public void editEmployeeAddress(int recId, Employee employee) {
+		employeeDaoIntf.updateEmployeeAddress(recId,employee);
+	}
 
 }
 

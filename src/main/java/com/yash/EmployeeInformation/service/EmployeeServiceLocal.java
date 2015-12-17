@@ -23,6 +23,9 @@ public interface EmployeeServiceLocal {
 	public List<Skill> getSkillList();
 	public List<Skill> getSkillEfficiencyList();
 	public void addEmployeeSkillAndEfficiency(String skillName, String skillEfficiency, int recId);
+	public Employee getEmployeeDetail(String emailID);
+	public void editEmployeeAddress(int recId, Employee employee);
+	public void updateEmployee(Employee employee);
 }
 
 
