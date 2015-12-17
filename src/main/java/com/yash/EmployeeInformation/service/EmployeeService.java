@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.yash.EmployeeInformation.dao.EmployeeDao;
-import com.yash.EmployeeInformation.domain.Address;
+
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Skill;
 

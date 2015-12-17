@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.inject.Inject;
+
 import javax.sql.DataSource;
 
 import com.yash.EmployeeInformation.domain.Address;
@@ -18,7 +18,7 @@ import com.yash.EmployeeInformation.domain.FeedBack;
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
 import com.yash.EmployeeInformation.domain.Skill;
-import com.yash.EmployeeInformation.util.ConnectionUtil;
+
 
 /**
  * This class Manages all the operations of done on employee

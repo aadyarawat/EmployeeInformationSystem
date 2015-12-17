@@ -1,10 +1,8 @@
 package com.yash.EmployeeInformation.util;
 
-import java.io.Closeable;
-import java.io.IOException;
+
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 
 import javax.annotation.Resource;
