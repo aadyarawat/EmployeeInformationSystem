@@ -16,27 +16,32 @@
 			<table align="center">
 				<tr>
 					<td><h:inputText value="#{managerBean.searchValueText}"
-							id="searchValueText" p:placeholder="Search Here.." /></td>
+							id="searchValueText" p:placeholder="Search Here.." size="40"
+							style="height:25px;" /></td>
 					<td><h:commandButton value="Search"
-							action="#{managerBean.searchEmployeeByName}" /></td>
+							action="#{managerBean.searchEmployeeByName}" class="myButton" /></td>
 					<td><h:commandButton value="Show All"
-							action="#{managerBean.showAllEmployee}" /></td>
-					<td><h:commandButton value="Project list" action="allProjects" /></td>
+							action="#{managerBean.showAllEmployee}" class="myButton" /></td>
+					<td><h:commandButton value="Project list"
+							action="#{managerBean.projectAllocation}" class="myButton" /></td>
 				</tr>
 				<tr>
-					<td><span id="spanSearchValueText" /></td>
-					<td colspan="3" style="color: red; text-align: center;">#{param.error}</td>
+					<td style="color: red; text-align: center;" colspan="4"><span
+						id="spanSearchValueText" />#{param.error}</td>
 				</tr>
 			</table>
-			<table class="CSSTableGenerator">
 
-				<tr align="center">
-					<td>Employee Name</td>
-					<td>Employee ID</td>
-					<td>Email</td>
-					<td>Contact</td>
-					<td colspan="2">Action</td>
-				</tr>
+			<table class="CSSTableGenerator tableSection">
+				<thead>
+					<tr align="center"
+						style="background-color: rgb(4, 82, 134); color: white; height: 46px;">
+						<th style="height: 46px; width: 116px;">Employee Name</th>
+						<th style="width: 150px;">Employee ID</th>
+						<th align="center">Email</th>
+						<th>Contact</th>
+						<th colspan="2">Action</th>
+					</tr>
+				</thead>
 				<ui:repeat var="employees" value="#{managerBean.employees}">
 					<tr align="center">
 						<td>#{employees.firstName} #{employees.lastName}</td>

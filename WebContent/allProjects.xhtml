@@ -11,9 +11,12 @@
 
 	<ui:define name="content">
 		<div align="center">
-			<div id="dialog" style="display: none;" title="Project Details!">
+			<div id="dialog" style="display: none;">
 				<h:form prependId="false">
 					<table align="center">
+						<caption>
+							<b>Project Details!</b>
+						</caption>
 						<tr>
 							<th align="right">Project Name:</th>
 							<td><h:inputText value="#{managerBean.projectName}" /></td>
@@ -36,41 +39,46 @@
 						<tr>
 							<td>Projects</td>
 							<td><h:selectOneMenu
-									value="#{managerBean.selectedProjectName}">
-									<f:selectItem itemLabel="-----Select-------" itemValue="null" />
+									value="#{managerBean.projectDetails_Id}"
+									id="selectedProjectName"
+									valueChangeListener="#{managerBean.getUnallocatedProjectEmployees}"
+									onchange="submit()">
+									<f:selectItem itemLabel="-----Select-------" itemValue="-1" />
 									<f:selectItems value="#{managerBean.projects}" var="project"
 										itemLabel="#{project.projectName}"
-										itemValue="#{project.projectName}" />
+										itemValue="#{project.projectDetails_Id}" />
 								</h:selectOneMenu></td>
 							<td colspan="2"><h:commandButton id="addProject"
 									type="button" value="Add Project" class="myButton" /></td>
 						</tr>
+					</table>
+					<table class="CSSTableGenerator tableSection" align="center">
+						<thead>
+							<tr align="center"
+								style="background-color: rgb(4, 82, 134); color: white; height: 46px;">
+								<th style="height: 46px; width: 180px;">Action</th>
+								<th style="width: 190px;">Employee Name</th>
+								<th>Employee Id</th>
+								<th>Email</th>
 
-						<tr align="center">
-							<td>***</td>
-							<td>Employee Name</td>
-							<td>Employee ID</td>
-							<td>Email</td>
-							<td>Contact</td>
-						</tr>
-						<ui:repeat var="employees" value="#{managerBean.employees}">
+							</tr>
+						</thead>
+						<ui:repeat var="employee" value="#{managerBean.employees}">
 							<tr align="center">
-								<td><h:selectManyCheckbox
-										value="#{managerBean.selectedEmployees}">
-										<f:selectItem itemLabel="#{employees.employeedetails_id}"
-											itemValue="#{employees.employeedetails_id}" />
-									</h:selectManyCheckbox></td>
-								<td>#{employees.firstName} #{employees.lastName}</td>
-								<td>#{employees.yashEmployeeId}</td>
-								<td>#{employees.email}</td>
-								<td>#{employees.mobile}</td>
+								<td><h:commandButton value="Assign"
+										action="#{managerBean.assignProjectToEmployee}">
+										<f:setPropertyActionListener value="#{employee}"
+											target="#{managerBean.employee}" />
+									</h:commandButton></td>
+								<td>#{employee.firstName} #{employee.lastName}</td>
+								<td>#{employee.yashEmployeeId}</td>
+								<td>#{employee.email}</td>
+
 							</tr>
 						</ui:repeat>
-						<tr align="center">
-							<td><h:commandButton value="Assign"
-									action="#{managerBean.assignProjectToEmployee}" /></td>
-						</tr>
+
 					</table>
+
 				</h:form>
 			</div>
 

@@ -5,11 +5,11 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -32,14 +32,25 @@ public class ManagerBean {
 	private String projectDuration;
 	private String fileName;
 	private List<Project> projects;
-	private int projectDetails_Id;
+	private int projectDetails_Id=-1;
 	private String feedbackcomment;
-
+	private List<Project> unallocatedEmployeeProjects;
 	private String selectedProjectName;
 	private String[] selectedEmployees;
 
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+
+	public List<Project> getUnallocatedEmployeeProjects() {
+		List<Project> projectAccordingToEmp = employee.getProjects();
+		unallocatedEmployeeProjects = getProjects();
+		unallocatedEmployeeProjects.removeAll(projectAccordingToEmp);
+		return unallocatedEmployeeProjects;
+	}
+
+	public void setUnallocatedEmployeeProjects(List<Project> unallocatedEmployeeProjects) {
+		this.unallocatedEmployeeProjects = unallocatedEmployeeProjects;
+	}
 
 	public String getSelectedProjectName() {
 		return selectedProjectName;
@@ -65,6 +76,7 @@ public class ManagerBean {
 		this.feedbackcomment = feedbackcomment;
 	}
 
+	// Check 1.
 	public List<Project> getProjects() {
 		projects = managerService.getAllProjects();
 		System.out.println(projects);
@@ -139,10 +151,11 @@ public class ManagerBean {
 	public String searchEmployeeByName() {
 		if (searchValueText.equalsIgnoreCase("")) {
 			employees = null;
+			
 		} else {
 			employees = managerService.searchEmployeeByName(searchValueText);
 		}
-
+		 projectDetails_Id=0;
 		return null;
 
 	}
@@ -159,16 +172,7 @@ public class ManagerBean {
 		return "allProjects.xhtml?faces-redirect=true";
 	}
 
-	/**
-	 * @author pratik.sethia
-	 * 
-	 *         This method will populate the list of the employee on the loading
-	 *         of the page.
-	 */
-	@PostConstruct
-	public void getAllEmployeesList() {
-		employees = managerService.getAllEmployees();
-	}
+	
 
 	public String showAllEmployee() {
 		employees = managerService.getAllEmployees();
@@ -185,11 +189,10 @@ public class ManagerBean {
 	 * @return
 	 */
 	public String allotProject() {
-		// pending task
-		// get the emplyeedetails_id from employeeObject
-		System.out.println("allot");
 		managerService.allocateProject(projectDetails_Id, employee.getEmployeedetails_id());
-
+		employee=managerService.getEmployee(employee.getEmployeedetails_id());
+		unallocatedEmployeeProjects=getUnallocatedEmployeeProjects();
+		employees=managerService.getAllEmployees();
 		return "ShowEmployeeDetails.xhtml";
 	}
 
@@ -306,10 +309,28 @@ public class ManagerBean {
 	}
 
 	public String assignProjectToEmployee() {
-		System.out.println(selectedEmployees.length);
-
+		System.out.println(projectDetails_Id + " " + employee.getEmail());
+		managerService.allocateProject(projectDetails_Id, employee.getEmployeedetails_id());
+		employees.remove(employee);
 		return null;
 
+	}
+
+	public void getUnallocatedProjectEmployees(ValueChangeEvent event) {
+		projectDetails_Id = Integer.parseInt(event.getNewValue().toString());
+		if (projectDetails_Id != 0) {
+			employees = managerService.getUnallocatedProjectEmployees(projectDetails_Id);
+		} else {
+			employees = null;
+			projectDetails_Id = -1;
+		}
+		projectDetails_Id = -1;
+	}
+	
+	public String projectAllocation(){
+		projectDetails_Id=-1;
+		employees=null;
+		return "allProjects.xhtml";
 	}
 
 }

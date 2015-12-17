@@ -13,34 +13,36 @@
 		<div>
 			<div id="accordion"
 				style="width: 1000px; height: 500px; margin: auto; margin-top: 10px;">
+
 				<h3>Details of the Employee</h3>
 				<div>
 					<h4>
 						<center>
 							<h:form prependId="false">
-								<table>
-									<caption>Personal Details</caption>
-									<tr></tr>
+								<table class="CSSEmployeeDetailsTable" style="width: 800px;">
 									<tr>
-										<td><h:outputText value="Employee Id:" /></td>
+										<td colspan="2">Personal Details</td>
+									</tr>
+									<tr>
+										<td><b><h:outputText value="Employee Id" /></b>&nbsp;</td>
 										<td><h:outputText
 												value="#{managerBean.employee.yashEmployeeId}" /></td>
 									</tr>
 
 									<tr>
-										<td><h:outputText value="Name:" /></td>
+										<td><b><h:outputText value="Name" /></b></td>
 										<td><h:outputText
 												value="#{managerBean.employee.firstName}" />&nbsp; <h:outputText
 												value="#{managerBean.employee.lastName}" /></td>
 									</tr>
 
 									<tr>
-										<td><h:outputText value="Email:" /></td>
+										<td><b><h:outputText value="Email" /></b></td>
 										<td><h:outputText value="#{managerBean.employee.email}" /></td>
 									</tr>
 
 									<tr>
-										<td><h:outputText value="Address:" /></td>
+										<td><b><h:outputText value="Address" /></b></td>
 										<td><h:outputText
 												value="#{managerBean.employee.address.houseNo}" /> &nbsp; <h:outputText
 												value="#{managerBean.employee.address.streetName}" />&nbsp;
@@ -50,27 +52,27 @@
 									</tr>
 
 									<tr>
-										<td><h:outputText value="Contact:" /></td>
+										<td><b><h:outputText value="Contact" /></b></td>
 										<td><h:outputText value="#{managerBean.employee.mobile}" />,&nbsp;
 											<h:outputText
 												value="#{managerBean.employee.alternate_mobile}" /></td>
 									</tr>
 								</table>
 
-								<hr />
-
-								<table>
-									<caption>Other Details</caption>
-									<tr></tr>
+								<table class="CSSEmployeeDetailsTable" style="width: 800px;">
+									<tr align="center">
+										<td colspan="2" align="center">Other Details</td>
+									</tr>
 									<tr>
-										<td><h:outputText value="Baseline Input:" /></td>
+										<td><b><h:outputText value="Baseline Input" />&nbsp;
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
 										<td><h:outputText
 												value="#{managerBean.employee.baseLineInput.baselineInputdetail}"
 												readonly="true" /></td>
 									</tr>
 
 									<tr>
-										<td><h:outputText value="FeedBack:" /></td>
+										<td><b><h:outputText value="FeedBack" /></b></td>
 										<td><h:outputText
 												value="#{managerBean.employee.feedBack.feedbackComment}"
 												readonly="true" /></td>
@@ -78,21 +80,20 @@
 								</table>
 
 
-								<hr />
-
-
-								<table>
-									<caption>Project Details</caption>
-									<tr></tr>
+								<table class="CSSEmployeeDetailsTable" style="width: 800px;">
 									<tr>
-										<td style="vertical-align: top;"><h:outputText
-												value="Projects:" /></td>
-										<td><ui:repeat value="#{managerBean.employee.projects}"
-												var="project">
-												<h:outputText value="#{project.projectName}" />
-												<br />
-											</ui:repeat></td>
-
+										<td colspan="2">Project Details</td>
+									</tr>
+									<tr>
+										<td><b><h:outputText value="Projects" /></b></td>
+										<td>
+											<ul>
+												<ui:repeat value="#{managerBean.employee.projects}"
+													var="project">
+													<li><h:outputText value="#{project.projectName}" /></li>
+												</ui:repeat>
+											</ul>
+										</td>
 									</tr>
 								</table>
 
@@ -105,27 +106,46 @@
 					<h:form prependId="false">
 						<table>
 							<tr>
-								<td><h:outputText value="Baseline Input:" /></td>
+								<td><b><h:outputText value="Baseline Input" /></b></td>
+							</tr>
+							<tr>
 								<td><h:inputTextarea
 										value="#{managerBean.employee.baseLineInput.baselineInputdetail}"
 										id="baseLineInputTextArea"
-										p:placeholder="Enter baseline for the employee here" /></td>
-								<td><h:commandButton value="Submit"
-										id="baseLineInputSubmitButton"
-										action="#{managerBean.addBaseLineInput}" /></td>
+										p:placeholder="Enter baseline for the employee here" cols="90" /></td>
+							</tr>
+							<tr>
+								<td colspan="2" align="right"><h:commandButton
+										value="Submit" id="baseLineInputSubmitButton"
+										action="#{managerBean.addBaseLineInput}" class="myButton" /></td>
 							</tr>
 						</table>
 					</h:form>
 				</div>
-
+				
+				<h3>Add Grade</h3>
+				<div>
+					<h:form>
+						<table>
+							<tr>
+								<td>Enter the Grade:</td>
+								<td>
+									<h:selectOneMenu value="#">
+   									<f:selectItem itemValue="1" itemLabel="" />
+   									</h:selectOneMenu>
+								</td>
+							</tr>
+						</table>
+					</h:form>
+				</div>
+				
 				<h3>Add Feedback</h3>
 				<div>
 					<h:form>
 						<table>
 							<tr>
-								<td><h:outputText value="FeedBack:" /></td>
-								<td><h:outputText
-										value="#{managerBean.employee.feedBack.feedbackComment}" /></td>
+								<td><h:outputText value="FeedBack : " /></td>
+								<td><h:outputText style="color:gray;"	value="#{managerBean.employee.feedBack.feedbackComment}" /></td>
 							</tr>
 						</table>
 						<table>
@@ -135,10 +155,9 @@
 									</h:inputTextarea></td>
 							</tr>
 							<tr>
-								<td colspan="2" align="right"><h:outputText
-										value="Last Updated By:-" />
-									<h:outputText
-										value="#{managerBean.employee.feedBack.lastUpdatedManager}" />
+								<td colspan="2" align="right">
+								<h:outputText style="font-size:15px;color:gray;"	value="Last Updated By:-" /> 
+								<h:outputText style="font-size:15px;color:gray;"	value="#{managerBean.employee.feedBack.lastUpdatedManager}" />
 								</td>
 							</tr>
 							<tr>
@@ -155,7 +174,7 @@
 				<div>
 					<h:form>
 						<h:selectOneMenu value="#{managerBean.projectDetails_Id}">
-							<f:selectItems value="#{managerBean.projects}"
+							<f:selectItems value="#{managerBean.unallocatedEmployeeProjects}"
 								var="projectdisplay" itemLabel="#{projectdisplay.projectName}"
 								itemValue="#{projectdisplay.projectDetails_Id}" />
 
@@ -164,7 +183,7 @@
 						<h:commandButton class="btn btn-info" value="Submit"
 							action="#{managerBean.allotProject}"></h:commandButton>
 					</h:form>
-					<p>Add Project Allocation code here</p>
+					
 
 				</div>
 

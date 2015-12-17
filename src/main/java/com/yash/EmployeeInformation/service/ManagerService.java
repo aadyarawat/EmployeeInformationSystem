@@ -156,4 +156,13 @@ public class ManagerService implements ManagerServiceLocal {
 		return updatedEmployee;
 	}
 	
+	
+	  @Override
+      public List<Employee> getUnallocatedProjectEmployees(int projectDetails_Id) {
+             String sql = "SELECT * FROM `employee` ,`projectallocationdetails` WHERE `employee`.`employeedetails_id`= `projectallocationdetails`.`employeedetails_id` AND `projectallocationdetails`.`projectDetails_Id`="+projectDetails_Id;
+             List<Employee> allocatedEmployees = managerDao.getAllEmployees(sql);
+             List<Employee> employees= getAllEmployees();
+             employees.removeAll(allocatedEmployees);
+             return employees ;
+      }
 }
