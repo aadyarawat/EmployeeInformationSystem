@@ -1,5 +1,7 @@
 
 package com.yash.EmployeeInformation.service;
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -7,6 +9,7 @@ import javax.inject.Inject;
 import com.yash.EmployeeInformation.dao.EmployeeDao;
 import com.yash.EmployeeInformation.domain.Address;
 import com.yash.EmployeeInformation.domain.Employee;
+import com.yash.EmployeeInformation.domain.Skill;
 
 /**
  * 
@@ -36,6 +39,23 @@ public class EmployeeService implements EmployeeServiceLocal {
 	@Override
 	public void saveEmployeeAddress(int recId, Employee employee) {
 		employeeDaoIntf.saveAddressService(recId, employee);
+	}
+	@Override
+	public List<Skill> getSkillList() {
+		// TODO Auto-generated method stub
+		return employeeDaoIntf.fetchSkill();
+		
+	}
+	@Override
+	public List<Skill> getSkillEfficiencyList() {
+		// TODO Auto-generated method stub
+		return employeeDaoIntf.fetchSkillEfficiency();
+		
+	}
+	@Override
+	public void addEmployeeSkillAndEfficiency(String skillName, String skillEfficiency, int recId) {
+		employeeDaoIntf.saveSkillAndEfficiency(skillName,skillEfficiency,recId);
+		
 	}
 
 }

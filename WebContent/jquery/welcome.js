@@ -3,6 +3,11 @@
  */
  $(function() {
     $( "#accordion" ).accordion({
-      collapsible: true
-    });
+      collapsible: true,
+
+      beforeActivate: function( event, ui ) {
+      ui.newHeader.add(ui.newPanel).prependTo(this)
+      }
+
+    })
   });

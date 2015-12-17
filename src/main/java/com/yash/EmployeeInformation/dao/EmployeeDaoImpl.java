@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import com.yash.EmployeeInformation.domain.Address;
 import com.yash.EmployeeInformation.domain.Employee;
+import com.yash.EmployeeInformation.domain.Skill;
 
 /**
  * 
@@ -18,6 +21,9 @@ import com.yash.EmployeeInformation.domain.Employee;
  */
 public class EmployeeDaoImpl implements EmployeeDao {
 
+	List<Skill> listSkill = new ArrayList<>();
+	List<Skill> listSkillEfficiency = new ArrayList<>();
+	
 	@Resource(lookup = "java:jboss/datasources/EIS")
 	private DataSource dataSource;
 
@@ -76,6 +82,65 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public List<Skill> fetchSkill() {
+		try
+
+		{
+			Connection connection = (Connection) dataSource.getConnection();
+			ResultSet resultSet = connection.prepareStatement("SELECT * FROM SKILL").executeQuery();
+			while (resultSet.next()) {
+				Skill skill = new Skill();
+				skill.setSkill_id(resultSet.getInt(1));
+				skill.setSkillName(resultSet.getString(2));
+				listSkill.add(skill);
+				
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return listSkill;
+	}
+
+	@Override
+	public List<Skill> fetchSkillEfficiency() {
+		try
+
+		{
+			Connection connection = (Connection) dataSource.getConnection();
+			ResultSet resultSet = connection.prepareStatement("SELECT * FROM SKILLEFFICIENCY").executeQuery();
+			while (resultSet.next()) {
+				Skill skill = new Skill();
+				skill.setSkillefficiency_id(resultSet.getInt(1));
+				skill.setEfficiencyType(resultSet.getString(2));
+				listSkillEfficiency.add(skill);
+				
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return listSkillEfficiency;
+	}
+
+	@Override
+	public void saveSkillAndEfficiency(String skillName, String skillEfficiency, int recId) {
+		String sql = "INSERT INTO EMPLOYEESKILL (SKILL_ID,SKILLEFFICIENCY_ID,EMPLOYEEDETAILS_ID) "
+				+ "VALUES ('"+skillName+"','"+skillEfficiency+"','"+recId+"')";
+		try {
+
+			Connection connection = (Connection) dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	
 

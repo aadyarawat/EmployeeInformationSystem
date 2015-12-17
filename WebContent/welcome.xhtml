@@ -232,13 +232,43 @@
 								<td><h:commandButton action="#{userBean.uploadFile}"
 										value="Upload"></h:commandButton></td>
 							</tr>
+							<tr>
+								<td colspan="3"><h:outputText
+										value="#{param.uploadmessage}"></h:outputText></td>
+							</tr>
 						</table>
 					</h:form>
 				</div>
 
-				<h3>Skills</h3>
-				<div>
-					<p>Here skills of the employees will be displayed.</p>
+				<h3 class="ui-state-disabled">Skills</h3>
+				<div id="skills">
+					<h:form prependId="false">
+
+						<table>
+
+							<tr>
+
+								<td>Select Your Skill</td>
+								<td><h:selectOneMenu value="#{employeeBean.skillName}">
+										<f:selectItem itemLabel="------------" itemValue="noskill"></f:selectItem>
+										<f:selectItems value="#{employeeBean.skillList}" var="skill" itemLabel="#{skill.skillName}" itemValue="#{skill.skill_id}"></f:selectItems>
+
+									</h:selectOneMenu></td>
+								<td>Select Your Efficiency</td>
+								<td><h:selectOneMenu value="#{employeeBean.skillEfficiency}">
+										<f:selectItem itemLabel="------------"
+											itemValue="noefficiency"></f:selectItem>
+										<f:selectItems value="#{employeeBean.skillEfficiencyList}" var="efficiency" itemLabel="#{efficiency.efficiencyType}" itemValue="#{efficiency.skillefficiency_id}"></f:selectItems>
+
+									</h:selectOneMenu></td>
+								<td><h:commandButton value="SAVE"
+										action="#{employeeBean.addSkillAndEfficiency}">
+									</h:commandButton></td>
+
+							</tr>
+
+						</table>
+					</h:form>
 
 				</div>
 			</div>
