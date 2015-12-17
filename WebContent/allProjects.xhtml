@@ -4,31 +4,80 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 <ui:composition template="/template/template.xhtml">
 
 	<ui:define name="content">
 		<div align="center">
-			<div style="font-size: 30px;">
-				<b>Projects</b>
-			</div>
-			<div>
-			<h:form prependId="false">
-				<table>
-					<tr>
-						<th>Project Name</th>
-						<th>Duration</th>
-						<td>Action</td>
-					</tr>
-					<tr>
-						<td><h:outputText value="#{managerBean.projectName}"/></td>
-						<td><h:outputText value="#{managerBean.projectDuration}"/></td>
-						<td><h:commandButton value="Add Members" action="#{managerBean.addEmployeeToProject}"/></td>
-					</tr>
-				</table>
+			<div id="dialog" style="display: none;">
+				<h:form prependId="false">
+					<table align="center">
+						<caption>
+							<b>Project Details!</b>
+						</caption>
+						<tr>
+							<th align="right">Project Name:</th>
+							<td><h:inputText value="#{managerBean.projectName}" /></td>
+						</tr>
+						<tr>
+							<th align="right">Duration:</th>
+							<td><h:inputText value="#{managerBean.projectDuration}" /></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center"><h:commandButton
+									value="Create Project!" action="#{managerBean.saveProject}" /></td>
+						</tr>
+					</table>
 				</h:form>
 			</div>
+
+			<div>
+				<h:form prependId="false">
+					<table>
+						<tr>
+							<td>Projects</td>
+							<td><h:selectOneMenu
+									value="#{managerBean.selectedProjectName}">
+									<f:selectItem itemLabel="-----Select-------" itemValue="null" />
+									<f:selectItems value="#{managerBean.projects}" var="project"
+										itemLabel="#{project.projectName}"
+										itemValue="#{project.projectName}" />
+								</h:selectOneMenu></td>
+							<td colspan="2"><h:commandButton id="addProject"
+									type="button" value="Add Project" class="myButton" /></td>
+						</tr>
+
+						<tr align="center">
+							<td>***</td>
+							<td>Employee Name</td>
+							<td>Employee ID</td>
+							<td>Email</td>
+							<td>Contact</td>
+						</tr>
+						<ui:repeat var="employees" value="#{managerBean.employees}">
+							<tr align="center">
+								<td><h:selectManyCheckbox
+										value="#{managerBean.selectedEmployees}">
+										<f:selectItem itemLabel="#{employees.employeedetails_id}"
+											itemValue="#{employees.employeedetails_id}" />
+									</h:selectManyCheckbox></td>
+								<td>#{employees.firstName} #{employees.lastName}</td>
+								<td>#{employees.yashEmployeeId}</td>
+								<td>#{employees.email}</td>
+								<td>#{employees.mobile}</td>
+							</tr>
+						</ui:repeat>
+						<tr align="center">
+							<td><h:commandButton value="Assign"
+									action="#{managerBean.assignProjectToEmployee}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</div>
+
+
 		</div>
 	</ui:define>
 

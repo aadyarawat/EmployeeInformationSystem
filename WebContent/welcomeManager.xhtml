@@ -12,6 +12,7 @@
 	<ui:define name="content">
 		<h:form prependId="false">
 
+
 			<table align="center">
 				<tr>
 					<td><h:inputText value="#{managerBean.searchValueText}"
@@ -20,8 +21,6 @@
 							action="#{managerBean.searchEmployeeByName}" /></td>
 					<td><h:commandButton value="Show All"
 							action="#{managerBean.showAllEmployee}" /></td>
-					<td><h:commandButton value="Create Project"
-							action="projectDetails" /></td>
 					<td><h:commandButton value="Project list" action="allProjects" /></td>
 				</tr>
 				<tr>
@@ -30,7 +29,7 @@
 				</tr>
 			</table>
 			<table class="CSSTableGenerator">
-				
+
 				<tr align="center">
 					<td>Employee Name</td>
 					<td>Employee ID</td>

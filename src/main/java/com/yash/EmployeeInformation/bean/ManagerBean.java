@@ -34,16 +34,30 @@ public class ManagerBean {
 	private List<Project> projects;
 	private int projectDetails_Id;
 	private String feedbackcomment;
-	
-	
-	
+
+	private String selectedProjectName;
+	private String[] selectedEmployees;
+
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-	
-	
-	
-	
-	
+
+	public String getSelectedProjectName() {
+		return selectedProjectName;
+	}
+
+	public void setSelectedProjectName(String selectedProjectName) {
+		this.selectedProjectName = selectedProjectName;
+	}
+
+	public String[] getSelectedEmployees() {
+		return selectedEmployees;
+	}
+
+	public void setSelectedEmployees(String[] selectedEmployees) {
+		this.selectedEmployees = selectedEmployees;
+	}
+
+
 	public String getFeedbackcomment() {
 		return feedbackcomment;
 	}
@@ -290,6 +304,13 @@ public class ManagerBean {
 			feedbackcomment = "";
 		}
 		return null;
+	}
+
+	public String assignProjectToEmployee() {
+		System.out.println(selectedEmployees.length);
+
+		return null;
+
 	}
 
 }
