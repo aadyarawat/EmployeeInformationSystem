@@ -19,7 +19,6 @@ $(document)
 													|| searchValueText
 															.charCodeAt(n) == 45;
 											if (!digit) {
-												alert("hello");
 												$('#spanSearchValueText').text(
 														"");
 
