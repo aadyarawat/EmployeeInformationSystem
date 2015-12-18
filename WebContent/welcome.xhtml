@@ -61,8 +61,7 @@
 					</tr>
 
 					<tr>
-						<td>
-							<h:outputLink
+						<td><h:outputLink
 								value="https://raw.githubusercontent.com/deepak-vishwakarma-at-yash/sample/master/SampleResume.doc"> Sample Resume </h:outputLink></td>
 					</tr>
 				</table>
@@ -112,13 +111,8 @@
 							</tr>
 
 							<tr>
-								<td>Enter Email :<sup style="color: red;">*</sup></td>
-								<td colspan="2" align="left"><h:inputText id="email"
-										size="43" required="true"
-										requiredMessage="Please enter your email id."
-										p:placeholder="Eg:xyz@yash.com" value="#{employeeBean.email}" ></h:inputText></td>
-								<td><h:message for="email" style="color: red;"></h:message>
-								</td>
+								<td colspan="4" align="left"><h:inputHidden
+										value="#{employeeBean.email}"></h:inputHidden></td>
 							</tr>
 							<tr>
 								<td>Enter Yash Id :<sup style="color: red;">*</sup></td>
@@ -141,10 +135,13 @@
 										p:placeholder="Enter your address" style="resize:none"></h:inputTextarea></td>
 								<td><h:message for="address" style="color: red;"></h:message>
 								</td> </tr>-->
+
+
 							<tr>
-								<td>Address:</td>
-								<td><h:inputText size="20" p:placeholder="House No"
-										value="#{employeeBean.houseNo}"></h:inputText></td>
+								<td>House No.<sup style="color: red;">*</sup>
+								</td>
+								<td><h:inputText id="houseNo" size="20"
+										p:placeholder="House No" value="#{employeeBean.houseNo}"></h:inputText></td>
 
 
 								<td><h:inputText id="street" required="true"
@@ -153,6 +150,13 @@
 								<td><h:message for="street" style="color: red;"></h:message></td>
 							</tr>
 
+							<tr>
+								<td></td>
+								<td><h:message id="houseNoMessage" for="houseNo"
+										style="color: red;"></h:message></td>
+								<td></td>
+								<td></td>
+							</tr>
 
 
 							<tr>
@@ -190,14 +194,6 @@
 										for="state" style="color: red;"></h:message></td>
 
 							</tr>
-							<!-- <tr>
-								<td>Enter City :<sup style="color: red;">*</sup></td>
-								<td colspan="2" align="left"><h:inputText id="city"
-										size="43" required="true" requiredMessage="Please enter city"
-										p:placeholder="Enter City"></h:inputText></td>
-								<td><h:message for="city" style="color: red;"></h:message>
-								</td>
-							</tr> -->
 							<tr>
 								<td>Enter Mobile No.:<sup style="color: red;">*</sup></td>
 								<td colspan="2" align="left"><h:inputText id="mobileNumber"

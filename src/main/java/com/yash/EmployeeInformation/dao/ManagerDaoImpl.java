@@ -337,6 +337,14 @@ public class ManagerDaoImpl implements ManagerDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -401,6 +409,8 @@ public class ManagerDaoImpl implements ManagerDao {
 		List<Project> projects = new ArrayList<>();
 		ResultSet resultSet = select(sql);
 		try {
+			
+			
 			while (resultSet.next()) {
 				Project project = new Project();
 
