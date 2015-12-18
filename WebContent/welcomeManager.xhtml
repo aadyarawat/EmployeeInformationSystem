@@ -52,7 +52,7 @@
 								<h:graphicImage value="images/download.jpg" height="30px" width="30px"/>
 								<f:setPropertyActionListener value="#{employees.email}"	target="#{managerBean.fileName}"></f:setPropertyActionListener>
 							</h:commandLink>
-							<h:commandLink 	action="ShowEmployeeDetails">
+							<h:commandLink 	action="ShowEmployeeDetails.xhtml">
 							&nbps;
 							<h:graphicImage value="images/Details_Icon.png" height="30px" width="30px"/>
 								<f:setPropertyActionListener target="#{managerBean.employee}" value="#{employees}" />
