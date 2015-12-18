@@ -3,6 +3,7 @@ package com.yash.EmployeeInformation.dao;
 import java.util.List;
 
 import com.yash.EmployeeInformation.domain.Employee;
+import com.yash.EmployeeInformation.domain.Grade;
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
 
@@ -23,5 +24,9 @@ public interface ManagerDao {
 	void saveFeedBack(Employee employee);
 
 	void updateFeedBack(Employee employee);
+
+	List<Grade> getAllGrades();
+
+	void assignEmployeeGrade(Employee employee);
 
 }

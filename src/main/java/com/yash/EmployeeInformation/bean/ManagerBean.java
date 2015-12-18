@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.yash.EmployeeInformation.domain.Employee;
+import com.yash.EmployeeInformation.domain.Grade;
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
 import com.yash.EmployeeInformation.service.ManagerServiceLocal;
@@ -32,14 +33,27 @@ public class ManagerBean {
 	private String projectDuration;
 	private String fileName;
 	private List<Project> projects;
-	private int projectDetails_Id=-1;
+	private int projectDetails_Id = -1;
 	private String feedbackcomment;
 	private List<Project> unallocatedEmployeeProjects;
 	private String selectedProjectName;
 	private String[] selectedEmployees;
-
+	private List<Grade> grades;
+	
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+
+	
+	
+		public List<Grade> getGrades() {
+		grades=managerService.getAllGrades();
+		System.out.println(grades);
+		return grades;
+	}
+
+	public void setGrades(List<Grade> grades) {
+		this.grades = grades;
+	}
 
 	public List<Project> getUnallocatedEmployeeProjects() {
 		List<Project> projectAccordingToEmp = employee.getProjects();
@@ -151,11 +165,11 @@ public class ManagerBean {
 	public String searchEmployeeByName() {
 		if (searchValueText.equalsIgnoreCase("")) {
 			employees = null;
-			
+
 		} else {
 			employees = managerService.searchEmployeeByName(searchValueText);
 		}
-		 projectDetails_Id=0;
+		projectDetails_Id = 0;
 		return null;
 
 	}
@@ -172,10 +186,9 @@ public class ManagerBean {
 		return "allProjects.xhtml?faces-redirect=true";
 	}
 
-	
-
 	public String showAllEmployee() {
 		employees = managerService.getAllEmployees();
+		searchValueText=null;
 		return null;
 	}
 
@@ -190,9 +203,9 @@ public class ManagerBean {
 	 */
 	public String allotProject() {
 		managerService.allocateProject(projectDetails_Id, employee.getEmployeedetails_id());
-		employee=managerService.getEmployee(employee.getEmployeedetails_id());
-		unallocatedEmployeeProjects=getUnallocatedEmployeeProjects();
-		employees=managerService.getAllEmployees();
+		employee = managerService.getEmployee(employee.getEmployeedetails_id());
+		unallocatedEmployeeProjects = getUnallocatedEmployeeProjects();
+		employees = managerService.getAllEmployees();
 		return "ShowEmployeeDetails.xhtml";
 	}
 
@@ -256,11 +269,12 @@ public class ManagerBean {
 			// as soon as the current phase is completed.
 			facesContext.responseComplete();
 
-			return "welcomeManager.xhtml?faces-redirect=true";
+			return "welcomeManager.xhtml?faces-redirect=true&error=";
 		} catch (Exception ex) {
 			exception = "Resume is not uploaded by " + finalFinalName;
+			return "welcomeManager.xhtml?faces-redirect=true&error=" + exception;
 		}
-		return "welcomeManager.xhtml?faces-redirect=true&error=" + exception;
+	//	return "welcomeManager.xhtml?faces-redirect=true&error=" + exception;
 	}
 
 	/***
@@ -318,7 +332,7 @@ public class ManagerBean {
 
 	public void getUnallocatedProjectEmployees(ValueChangeEvent event) {
 		projectDetails_Id = Integer.parseInt(event.getNewValue().toString());
-		if (projectDetails_Id != -1) {
+		if (projectDetails_Id != 0) {
 			employees = managerService.getUnallocatedProjectEmployees(projectDetails_Id);
 		} else {
 			employees = null;
@@ -326,11 +340,18 @@ public class ManagerBean {
 		}
 		projectDetails_Id = -1;
 	}
-	
-	public String projectAllocation(){
-		projectDetails_Id=-1;
-		employees=null;
+
+	public String projectAllocation() {
+		projectDetails_Id = -1;
+		employees = null;
 		return "allProjects.xhtml";
+	}
+	
+	public String assignEmployeeGrade(){
+		managerService.assignEmployeeGrade(employee);
+		employee=managerService.getEmployee(employee.getEmployeedetails_id());
+		employees=managerService.getAllEmployees();
+		return null;
 	}
 
 }

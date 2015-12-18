@@ -15,6 +15,15 @@ public class Employee {
 	private BaseLineInput baseLineInput;
 	private FeedBack feedBack;
 	private List<Skill> skills;
+	private Grade grade;
+
+	public Grade getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Grade grade) {
+		this.grade = grade;
+	}
 
 	public int getEmployeedetails_id() {
 		return employeedetails_id;
