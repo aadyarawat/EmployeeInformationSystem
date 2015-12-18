@@ -124,3 +124,7 @@ span {
 	position:relative;
 	top:1px;
 }
+
+#accordion .ui-accordion-content {
+    max-height: 400px;
+}
