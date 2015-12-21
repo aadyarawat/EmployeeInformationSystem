@@ -39,22 +39,18 @@
 				<thead>
 					<tr align="center"
 						style="background-color: rgb(4, 82, 134); color: white; height: 46px;">
+						<th style="text-align: center; width: 20%;">Action</th>
 						<th style="width: 20%; text-align: center;">Employee ID</th>
 						<th style="height: 46px; width: 20%; text-align: center;">Employee
 							Name</th>
 						<th align="center" style="text-align: center; width: 25%;">Email</th>
-						<th style="text-align: center; width: 20%;">Action</th>
 						<th style="text-align: center; width: 20%;">Contact</th>
 					</tr>
 				</thead>
 				<ui:repeat var="employees" value="#{managerBean.employees}">
 					<tr align="center">
-						<td style="text-align: center; width: 20%;">#{employees.yashEmployeeId}</td>
-						<td style="text-align: center; width: 20%;">#{employees.firstName}
-							#{employees.lastName}</td>
-						<td style="text-align: center; width: 25%;">#{employees.email}</td>
 						<td style="text-align: center; width: 20%;"><h:commandLink
-								action="#{managerBean.downloadFile}" class="tooltips">
+								action="#{managerBean.downloadFile}" class="tooltipsAssign">
 								<span>Download</span>
 								<h:graphicImage value="images/download.jpg" height="10%"
 									width="18%" />
@@ -69,6 +65,10 @@
 								<f:setPropertyActionListener target="#{managerBean.employee}"
 									value="#{employees}"  />
 							</h:commandLink></td>
+						<td style="text-align: center; width: 20%;">#{employees.yashEmployeeId}</td>
+						<td style="text-align: center; width: 20%;">#{employees.firstName}
+							#{employees.lastName}</td>
+						<td style="text-align: center; width: 25%;">#{employees.email}</td>
 						<td style="text-align: center; width: 20%;">#{employees.mobile}</td>
 					</tr>
 				</ui:repeat>
