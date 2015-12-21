@@ -14,4 +14,8 @@ $(function() {
 		}
 
 	})
+	
+	var value = getvalue();
+	$("#accordion").accordion({active :value});
+
 });

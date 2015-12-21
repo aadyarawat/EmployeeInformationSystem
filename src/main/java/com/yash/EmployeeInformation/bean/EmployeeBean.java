@@ -52,8 +52,17 @@ public class EmployeeBean {
 	private String checkEmployee;
 	private String disableTab;
 	private List<Skill> employeeSkills = new ArrayList<>();
-	Employee employee = new Employee();
-	Employee oldEmployee = null;
+	private Employee employee = new Employee();
+	private Employee oldEmployee = null;
+	private int selectdefault;
+
+	public int getSelectdefault() {
+		return selectdefault;
+	}
+
+	public void setSelectdefault(int selectdefault) {
+		this.selectdefault = selectdefault;
+	}
 
 	public String getDisableTab() {
 		return disableTab;
