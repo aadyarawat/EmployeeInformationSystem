@@ -1,68 +1,81 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
- 
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-       xmlns:ui="http://java.sun.com/jsf/facelets"
-       xmlns:h="http://java.sun.com/jsf/html"
-       xmlns:f="http://java.sun.com/jsf/core"
-       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
- 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
 <ui:composition template="/template/template.xhtml">
- 
-       <ui:define name="content">
-              <h:form prependId="false">
- 
- 
-                     <table align="center">
-                           <tr>
-                                  <td><h:inputText value="#{managerBean.searchValueText}"
-                                                id="searchValueText" p:placeholder="Search Here.." size="40"
-                                                style="height:25px;" /></td>
-                                  <td><h:commandButton value="Search"
-                                                action="#{managerBean.searchEmployeeByName}" class="myButton" /></td>
-                                  <td><h:commandButton value="Show All"
-                                                action="#{managerBean.showAllEmployee}" class="myButton" /></td>
-                                  <td><h:commandButton value="Project list"
-                                                action="#{managerBean.projectAllocation}" class="myButton" /></td>
-                           </tr>
-                           <tr>
-                                  <td style="color: red; text-align: center;" colspan="4"><span
-                                         id="spanSearchValueText" />#{param.error}</td>
-                           </tr>
-                     </table>
- 
-                     <table class="CSSTableGenerator tableSection">
-                           <thead>
-                                  <tr align="center" style="background-color: rgb(4, 82, 134); color: white; height: 46px;">
-                                         <th style="height: 46px; width: 160px;text-align: center;">Employee Name</th>
-                                         <th style="width: 170px;text-align: center;">Employee ID</th>
-                                         <th align="center" style="text-align: center;">Email</th>
-                                         <th style="text-align: center;">Contact</th>
-                                         <th style="text-align: center;" >Action</th>
-                                  </tr>
-                           </thead>
-                           <ui:repeat var="employees" value="#{managerBean.employees}">
-                                  <tr align="center">
-                                         <td style="text-align: center;">#{employees.firstName} #{employees.lastName}</td>
-                                         <td style="text-align: center;">#{employees.yashEmployeeId}</td>
-                                         <td style="text-align: center;">#{employees.email}</td>
-                                         <td style="text-align: center;">#{employees.mobile}</td>
-                                         <td style="text-align: center;">
-                                                <h:commandLink       action="#{managerBean.downloadFile}">
-                                                       <h:graphicImage value="images/download.jpg" height="30px" width="30px"/>
-                                                       <f:setPropertyActionListener value="#{employees.email}" target="#{managerBean.fileName}"></f:setPropertyActionListener>
-                                                </h:commandLink>
-                                                <h:commandLink       action="ShowEmployeeDetails.xhtml">
-                                                &nbps;
-                                                <h:graphicImage value="images/Details_Icon.png" height="30px" width="30px"/>
-                                                       <f:setPropertyActionListener target="#{managerBean.employee}" value="#{employees}" />
-                                                </h:commandLink></td>
-                                  </tr>
-                           </ui:repeat>
-                     </table>
- 
-              </h:form>
-       </ui:define>
- 
+
+	<ui:define name="content">
+		<h:form prependId="false">
+
+
+			<table align="center">
+				<tr>
+					<td><h:inputText value="#{managerBean.searchValueText}"
+							id="searchValueText" p:placeholder="Search Here.." size="40"
+							style="height:25px;" /></td>
+					<td>&nbsp;&nbsp;</td>
+					<td><h:commandButton value="Search"
+							action="#{managerBean.searchEmployeeByName}" class="myButton" /></td>
+					<td>&nbsp;&nbsp;</td>
+
+					<td><h:commandButton value="Show All"
+							action="#{managerBean.showAllEmployee}" class="myButton" /></td>
+					<td>&nbsp;&nbsp;</td>
+					<td><h:commandButton value="Project list"
+							action="#{managerBean.projectAllocation}" class="myButton" /></td>
+				</tr>
+				<tr>
+					<td style="color: red; text-align: center;" colspan="4"><span
+						id="spanSearchValueText" />#{param.error}</td>
+				</tr>
+			</table>
+
+			<table class="CSSTableGenerator tableSection" >
+				<thead>
+					<tr align="center"
+						style="background-color: rgb(4, 82, 134); color: white; height: 46px;">
+						<th style="width: 20%; text-align: center;">Employee ID</th>
+						<th style="height: 46px; width: 20%; text-align: center;">Employee
+							Name</th>
+						<th align="center" style="text-align: center; width: 25%;">Email</th>
+						<th style="text-align: center; width: 20%;">Action</th>
+						<th style="text-align: center; width: 20%;">Contact</th>
+					</tr>
+				</thead>
+				<ui:repeat var="employees" value="#{managerBean.employees}">
+					<tr align="center">
+						<td style="text-align: center; width: 20%;">#{employees.yashEmployeeId}</td>
+						<td style="text-align: center; width: 20%;">#{employees.firstName}
+							#{employees.lastName}</td>
+						<td style="text-align: center; width: 25%;">#{employees.email}</td>
+						<td style="text-align: center; width: 20%;"><h:commandLink
+								action="#{managerBean.downloadFile}" class="tooltips">
+								<span>Download</span>
+								<h:graphicImage value="images/download.jpg" height="10%"
+									width="18%" />
+								<f:setPropertyActionListener value="#{employees.email}"
+									target="#{managerBean.fileName}"></f:setPropertyActionListener>
+							</h:commandLink> 
+							<h:commandLink action="ShowEmployeeDetails.xhtml" class="tooltipsAssign">
+								&nbps;
+								<span>Details</span>
+								<h:graphicImage value="images/Details_Icon.png" height="10%"
+									width="18%" />
+								<f:setPropertyActionListener target="#{managerBean.employee}"
+									value="#{employees}"  />
+							</h:commandLink></td>
+						<td style="text-align: center; width: 20%;">#{employees.mobile}</td>
+					</tr>
+				</ui:repeat>
+			</table>
+
+		</h:form>
+	</ui:define>
+
 </ui:composition>
 </html>

@@ -50,8 +50,6 @@ public class Project {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + projectDetails_Id;
-		result = prime * result + ((projectDuration == null) ? 0 : projectDuration.hashCode());
 		result = prime * result + ((projectName == null) ? 0 : projectName.hashCode());
 		return result;
 	}
@@ -65,13 +63,6 @@ public class Project {
 		if (getClass() != obj.getClass())
 			return false;
 		Project other = (Project) obj;
-		if (projectDetails_Id != other.projectDetails_Id)
-			return false;
-		if (projectDuration == null) {
-			if (other.projectDuration != null)
-				return false;
-		} else if (!projectDuration.equals(other.projectDuration))
-			return false;
 		if (projectName == null) {
 			if (other.projectName != null)
 				return false;

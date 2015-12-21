@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -10,18 +10,27 @@
 <ui:composition template="/template/template.xhtml">
 
 	<ui:define name="content">
+		<script src="jquery/sweetalert.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/sweetalert.css" />
+		<h:outputScript>
+       if('#{param.message}'!=''){
+        swal("Error!", "#{param.message}");
+       
+       }
+</h:outputScript>
 		<div align="center">
-		<div align="left">
+			<div align="left">
 				<h:form>
-					<h:commandButton value="Home" action="welcomeManager" class="myButton" />
+					<h:commandButton value="Home" action="welcomeManager"
+						class="myButton" />
 				</h:form>
 			</div>
-			<div id="dialog" style="display: none;">
+			<div id="dialog"
+				style="display: none; color: black; text-align: center;"
+				title="Project Details">
 				<h:form prependId="false">
 					<table align="center">
-						<caption>
-							<b>Project Details!</b>
-						</caption>
+
 						<tr>
 							<th align="right">Project Name:</th>
 							<td><h:inputText value="#{managerBean.projectName}" /></td>
@@ -42,6 +51,10 @@
 				<h:form prependId="false">
 					<table>
 						<tr>
+							<td colspan="3"><span id="hiddenMessage"
+								style="display: none;"> #{param.message}</span></td>
+						</tr>
+						<tr>
 							<td>Projects</td>
 							<td><h:selectOneMenu
 									value="#{managerBean.projectDetails_Id}"
@@ -61,22 +74,27 @@
 						<thead>
 							<tr align="center"
 								style="background-color: rgb(4, 82, 134); color: white; height: 46px;">
-								<th style="height: 46px; width: 180px;">Assign</th>
-								<th style="width: 190px;">Employee Name</th>
-								<th>Employee Id</th>
-								<th>Email</th>
+								<th style="height: 46px; width: 20%;text-align: center;">Assign</th>
+								<th style="width: 20%; text-align: center;">Employee Name</th>
+								<th style="width: 20%; text-align: center;">Employee Id</th>
+								<th style="width: 25%; text-align: center;">Email</th>
 
 							</tr>
 						</thead>
 						<ui:repeat var="employee" value="#{managerBean.employees}">
 							<tr align="center">
-								<td><h:commandLink 	action="#{managerBean.assignProjectToEmployee}">
-										<h:graphicImage value="images/Active_icon.jpg" height="30px" width="30px"/>
-										<f:setPropertyActionListener value="#{employee}" target="#{managerBean.employee}" />
+								<td ><h:commandLink
+										action="#{managerBean.assignProjectToEmployee}"
+										class="tooltipsAssign" >
+										<h:graphicImage value="images/Active_icon.jpg" height="30px"
+											width="30px" />
+										<f:setPropertyActionListener value="#{employee}"
+											target="#{managerBean.employee}" />
+										<span>Assign</span>
 									</h:commandLink></td>
 								<td>#{employee.firstName} #{employee.lastName}</td>
 								<td>#{employee.yashEmployeeId}</td>
-								<td>#{employee.email}</td>
+								<td style="width: 25%;" >#{employee.email}</td>
 
 							</tr>
 						</ui:repeat>

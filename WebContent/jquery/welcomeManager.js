@@ -3,33 +3,33 @@ $(document)
 				function() {
 
 					$('#searchValueText')
-							.keyup(
-									function() {
-										var searchValueTextLength = $(
-												'#searchValueText').val().length;
-										var searchValueText = $(
-												'#searchValueText').val();
-										for (var n = 0; n < searchValueText.length; n++) {
-											var digit = searchValueText
-													.charCodeAt(n) >= 48
-													&& searchValueText
-															.charCodeAt(n) <= 57
-													|| searchValueText
-															.charCodeAt(n) == 46
-													|| searchValueText
-															.charCodeAt(n) == 45;
-											if (!digit) {
-												$('#spanSearchValueText').text(
-														"");
+							.keydown(
+									function(e) {
+										if (e.ctrlKey || e.altKey) {
 
-											} else {
-
-												$('#spanSearchValueText').text(
-														"Enter String Only");
-
-											}
+											e.preventDefault();
 										}
 
+										else {
+											var key = e.keyCode;
+											if (!((key == 8) || (key == 9)
+													|| (key == 16)
+													|| (key == 32)
+													|| (key == 46)
+													|| (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+
+												$('#spanSearchValueText')
+														.fadeOut(1000);
+												e.preventDefault();
+
+											}
+											if (key >= 48 && key <= 57)
+
+											{
+												$('#spanSearchValueText').text(
+														'Enter Alphabets');
+											}
+										}
 									});
 
 				});

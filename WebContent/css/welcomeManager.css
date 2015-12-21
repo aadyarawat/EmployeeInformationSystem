@@ -1,99 +1,140 @@
 @CHARSET "ISO-8859-1";
 
 .CSSTableGenerator {
-       margin-left: 20%;
-       padding: 0px;
-       margin-top: 1%;
-       width: 60%;
-       box-shadow: 10px 10px 5px #888888;
-       -moz-border-radius-bottomleft: 0px;
-       -webkit-border-bottom-left-radius: 0px;
-       border-bottom-left-radius: 7px;
-       -moz-border-radius-bottomright: 0px;
-       -webkit-border-bottom-right-radius: 0px;
-       border-bottom-right-radius: 7px;
-       -moz-border-radius-topright: 0px;
-       -webkit-border-top-right-radius: 0px;
-       border-top-right-radius: 7px;
-       -moz-border-radius-topleft: 0px;
-       -webkit-border-top-left-radius: 0px;
-       border-top-left-radius: 7px;
+	margin-left: 20%;
+	padding: 0px;
+	margin-top: 1%;
+	width: 60%;
+	box-shadow: 10px 10px 5px #888888;
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	border-bottom-left-radius: 7px;
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	border-bottom-right-radius: 7px;
+	-moz-border-radius-topright: 0px;
+	-webkit-border-top-right-radius: 0px;
+	border-top-right-radius: 7px;
+	-moz-border-radius-topleft: 0px;
+	-webkit-border-top-left-radius: 0px;
+	border-top-left-radius: 7px;
 }
- 
+
 .CSSTableGenerator table {
-       border-collapse: collapse;
-       border-spacing: 0;
-       width: 100%;
-       height: 100%;
-       margin: 0px;
-       padding: 0px;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
 }
- 
+
 .CSSTableGenerator tr:last-child td:last-child {
-       -moz-border-radius-bottomright: 0px;
-       -webkit-border-bottom-right-radius: 0px;
-       border-bottom-right-radius: 7px;
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	border-bottom-right-radius: 7px;
 }
- 
+
 .CSSTableGenerator table tr:first-child td:first-child {
-       -moz-border-radius-topleft: 0px;
-       -webkit-border-top-left-radius: 0px;
-       border-top-left-radius: 7px;
+	-moz-border-radius-topleft: 0px;
+	-webkit-border-top-left-radius: 0px;
+	border-top-left-radius: 7px;
 }
- 
+
 .CSSTableGenerator table tr:first-child td:last-child {
-       -moz-border-radius-topright: 0px;
-       -webkit-border-top-right-radius: 0px;
-       border-top-right-radius: 7px;
+	-moz-border-radius-topright: 0px;
+	-webkit-border-top-right-radius: 0px;
+	border-top-right-radius: 7px;
 }
- 
+
 .CSSTableGenerator tr:last-child td:first-child {
-       -moz-border-radius-bottomleft: 0px;
-       -webkit-border-bottom-left-radius: 0px;
-       border-bottom-left-radius: 7px;
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	border-bottom-left-radius: 7px;
 }
- 
+
 .CSSTableGenerator tr:hover td {
-      
+	
 }
- 
+
 .CSSTableGenerator tr:nth-child(odd) {
-       background-color: #ffffff;
+	background-color: #ffffff;
 }
- 
+
 .CSSTableGenerator tr:nth-child(even) {
-       background-color: #C9DAE3;
+	background-color: #C9DAE3;
 }
- 
+
 .CSSTableGenerator td {
-       vertical-align: middle;
-       border-width: 0px 1px 1px 0px;
-       text-align: left;
-       padding: 7px;
-       font-size: 15px;
-       font-family: Times New Roman;
-       font-weight: normal;
-       color: #000000;
-       width: 20%;
+	vertical-align: middle;
+	border-width: 0px 1px 1px 0px;
+	text-align: center;
+	padding: 7px;
+	font-size: 15px;
+	font-family: Times New Roman;
+	font-weight: normal;
+	color: #000000;
+	width: 20%;
 }
- 
+
 .CSSTableGenerator tr:first-child td:last-child {
-       border-width: 0px 0px 1px 1px;
-       width: 20%;
+	border-width: 0px 0px 1px 1px;
+	width: 20%;
 }
- 
+
 table.tableSection thead, table.tableSection tbody {
-       float: right;
-       width: 100%;
+	float: right;
+	width: 100%;
 }
- 
+
 table.tableSection tbody {
-       overflow: auto;
-       height: 320px;
+	overflow: auto;
+	height: 320px;
 }
- 
+
 table.tableSection tr {
-       width: 100%;
-       display: table;
-       text-align: left;
+	width: 100%;
+	display: table;
+	text-align: left;
+}
+
+/* ------------------------Tooltip CSS------------------------------------------ */
+a.tooltips {
+	position: relative;
+	display: inline;
+}
+
+a.tooltips span {
+	position: absolute;
+	width: 140px;
+	color: #FFFFFF;
+	background: #000000;
+	height: 27px;
+	line-height: 27px;
+	text-align: center;
+	visibility: hidden;
+	border-radius: 7px;
+}
+
+a.tooltips span:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 100%;
+	margin-top: -8px;
+	width: 0;
+	height: 0;
+	border-left: 8px solid #000000;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+}
+
+a:hover.tooltips span {
+	visibility: visible;
+	opacity: 0.8;
+	right: 100%;
+	top: 50%;
+	margin-top: -13.5px;
+	margin-right: 15px;
+	z-index: 999;
 }

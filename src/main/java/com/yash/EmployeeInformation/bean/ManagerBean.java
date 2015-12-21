@@ -3,7 +3,9 @@ package com.yash.EmployeeInformation.bean;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -39,14 +41,12 @@ public class ManagerBean {
 	private String selectedProjectName;
 	private String[] selectedEmployees;
 	private List<Grade> grades;
-	
+
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
 
-	
-	
-		public List<Grade> getGrades() {
-		grades=managerService.getAllGrades();
+	public List<Grade> getGrades() {
+		grades = managerService.getAllGrades();
 		System.out.println(grades);
 		return grades;
 	}
@@ -181,14 +181,37 @@ public class ManagerBean {
 	 * @return a string for the page redirection
 	 */
 	public String saveProject() {
-		Project project = new Project(0, projectName, projectDuration);
-		managerService.createNewProject(project);
-		return "allProjects.xhtml?faces-redirect=true";
+		System.out.println(projectName + " " + projectDuration);
+		if (projectName.equalsIgnoreCase("") || projectDuration.equalsIgnoreCase("")) {
+			if (projectName.equalsIgnoreCase("")) {
+				if (projectDuration.equalsIgnoreCase("")) {
+					return "allProjects.xhtml?faces-redirect=true&message=Enter Project Name and Project Duration";
+				} else {
+					return "allProjects.xhtml?faces-redirect=true&message=Enter Project Name";
+				}
+			} else {
+				return "allProjects.xhtml?faces-redirect=true&message=Enter Project Duration";
+
+			}
+		} else {
+			Set<Project> projectsSet = new HashSet<>(projects);
+
+			Project project = new Project(0, projectName, projectDuration);
+			boolean result = projectsSet.add(project);
+			if (result == true) {
+
+				managerService.createNewProject(project);
+				return "allProjects.xhtml?faces-redirect=true&message=Project Details Saved Successfully";
+			}
+			return "allProjects.xhtml?faces-redirect=true&message=Project Already Exists";
+
+		}
+
 	}
 
 	public String showAllEmployee() {
 		employees = managerService.getAllEmployees();
-		searchValueText=null;
+		searchValueText = null;
 		return null;
 	}
 
@@ -274,7 +297,7 @@ public class ManagerBean {
 			exception = "Resume is not uploaded by " + finalFinalName;
 			return "welcomeManager.xhtml?faces-redirect=true&error=" + exception;
 		}
-	//	return "welcomeManager.xhtml?faces-redirect=true&error=" + exception;
+		// return "welcomeManager.xhtml?faces-redirect=true&error=" + exception;
 	}
 
 	/***
@@ -346,11 +369,11 @@ public class ManagerBean {
 		employees = null;
 		return "allProjects.xhtml";
 	}
-	
-	public String assignEmployeeGrade(){
+
+	public String assignEmployeeGrade() {
 		managerService.assignEmployeeGrade(employee);
-		employee=managerService.getEmployee(employee.getEmployeedetails_id());
-		employees=managerService.getAllEmployees();
+		employee = managerService.getEmployee(employee.getEmployeedetails_id());
+		employees = managerService.getAllEmployees();
 		return null;
 	}
 
