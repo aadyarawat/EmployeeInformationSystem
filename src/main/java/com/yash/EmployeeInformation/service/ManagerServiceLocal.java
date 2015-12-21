@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import com.yash.EmployeeInformation.domain.Efficiency;
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Grade;
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
+import com.yash.EmployeeInformation.domain.Skill;
 
 @Local
 public interface ManagerServiceLocal {
@@ -37,6 +39,16 @@ public interface ManagerServiceLocal {
 	List<Grade> getAllGrades();
 
 	void assignEmployeeGrade(Employee employee);
+
+	List<Efficiency> getAllEfficiencies();
+
+	void updateEmployeeSkill(Skill skill);
+
+	void updateEmployeeGrade(Employee employee);
+
+	List<Skill> getAllSkills();
+
+	void addEmployeeSkill(Skill skill);
 	
 	
 	 

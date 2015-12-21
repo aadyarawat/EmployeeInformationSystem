@@ -69,11 +69,25 @@
 										<td colspan="2" align="center">Other Details</td>
 									</tr>
 									<tr>
-										<td><b><h:outputText value="Baseline Input" /></b></td>
-										<td><h:outputText
-												value="#{managerBean.employee.baseLineInput.baselineInputdetail}"
-												readonly="true" /></td>
+										<td>
+											<b><h:outputText value="Skills"/></b>
+										</td>
+										<td style="text-align: left;">
+											
+																	
+												<ul>
+											<ui:repeat value="#{managerBean.employee.skills}" var="skill">
+												<li>
+												#{skill.skillName} 												
+												</li>
+												
+												
+											</ui:repeat>
+												</ul>
+										
+										</td>
 									</tr>
+									
 									<tr>
 										<td><b><h:outputText value="Grade" /></b></td>
 										<td><h:outputText
@@ -96,7 +110,7 @@
 									</tr>
 									<tr>
 										<td><b><h:outputText value="Projects" /></b></td>
-										<td>
+										<td style="text-align: left;">
 											<ul>
 												<ui:repeat value="#{managerBean.employee.projects}"
 													var="project">
@@ -111,46 +125,101 @@
 						</center>
 					</h4>
 				</div>
-				<h3>Add Baseline Input</h3>
+				<h3>Employee Skills</h3>
 				<div>
+					
+					
+					
+			
+					<!-- <p style="text-align: center;font-size:8;font-weight: bolder;">Update Skills Efficiency</p> -->
 					<h:form prependId="false">
-						<table>
+					<table class="CSSEmployeeDetailsTable">
+						<tr>
+								<td>
+									Select Skill Efficiency:
+								</td>
+								<td>
+									<h:selectOneMenu style="color:black;font-weight: normal;" value="#{managerBean.efficiency_id}" >
+										<f:selectItems value="#{managerBean.efficiencies}" var="efficiency" itemLabel="#{efficiency.efficiencyType}" itemValue="#{efficiency.skillefficiency_id}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>
+					</table>
+					
+					<br/>
+					
+					<table  class="CSSEmployeeDetailsTable">
+							<tr style="text-align: center;">
+							<td>Skill</td>
+							<td>Efficiency</td>
+							<td>Edit</td>
+							</tr>
+							<ui:repeat var="skill" value="#{managerBean.employee.skills}">
+								<tr style="text-align: center;">
+									<td>
+										#{skill.skillName}
+									</td>
+									<td>
+										#{skill.efficiencyType}
+									</td>
+									<td>
+										<h:commandLink action="#{managerBean.updateSkillEfficiency}">
+										<h:graphicImage value="images/Active_icon.jpg" width="30px" height="30px"/>
+										<f:setPropertyActionListener value="#{skill}" target="#{managerBean.skill}" />
+										</h:commandLink>
+									</td>
+								</tr>
+							</ui:repeat>
 							<tr>
-								<td><b><h:outputText value="Baseline Input" /></b></td>
+							<td colspan="3" style="background: #0057af -moz-linear-gradient(center top , #0057af 5%, #007fff 100%) repeat scroll 0 0;color: White;font-weight: bolder;">Add Skill for Employee</td>
 							</tr>
 							<tr>
-								<td><h:inputTextarea
-										value="#{managerBean.employee.baseLineInput.baselineInputdetail}"
-										id="baseLineInputTextArea"
-										p:placeholder="Enter baseline for the employee here" cols="90" /></td>
-							</tr>
-							<tr>
-								<td colspan="2" align="right"><h:commandButton
-										value="Submit" id="baseLineInputSubmitButton"
-										action="#{managerBean.addBaseLineInput}" class="myButton" /></td>
+							
+							<td>
+								<h:selectOneMenu value="#{managerBean.skill_id}" >
+										<f:selectItems value="#{managerBean.skills}" var="skill" itemValue="#{skill.skill_id}" itemLabel="#{skill.skillName}" />
+									</h:selectOneMenu>
+							</td>
+							
+							<td>
+									<h:selectOneMenu value="#{managerBean.addEfficiency_id}" >
+										<f:selectItems value="#{managerBean.efficiencies}" var="efficiency" itemLabel="#{efficiency.efficiencyType}" itemValue="#{efficiency.skillefficiency_id}" />
+									</h:selectOneMenu>
+								</td>
+								<td><h:commandButton class="myButton" value="Add" action="#{managerBean.addEmployeeSkill}"/></td>
 							</tr>
 						</table>
 					</h:form>
+					<br/>
+					<br/>
+					
+					
 				</div>
-
-				<h3>Add Grade</h3>
-				<div>
+		
+				<h3>Employee Grade</h3>
+				<div style="padding-top:40px">
+					
 					<h:form>
-						<table>
+						<table class="CSSEmployeeDetailsTable">
+							<tr>
+							<td colspan="2">Assign Grade</td>
+							</tr>
 							<tr>
 								<td><h:outputText value="Grade : " /></td>
-								<td><h:selectOneMenu style="width:100px;"
-										value="#{managerBean.employee.grade.grade_id}">
-										<f:selectItems value="#{managerBean.grades}" var="grade"
-											itemValue="#{grade.grade_id}" itemLabel="#{grade.gradeValue}" />
-									</h:selectOneMenu> <h:commandButton value="Save" class="myButton"
-										action="#{managerBean.assignEmployeeGrade}"
-										id="gradeSubmitButton" /></td>
+								<td>
+								<h:selectOneMenu style="width:100px;" value="#{managerBean.grade_id}">
+										<f:selectItems value="#{managerBean.grades}" var="grade" itemValue="#{grade.grade_id}" itemLabel="#{grade.gradeValue}" />
+								</h:selectOneMenu>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"> <h:commandButton class="myButton" value="Save"  action="#{managerBean.assignEmployeeGrade}" /></td>
 							</tr>
 						</table>
 					</h:form>
+				
+				
 				</div>
-
 				<h3>Add Feedback</h3>
 				<div>
 					<h:form>
@@ -185,22 +254,55 @@
 					</h:form>
 				</div>
 				<h3>Project Allocation</h3>
+				
 				<div>
-					<h:form>
-						<h:selectOneMenu value="#{managerBean.projectDetails_Id}">
-							<f:selectItems value="#{managerBean.unallocatedEmployeeProjects}"
-								var="projectdisplay" itemLabel="#{projectdisplay.projectName}"
-								itemValue="#{projectdisplay.projectDetails_Id}" />
+					<h:form prependId="false">
+					<table class="CSSEmployeeDetailsTable">
+						<tr>
+							<td colspan="2" align="center">Assign Project</td>
+						</tr>
+						<tr>
+							<td>
+							Select Project:
+							</td>
+							<td>
+								<h:selectOneMenu value="#{managerBean.projectDetails_Id}">
+						
+									<f:selectItems value="#{managerBean.unallocatedEmployeeProjects}" var="projectdisplay" itemLabel="#{projectdisplay.projectName}" itemValue="#{projectdisplay.projectDetails_Id}" />
 
-						</h:selectOneMenu>
-
-						<h:commandButton class="btn btn-info" value="Submit"
-							action="#{managerBean.allotProject}"></h:commandButton>
+								</h:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="right">
+								<h:commandButton  class="myButton" value="Submit"  action="#{managerBean.allotProject}" />
+							</td>
+						</tr>
+					</table>
 					</h:form>
-
-
+				<div style="padding-bottom: 30px;">
+					<br/>
+					<br/>
+					<table class="CSSEmployeeDetailsTable">
+									
+									<tr>
+										<td><b><h:outputText value="Current Working Projects" /></b></td>
+										
+									</tr>
+									<tr>
+									<td>
+											<ul>
+												<ui:repeat value="#{managerBean.employee.projects}"
+													var="project">
+													<li><h:outputText value="#{project.projectName}" /></li>
+												</ui:repeat>
+											</ul>
+										</td>
+									</tr>
+								</table>				
 				</div>
 
+				</div>
 			</div>
 		</div>
 	</ui:define>

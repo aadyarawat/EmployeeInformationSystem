@@ -7,10 +7,12 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.yash.EmployeeInformation.dao.ManagerDao;
+import com.yash.EmployeeInformation.domain.Efficiency;
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Grade;
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
+import com.yash.EmployeeInformation.domain.Skill;
 
 /**
  * Session Bean implementation class EmployeeService
@@ -178,5 +180,34 @@ public class ManagerService implements ManagerServiceLocal {
 	public void assignEmployeeGrade(Employee employee) {
 		
 		managerDao.assignEmployeeGrade(employee);
+	}
+
+	@Override
+	public List<Efficiency> getAllEfficiencies() {
+		List<Efficiency> efficiencies= managerDao.getAllEfficiencies();
+		return efficiencies;
+	}
+
+	@Override
+	public void updateEmployeeSkill(Skill skill) {
+		managerDao.updateEmployeeEfficiency(skill);
+	}
+
+	@Override
+	public void updateEmployeeGrade(Employee employee) {
+		managerDao.updateEmployeeGrade(employee);
+		
+	}
+
+	@Override
+	public List<Skill> getAllSkills() {
+		List<Skill> skills=managerDao.getAllSkills();
+		return skills;
+	}
+
+	@Override
+	public void addEmployeeSkill(Skill skill) {
+		managerDao.addEmployeeSkill(skill);
+		
 	}
 }

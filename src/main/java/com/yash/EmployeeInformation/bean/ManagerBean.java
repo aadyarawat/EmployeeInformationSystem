@@ -15,10 +15,12 @@ import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.yash.EmployeeInformation.domain.Efficiency;
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Grade;
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
+import com.yash.EmployeeInformation.domain.Skill;
 import com.yash.EmployeeInformation.service.ManagerServiceLocal;
 
 @ManagedBean
@@ -41,9 +43,80 @@ public class ManagerBean {
 	private String selectedProjectName;
 	private String[] selectedEmployees;
 	private List<Grade> grades;
-
+	private List<Efficiency> efficiencies;
+	private List<Skill> skills;
+	private Skill skill;
+	private int efficiency_id;
+	private int grade_id;
+	private int skill_id;
+	private int addEfficiency_id;
+	
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+	
+	
+	
+	
+	
+	public int getAddEfficiency_id() {
+		return addEfficiency_id;
+	}
+
+	public void setAddEfficiency_id(int addEfficiency_id) {
+		this.addEfficiency_id = addEfficiency_id;
+	}
+
+	public int getSkill_id() {
+		return skill_id;
+	}
+
+	public void setSkill_id(int skill_id) {
+		this.skill_id = skill_id;
+	}
+
+	public List<Skill> getSkills() {
+		skills=managerService.getAllSkills();
+		List<Skill> employeeSkills=employee.getSkills();
+		skills.removeAll(employeeSkills);
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+
+	public int getGrade_id() {
+		return grade_id;
+	}
+
+	public void setGrade_id(int grade_id) {
+		this.grade_id = grade_id;
+	}
+
+	public int getEfficiency_id() {
+		return efficiency_id;
+	}
+
+	public void setEfficiency_id(int efficiency_id) {
+		this.efficiency_id = efficiency_id;
+	}
+
+	public Skill getSkill() {
+		return skill;
+	}
+
+	public void setSkill(Skill skill) {
+		this.skill = skill;
+	}
+
+	public List<Efficiency> getEfficiencies() {
+		efficiencies = managerService.getAllEfficiencies();
+		return efficiencies;
+	}
+
+	public void setEfficiencies(List<Efficiency> efficiencies) {
+		this.efficiencies = efficiencies;
+	}
 
 	public List<Grade> getGrades() {
 		grades = managerService.getAllGrades();
@@ -208,7 +281,6 @@ public class ManagerBean {
 		}
 
 	}
-
 	public String showAllEmployee() {
 		employees = managerService.getAllEmployees();
 		searchValueText = null;
@@ -371,9 +443,36 @@ public class ManagerBean {
 	}
 
 	public String assignEmployeeGrade() {
+		if(employee.getGrade().getGrade_id()==0){
+		employee.getGrade().setGrade_id(grade_id);
 		managerService.assignEmployeeGrade(employee);
 		employee = managerService.getEmployee(employee.getEmployeedetails_id());
 		employees = managerService.getAllEmployees();
+		}else{
+		employee.getGrade().setGrade_id(grade_id);
+		managerService.updateEmployeeGrade(employee);
+		employee = managerService.getEmployee(employee.getEmployeedetails_id());
+		employees = managerService.getAllEmployees();
+		}
+		return null;
+	}
+	
+	public String updateSkillEfficiency(){
+		skill.setSkillefficiency_id(efficiency_id);
+		managerService.updateEmployeeSkill(skill);
+		employee=managerService.getEmployee(employee.getEmployeedetails_id());
+		employees=managerService.getAllEmployees();
+		return null;
+	}
+	
+	public String addEmployeeSkill(){
+		skill=new Skill();
+		skill.setSkill_id(skill_id);
+		skill.setSkillefficiency_id(addEfficiency_id);
+		skill.setEmployeedetails_id(employee.getEmployeedetails_id());
+		managerService.addEmployeeSkill(skill);
+		employee=managerService.getEmployee(employee.getEmployeedetails_id());
+		employees=managerService.getAllEmployees();
 		return null;
 	}
 
