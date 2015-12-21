@@ -11,18 +11,34 @@
 
 
 	<ui:define name="content">
+		<script src="jquery/sweetalert.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/sweetalert.css" />
 		<h:outputScript>
 
 	if ('#{param.uploadmessage}' != '')
-		alert('#{param.uploadmessage}');
+		swal("File Message!", "#{param.uploadmessage}")
 		
 	if ('#{param.employeemessange}' != '')
-		alert('#{param.employeemessange}');
+		swal("Form Message!", "#{param.employeemessange}")
 		
-	if ('#{param.skillmessage}' != '')
-		alert('#{param.skillmessage}');
+	if ('#{param.skillmessage}' != ''){
+		swal("Skill Message!", "#{param.skillmessage}")
+		}
+		
+	function download(url){
+		document.getElementById('spinner').style.display='';
+		frame = document.createElement("iframe");
+		frame.onload=function(){document.getElementById('spinner').style.display='none';}
+		frame.src=url;
+		document.body.appendChild(frame);
+		$('iframe').hide();
+	}
+		$('iframe').remove();
 	
 	</h:outputScript>
+		<div id="spinner"
+			style="background-color: black; opacity: .5; width: 100%; height: 100%; display: none; position: absolute">Downloading....</div>
+
 		<div id="dialog" style="display: none;">
 			<h3>Guidelines</h3>
 			<div>
@@ -59,18 +75,20 @@
 					<tr>
 						<td>Download the Yash Format for resume:</td>
 					</tr>
-
-					<tr>
-						<td>
-							<h:outputLink
-								value="https://raw.githubusercontent.com/deepak-vishwakarma-at-yash/sample/master/SampleResume.doc"> Sample Resume </h:outputLink></td>
-					</tr>
+					<h:form>
+						<tr>
+							<td><h:commandButton type="button" class="myButton"
+									onclick="download('https://raw.githubusercontent.com/deepak-vishwakarma-at-yash/sample/master/SampleResume.doc');"
+									value="sample demo"></h:commandButton> <!-- <h:outputLink
+									value="https://raw.githubusercontent.com/deepak-vishwakarma-at-yash/sample/master/SampleResume.doc"> Sample Resume </h:outputLink> --></td>
+						</tr>
+					</h:form>
 				</table>
 			</div>
 		</div>
 		<div class="pagebody">
 			<div id="accordion"
-				style="width: 1000px; height: 500px; margin: auto; margin-top: 10px;">
+				style="width: 70%; height: 50%; margin: auto; position: relative; top: 20%; bottom: 0; left: 0; right: 0; margin: auto;">
 
 
 				<h3>Employee Details</h3>
@@ -81,12 +99,17 @@
 						style="color:red"></h:outputLabel>
 
 					<h:form prependId="false">
+
+
+
 						<div align="center">
 
 
 
 							All fields with <sup style="color: red;">*</sup> are mandatory.
 						</div>
+
+
 						<table>
 
 
@@ -95,11 +118,14 @@
 								<td>Enter Name : <sup style="color: red;">*</sup></td>
 								<td><h:inputText id="firstname" size="20" required="true"
 										requiredMessage="Please enter first name"
-										p:placeholder="First name" value="#{employeeBean.firstname}">
+										p:placeholder="First name" p:maxlength="15"
+										value="#{employeeBean.firstname}">
 									</h:inputText></td>
 								<td><h:inputText id="lastname" size="20" required="true"
-										requiredMessage="Please enter last name"
-										p:placeholder="Last name" value="#{employeeBean.lastname}"></h:inputText></td>
+										requiredMessage="Please enter last name" p:maxlength="15"
+										p:placeholder="Last name" value="#{employeeBean.lastname}">
+
+									</h:inputText></td>
 							</tr>
 
 							<tr>
@@ -112,20 +138,15 @@
 							</tr>
 
 							<tr>
-								<td>Enter Email :<sup style="color: red;">*</sup></td>
-								<td colspan="2" align="left"><h:inputText id="email"
-										size="43" required="true"
-										requiredMessage="Please enter your email id."
-										p:placeholder="Eg:xyz@yash.com" value="#{employeeBean.email}" ></h:inputText></td>
-								<td><h:message for="email" style="color: red;"></h:message>
-								</td>
+								<td colspan="4" align="left"><h:inputHidden
+										value="#{employeeBean.email}"></h:inputHidden></td>
 							</tr>
 							<tr>
 								<td>Enter Yash Id :<sup style="color: red;">*</sup></td>
 								<td colspan="2" align="left"><h:inputText id="yash_emp_id"
 										name="empId" size="43" required="true"
 										requiredMessage="Please enter yash ID" p:placeholder="100XXXX"
-										validatorMessage="Enter 7 digits "
+										p:maxlength="7" validatorMessage="Enter 7 digits"
 										value="#{employeeBean.employeeId}">
 										<f:validateLength minimum="7" maximum="7" />
 									</h:inputText></td>
@@ -133,38 +154,43 @@
 									id="errmsg" style="color: red;"></span></td>
 
 							</tr>
-							<!-- <tr> -->
-							<!-- <td>Enter Address :<sup style="color: red;">*</sup></td>
-								<td colspan="2" align="left"><h:inputTextarea id="address"
-										rows="5" cols="44" required="true"
-										requiredMessage="Please enter your address"
-										p:placeholder="Enter your address" style="resize:none"></h:inputTextarea></td>
-								<td><h:message for="address" style="color: red;"></h:message>
-								</td> </tr>-->
+
 							<tr>
-								<td>Address:</td>
-								<td><h:inputText size="20" p:placeholder="House No"
+								<td>House No.<sup style="color: red;">*</sup>
+								</td>
+								<td><h:inputText id="houseNo" size="20"
+										p:placeholder="House No" p:maxlength="5"
 										value="#{employeeBean.houseNo}"></h:inputText></td>
 
 
 								<td><h:inputText id="street" required="true"
 										requiredMessage="Please enter Street Name"
-										p:placeholder="Street Name" value="#{employeeBean.streetName}"></h:inputText></td>
-								<td><h:message for="street" style="color: red;"></h:message></td>
+										p:placeholder="Street Name" p:maxlength="30"
+										value="#{employeeBean.streetName}"></h:inputText></td>
+								<td><h:message id="streetmessage" for="street"
+										style="color: red;"></h:message></td>
 							</tr>
 
-
+							<tr>
+								<td></td>
+								<td><h:message id="houseNoMessage" for="houseNo"
+										style="color: red;"></h:message></td>
+								<td></td>
+								<td></td>
+							</tr>
 
 							<tr>
 								<td>Enter City :<sup style="color: red;">*</sup></td>
 								<td colspan="1" align="left"><h:inputText id="city"
 										required="true" requiredMessage="Please enter city"
-										p:placeholder="Enter City" value="#{employeeBean.city}"></h:inputText></td>
+										p:placeholder="Enter City" p:maxlength="20"
+										value="#{employeeBean.city}"></h:inputText></td>
 
 								<td><h:inputText id="pincode" required="true"
 										requiredMessage="Please enter pincode"
 										validatorMessage="Please enter 6 digit pincode"
-										p:placeholder="45XXXX" value="#{employeeBean.pincode}">
+										p:placeholder="45XXXX" p:maxlength="6"
+										value="#{employeeBean.pincode}">
 										<f:validateLength minimum="6" maximum="6" />
 									</h:inputText></td>
 							</tr>
@@ -185,46 +211,52 @@
 								<td>Enter State :<sup style="color: red;">*</sup></td>
 								<td colspan="2" align="left"><h:inputText id="state"
 										size="43" required="true" requiredMessage="Please enter state"
-										p:placeholder="Enter State" value="#{employeeBean.state}"></h:inputText></td>
+										p:placeholder="Enter State" p:maxlength="20"
+										value="#{employeeBean.state}"></h:inputText></td>
 								<td style="color: red"><h:message id="statemessage"
 										for="state" style="color: red;"></h:message></td>
 
 							</tr>
-							<!-- <tr>
-								<td>Enter City :<sup style="color: red;">*</sup></td>
-								<td colspan="2" align="left"><h:inputText id="city"
-										size="43" required="true" requiredMessage="Please enter city"
-										p:placeholder="Enter City"></h:inputText></td>
-								<td><h:message for="city" style="color: red;"></h:message>
-								</td>
-							</tr> -->
+
 							<tr>
 								<td>Enter Mobile No.:<sup style="color: red;">*</sup></td>
 								<td colspan="2" align="left"><h:inputText id="mobileNumber"
 										size="43" required="true"
 										requiredMessage="Please enter mobile number"
 										validatorMessage="10 digits are requried"
-										p:placeholder="XXX9878XXX" value="#{employeeBean.mobile}">
+										p:placeholder="XXX9878XXX" p:maxlength="10"
+										value="#{employeeBean.mobile}">
 										<f:validateLength minimum="10" maximum="10" />
 									</h:inputText></td>
 								<td><h:message for="mobileNumber" style="color: red;"></h:message><span
 									id="mobileerror" style="color: red"></span></td>
 							</tr>
 							<tr>
-								<td>Enter Alternate No. :</td>
+								<td>Alternate Mobile No: <sup style="color: red;">*</sup></td>
 								<td colspan="2" align="left"><h:inputText size="43"
-										p:placeholder="XXX9878XXX"
-										value="#{employeeBean.alternate_mobile}"></h:inputText></td>
+										id="alternateNumber" p:placeholder="XXX9878XXX"
+										p:maxlength="10" value="#{employeeBean.alternate_mobile}"
+										required="true"
+										requiredMessage="Please enter alternate mobile number"></h:inputText></td>
+								<td><h:message for="alternateNumber" style="color: red;"></h:message><span
+									id="alternateerror" style="color: red"></span></td>
 							</tr>
 
 							<tr></tr>
 
+
+						</table>
+
+						<table width="800px">
 							<tr>
+								<td></td>
 								<td colspan="4" align="center"><h:commandButton
 										class="myButton" value="#{employeeBean.checkEmployee}"
 										action="#{employeeBean.dataSave}" id="submitbtn"></h:commandButton></td>
 							</tr>
 						</table>
+
+
 					</h:form>
 				</div>
 				<h3 class="class-disabled #{employeeBean.disableTab}">Upload</h3>
@@ -253,19 +285,17 @@
 						<table>
 
 							<tr>
-
 								<td>Select Your Skill</td>
-								<td><h:selectOneMenu value="#{employeeBean.skillName}">
-										<f:selectItem itemLabel="------------" itemValue="noskill"></f:selectItem>
+								<td><h:selectOneMenu value="#{employeeBean.skillNameId}">
+										<f:selectItem itemLabel="------------" itemValue="0"></f:selectItem>
 										<f:selectItems value="#{employeeBean.skillList}" var="skill"
 											itemLabel="#{skill.skillName}" itemValue="#{skill.skill_id}"></f:selectItems>
 
 									</h:selectOneMenu></td>
 								<td>Select Your Efficiency</td>
 								<td><h:selectOneMenu
-										value="#{employeeBean.skillEfficiency}">
-										<f:selectItem itemLabel="------------"
-											itemValue="noefficiency"></f:selectItem>
+										value="#{employeeBean.skillEfficiencyId}">
+										<f:selectItem itemLabel="------------" itemValue="0"></f:selectItem>
 										<f:selectItems value="#{employeeBean.skillEfficiencyList}"
 											var="efficiency" itemLabel="#{efficiency.efficiencyType}"
 											itemValue="#{efficiency.skillefficiency_id}"></f:selectItems>
@@ -276,8 +306,27 @@
 									</h:commandButton></td>
 
 							</tr>
-
 						</table>
+						<br />
+						<table>
+							<tr>
+								<th>Skill</th>
+								<th>Efficiency</th>
+							</tr>
+							<ui:repeat var="empskill" value="#{employeeBean.employeeSkills}">
+								<tr>
+									<td>#{empskill.skillName}</td>
+									<td>#{empskill.efficiencyType}</td>
+									<td><h:commandButton value="Delete"
+											action="#{employeeBean.deleteEmployeeSkill}">
+											<f:param name="skillid" value="#{empskill.skill_id}"></f:param>
+											<f:param name="efficiencyid"
+												value="#{empskill.skillefficiency_id}"></f:param>
+										</h:commandButton></td>
+								</tr>
+							</ui:repeat>
+						</table>
+
 					</h:form>
 
 				</div>

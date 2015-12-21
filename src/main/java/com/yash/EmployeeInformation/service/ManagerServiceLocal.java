@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import com.yash.EmployeeInformation.domain.Employee;
+import com.yash.EmployeeInformation.domain.Grade;
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
 
@@ -32,6 +33,10 @@ public interface ManagerServiceLocal {
 	Employee updateFeedBack(Employee employee);
 
 	List<Employee> getUnallocatedProjectEmployees(int projectDetails_Id);
+
+	List<Grade> getAllGrades();
+
+	void assignEmployeeGrade(Employee employee);
 	
 	
 	 

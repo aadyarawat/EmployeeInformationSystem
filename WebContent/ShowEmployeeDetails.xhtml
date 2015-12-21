@@ -11,6 +11,11 @@
 
 	<ui:define name="content">
 		<div>
+			<div >
+				<h:form>
+					<h:commandButton value="Home" action="welcomeManager" class="myButton"/>
+				</h:form>
+			</div>
 			<div id="accordion"
 				style="width: 1000px; height: 500px; margin: auto; margin-top: 10px;">
 
@@ -64,11 +69,16 @@
 										<td colspan="2" align="center">Other Details</td>
 									</tr>
 									<tr>
-										<td><b><h:outputText value="Baseline Input" />&nbsp;
-												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+										<td><b><h:outputText value="Baseline Input" /></b></td>
 										<td><h:outputText
 												value="#{managerBean.employee.baseLineInput.baselineInputdetail}"
 												readonly="true" /></td>
+									</tr>
+									<tr>
+										<td><b><h:outputText value="Grade" /></b></td>
+										<td><h:outputText
+												value="#{managerBean.employee.grade.gradeValue}"
+												readonly="true" id="gradeSelectMenu" /></td>
 									</tr>
 
 									<tr>
@@ -122,30 +132,33 @@
 						</table>
 					</h:form>
 				</div>
-				
+
 				<h3>Add Grade</h3>
 				<div>
 					<h:form>
 						<table>
 							<tr>
-								<td>Enter the Grade:</td>
-								<td>
-									<h:selectOneMenu value="#">
-   									<f:selectItem itemValue="1" itemLabel="" />
-   									</h:selectOneMenu>
-								</td>
+								<td><h:outputText value="Grade : " /></td>
+								<td><h:selectOneMenu style="width:100px;"
+										value="#{managerBean.employee.grade.grade_id}">
+										<f:selectItems value="#{managerBean.grades}" var="grade"
+											itemValue="#{grade.grade_id}" itemLabel="#{grade.gradeValue}" />
+									</h:selectOneMenu> <h:commandButton value="Save" class="myButton"
+										action="#{managerBean.assignEmployeeGrade}"
+										id="gradeSubmitButton" /></td>
 							</tr>
 						</table>
 					</h:form>
 				</div>
-				
+
 				<h3>Add Feedback</h3>
 				<div>
 					<h:form>
 						<table>
 							<tr>
 								<td><h:outputText value="FeedBack : " /></td>
-								<td><h:outputText style="color:gray;"	value="#{managerBean.employee.feedBack.feedbackComment}" /></td>
+								<td><h:outputText style="color:gray;"
+										value="#{managerBean.employee.feedBack.feedbackComment}" /></td>
 							</tr>
 						</table>
 						<table>
@@ -155,9 +168,10 @@
 									</h:inputTextarea></td>
 							</tr>
 							<tr>
-								<td colspan="2" align="right">
-								<h:outputText style="font-size:15px;color:gray;"	value="Last Updated By:-" /> 
-								<h:outputText style="font-size:15px;color:gray;"	value="#{managerBean.employee.feedBack.lastUpdatedManager}" />
+								<td colspan="2" align="right"><h:outputText
+										style="font-size:15px;color:gray;" value="Last Updated By:-" />
+									<h:outputText style="font-size:15px;color:gray;"
+										value="#{managerBean.employee.feedBack.lastUpdatedManager}" />
 								</td>
 							</tr>
 							<tr>
@@ -183,7 +197,7 @@
 						<h:commandButton class="btn btn-info" value="Submit"
 							action="#{managerBean.allotProject}"></h:commandButton>
 					</h:form>
-					
+
 
 				</div>
 

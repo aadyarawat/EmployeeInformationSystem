@@ -1,6 +1,8 @@
 package com.yash.EmployeeInformation.bean;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -23,6 +25,9 @@ import com.yash.EmployeeInformation.service.EmployeeServiceLocal;
 @SessionScoped
 public class EmployeeBean {
 
+	@EJB
+	EmployeeServiceLocal employeeServiceLocal;
+
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 
@@ -40,12 +45,13 @@ public class EmployeeBean {
 	private String city;
 	private String state;
 	private String pincode;
-	private String skillName;
-	private String skillEfficiency;
+	private int skillNameId;
+	private int skillEfficiencyId;
 	private List<Skill> skillList;
 	private List<Skill> skillEfficiencyList;
 	private String checkEmployee;
 	private String disableTab;
+	private List<Skill> employeeSkills = new ArrayList<>();
 	Employee employee = new Employee();
 	Employee oldEmployee = null;
 
@@ -73,23 +79,20 @@ public class EmployeeBean {
 		this.checkEmployee = checkEmployee;
 	}
 
-	@EJB
-	EmployeeServiceLocal employeeServiceLocal;
-
-	public String getSkillName() {
-		return skillName;
+	public int getSkillNameId() {
+		return skillNameId;
 	}
 
-	public void setSkillName(String skillName) {
-		this.skillName = skillName;
+	public void setSkillNameId(int skillNameId) {
+		this.skillNameId = skillNameId;
 	}
 
-	public String getSkillEfficiency() {
-		return skillEfficiency;
+	public int getSkillEfficiencyId() {
+		return skillEfficiencyId;
 	}
 
-	public void setSkillEfficiency(String skillEfficiency) {
-		this.skillEfficiency = skillEfficiency;
+	public void setSkillEfficiencyId(int skillEfficiencyId) {
+		this.skillEfficiencyId = skillEfficiencyId;
 	}
 
 	public List<Skill> getSkillList() {
@@ -111,7 +114,6 @@ public class EmployeeBean {
 	}
 
 	public int getHouseNo() {
-		// oldEmployee = helper();
 		if (oldEmployee != null) {
 
 			houseNo = oldEmployee.getAddress().getHouseNo();
@@ -125,7 +127,6 @@ public class EmployeeBean {
 	}
 
 	public String getStreetName() {
-		// oldEmployee = helper();
 		if (oldEmployee != null) {
 
 			streetName = oldEmployee.getAddress().getStreetName();
@@ -139,7 +140,6 @@ public class EmployeeBean {
 	}
 
 	public String getCity() {
-		// oldEmployee = helper();
 		if (oldEmployee != null) {
 
 			city = oldEmployee.getAddress().getCity();
@@ -153,7 +153,6 @@ public class EmployeeBean {
 	}
 
 	public String getState() {
-		// oldEmployee = helper();
 		if (oldEmployee != null) {
 
 			state = oldEmployee.getAddress().getState();
@@ -167,7 +166,6 @@ public class EmployeeBean {
 	}
 
 	public String getPincode() {
-		// oldEmployee = helper();
 		if (oldEmployee != null) {
 
 			pincode = oldEmployee.getAddress().getPincode();
@@ -180,7 +178,6 @@ public class EmployeeBean {
 	}
 
 	public String getMobile() {
-		// oldEmployee = helper();
 		if (oldEmployee != null) {
 
 			mobile = oldEmployee.getMobile();
@@ -194,7 +191,6 @@ public class EmployeeBean {
 	}
 
 	public String getAlternate_mobile() {
-		// oldEmployee = helper();
 		if (oldEmployee != null) {
 
 			alternate_mobile = oldEmployee.getAlternate_mobile();
@@ -208,7 +204,6 @@ public class EmployeeBean {
 	}
 
 	public Address getAddress() {
-		// oldEmployee = helper();
 		if (oldEmployee != null) {
 
 			address = oldEmployee.getAddress();
@@ -234,7 +229,6 @@ public class EmployeeBean {
 	}
 
 	public String getLastname() {
-		// oldEmployee = helper();
 		if (oldEmployee != null) {
 
 			lastname = oldEmployee.getLastName();
@@ -249,7 +243,6 @@ public class EmployeeBean {
 	}
 
 	public String getEmail() {
-		// helper();
 		recId = employeeServiceLocal.getRegisteredEmpid((String) session.getAttribute("eusername"));
 		String sessionEmailValue = (String) session.getAttribute("eusername");
 		return sessionEmailValue;
@@ -260,7 +253,6 @@ public class EmployeeBean {
 	}
 
 	public int getEmployeeId() {
-		// oldEmployee = helper();
 		if (oldEmployee != null) {
 
 			employeeId = oldEmployee.getYashEmployeeId();
@@ -293,11 +285,6 @@ public class EmployeeBean {
 	int recId;
 
 	public int getRecId() {
-		/*
-		 * recId =
-		 * employeeServiceLocal.getRegisteredEmpid((String)session.getAttribute(
-		 * "eusername")); System.out.println(recId);
-		 */
 		return recId;
 	}
 
@@ -305,9 +292,24 @@ public class EmployeeBean {
 		this.recId = recId;
 	}
 
+	public List<Skill> getEmployeeSkills() {
+		employeeSkills = employeeServiceLocal.getEmployeeSkills(recId);
+		return employeeSkills;
+	}
+
+	public void setEmployeeSkills(List<Skill> employeeSkills) {
+		this.employeeSkills = employeeSkills;
+	}
+
 	public String dataSave() {
-
 		if (checkEmployee.equals("Edit")) {
+			if (firstname == null || lastname == null || email == null || employeeId == 0 || mobile == null) {
+				return "welcome.xhtml?employeemessange=Please Fill All Entries&faces-redirect=true";
+			}
+			if (firstname.equals("") || lastname.equals("") || email.equals("") || employeeId == 0
+					|| mobile.equals("")) {
+				return "welcome.xhtml?employeemessange=Please Fill All Entries&faces-redirect=true";
+			}
 			recId = employeeServiceLocal.getRegisteredEmpid((String) session.getAttribute("eusername"));
 			employee.setEmployeedetails_id(recId);
 			employee.setFirstName(firstname);
@@ -316,47 +318,70 @@ public class EmployeeBean {
 			employee.setEmail(email);
 			employee.setYashEmployeeId(employeeId);
 			employee.setMobile(mobile);
-			employeeServiceLocal.updateEmployee(employee);
-			System.out.println("update call-------for employee--");
+			String checkemployee = employeeServiceLocal.updateEmployee(employee);
 			employee.getAddress().setCity(city);
 			employee.getAddress().setHouseNo(houseNo);
 			employee.getAddress().setStreetName(streetName);
 			employee.getAddress().setState(state);
 			employee.getAddress().setPincode(pincode);
-			employeeServiceLocal.editEmployeeAddress(recId, employee);
-			System.out.println("update call------for address---");
-			return "welcome.xhtml?employeemessange=Updated Your Details&faces-redirect=true";
+			String checkaddress = employeeServiceLocal.editEmployeeAddress(recId, employee);
+			if (!checkemployee.equals("success"))
+				return "welcome.xhtml?employeemessange=" + checkemployee + "&faces-redirect=true";
+			if (!checkaddress.equals("success"))
+				return "welcome.xhtml?employeemessange=" + checkaddress + "&faces-redirect=true";
+			return "welcome.xhtml?employeemessange=Details Updated Successful&faces-redirect=true";
 		} else {
+			if (firstname == null || lastname == null || email == null || employeeId == 0 || mobile == null)
+				return "welcome.xhtml?employeemessange=Please fill all null&faces-redirect=true";
+			if (firstname.equals("") || lastname.equals("") || email.equals("") || employeeId == 0
+					|| mobile.equals("")) {
+				System.out.println(
+						"firstname->" + firstname + "  lastname->" + lastname + "  email->" + email + " emlpoyeeid->"
+								+ employeeId + "   mobile->" + mobile + " alternate number->" + alternate_mobile);
+				return "welcome.xhtml?employeemessange=Please fill all enteries&faces-redirect=true";
+			}
+
 			employee.setFirstName(firstname);
 			employee.setLastName(lastname);
 			employee.setAlternate_mobile(alternate_mobile);
 			employee.setEmail(email);
 			employee.setYashEmployeeId(employeeId);
 			employee.setMobile(mobile);
-			employeeServiceLocal.register(employee);
+			String checkemployee = employeeServiceLocal.register(employee);
 			recId = employeeServiceLocal.getRegisteredEmpid((String) session.getAttribute("eusername"));
 			employee.setEmployeedetails_id(recId);
-			System.out.println("INSIDE SAVE -------------" + recId);
 			employee.getAddress().setCity(city);
 			employee.getAddress().setHouseNo(houseNo);
 			employee.getAddress().setStreetName(streetName);
 			employee.getAddress().setState(state);
 			employee.getAddress().setPincode(pincode);
-			employeeServiceLocal.saveEmployeeAddress(recId, employee);
+			String checkaddress = employeeServiceLocal.saveEmployeeAddress(recId, employee);
+			if (!checkemployee.equals("success"))
+				return "welcome.xhtml?employeemessange=" + checkemployee + "&faces-redirect=true";
+			if (!checkaddress.equals("success"))
+				return "welcome.xhtml?employeemessange=" + checkaddress + "&faces-redirect=true";
 			return "welcome.xhtml?employeemessange=Successfully Added Details&faces-redirect=true";
-
 		}
 
 	}
 
 	public String addSkillAndEfficiency() {
-		System.out.println("ADD AND EFFIC +CELLED");
-		System.out.println("SKILL NAME ---------" + skillName);
-		System.out.println("SKILL Efficiency NAME ---------" + skillEfficiency);
-		System.out.println("SKILL ID FROM EMAIL ---------" + recId);
-		employeeServiceLocal.addEmployeeSkillAndEfficiency(skillName, skillEfficiency, recId);
-		return "welcome.xhtml?skillmessage=Successfully Added &faces-redirect=true";
-
+		System.out.println("skillid-->" + skillNameId);
+		if (skillNameId == 0 && skillEfficiencyId == 0)
+			return "welcome.xhtml?skillmessage=Please Select Skill And Efficiency&faces-redirect=true";
+		if (skillNameId == 0)
+			return "welcome.xhtml?skillmessage=Please Select a Skill&faces-redirect=true";
+		if (skillEfficiencyId == 0)
+			return "welcome.xhtml?skillmessage=Please Select a Efficiency&faces-redirect=true";
+		for (Skill skill : employeeSkills) {
+			if (skillNameId == skill.getSkill_id()) {
+				return "welcome.xhtml?skillmessage=Skill Already Exist!! Please Select Another Skill&faces-redirect=true";
+			}
+		}
+		String checkskill = employeeServiceLocal.addEmployeeSkillAndEfficiency(skillNameId, skillEfficiencyId, recId);
+		if (!checkskill.equals("success"))
+			return "welcome.xhtml?skillmessage=Skill Not Saved!!! Try Again&faces-redirect=true";
+		return "welcome.xhtml?skillmessage=Skill Added Successfully&faces-redirect=true";
 	}
 
 	public Employee helper() {
@@ -365,4 +390,16 @@ public class EmployeeBean {
 		return oldEmployee;
 	}
 
+	public String deleteEmployeeSkill() {
+		Map<String, String> requestparams = (Map<String, String>) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequestParameterMap();
+		String skillid = (String) requestparams.get("skillid");
+		String efficiencyid = (String) requestparams.get("efficiencyid");
+		System.out.println("skillid-->" + skillid + "    efficiencyid-->" + efficiencyid);
+		String check = employeeServiceLocal.deleteEmployeeSkill(Integer.parseInt(skillid),
+				Integer.parseInt(efficiencyid), recId);
+		if (!check.equals("success"))
+			return "welcome.xhtml?skillmessage=" + check + "&faces-redirect=true";
+		return "welcome.xhtml?skillmessage=Delete successfull&faces-redirect=true";
+	}
 }

@@ -30,7 +30,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	private DataSource dataSource;
 
 	@Override
-	public void getRegister(Employee employee) {
+	public String getRegister(Employee employee) {
 		String query = "INSERT INTO EMPLOYEE (YASHEMPLOYEEID,FIRSTNAME,LASTNAME,EMAIL,MOBILE,ALTERNATE_MOBILE) VALUES "
 				+ "('" + employee.getYashEmployeeId() + "','" + employee.getFirstName() + "','" + employee.getLastName()
 				+ "'," + "'" + employee.getEmail() + "','" + employee.getMobile() + "','"
@@ -41,9 +41,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			connection = (Connection) dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.executeUpdate();
+			return "success";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Error registering employee check filed values";
 		} finally {
 			try {
 				if (connection != null)
@@ -70,6 +72,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				receivedId = resultSet.getInt("EMPLOYEEDETAILS_ID");
 				
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,7 +90,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public void saveAddressService(int recId, Employee employee) {
+	public String saveAddressService(int recId, Employee employee) {
 		String query = "INSERT INTO ADDRESS (HOUSENO,STREETNAME,CITY,STATE,PINCODE,EMPLOYEEDETAILS_ID) VALUES " + "('"
 				+ employee.getAddress().getHouseNo() + "','" + employee.getAddress().getStreetName() + "','"
 				+ employee.getAddress().getCity() + "'," + "'" + employee.getAddress().getState() + "','"
@@ -98,9 +101,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			connection = (Connection) dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.executeUpdate();
+			return "success";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Error saving address check fields";
 		} finally {
 			try {
 				if (connection != null)
@@ -153,8 +158,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				skill.setSkillefficiency_id(resultSet.getInt(1));
 				skill.setEfficiencyType(resultSet.getString(2));
 				listSkillEfficiency.add(skill);
-
 			}
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -171,17 +176,19 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public void saveSkillAndEfficiency(String skillName, String skillEfficiency, int recId) {
-		String sql = "INSERT INTO EMPLOYEESKILL (SKILL_ID,SKILLEFFICIENCY_ID,EMPLOYEEDETAILS_ID) " + "VALUES ('"
-				+ skillName + "','" + skillEfficiency + "','" + recId + "')";
+	public String saveSkillAndEfficiency(int skillName, int skillEfficiency, int recId) {
+		String sql = "INSERT INTO EMPLOYEESKILL (SKILL_ID,SKILLEFFICIENCY_ID,EMPLOYEEDETAILS_ID) " + "VALUES ("
+				+ skillName + "," + skillEfficiency + "," + recId + ")";
 		try {
 
 			connection = (Connection) dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.executeUpdate();
+			return "success";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Error inserting skill check fields selected";
 		} finally {
 			try {
 				if (connection != null)
@@ -252,28 +259,28 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public void updateEmployeeDetail(Employee employee) {
+	public String updateEmployeeDetail(Employee employee) {
 		String query = "UPDATE `employee` SET `yashemployeeid`='"+employee.getYashEmployeeId()+"' , `firstname`='"+employee.getFirstName()+"' , `lastname`='"+employee.getLastName()+"' , `email`='"+employee.getEmail()+"' , `mobile`='"+employee.getMobile()+"' , `alternate_mobile`='"+employee.getAlternate_mobile()+"'  WHERE `employeedetails_id`="+employee.getEmployeedetails_id();
-		update(query);
-		System.out.println("-------update employee ----->"+query);
+		return update(query);
 	}
 
 	@Override
-	public void updateEmployeeAddress(int recId, Employee employee) {
+	public String updateEmployeeAddress(int recId, Employee employee) {
 		String query = "UPDATE `address` SET `houseNo`="+employee.getAddress().getHouseNo()+" , streetName='"+employee.getAddress().getStreetName()+"' , state='"+employee.getAddress().getState()+"' ,city='"+employee.getAddress().getCity()+"' , pincode="+employee.getAddress().getPincode()+" WHERE `employeedetails_id`="+employee.getEmployeedetails_id();
-		update(query);
-		System.out.println("-------update address ----->"+query);
+		return update(query);
 	}
 
-	public void update(String query) {
+	public String update(String query) {
 		try {
 
 			connection = (Connection) dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.executeUpdate();
+			return "success";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Error Performing Update Check field values";
 		} finally {
 			try {
 				if (connection != null)
@@ -283,5 +290,73 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public List<Skill> getEmployeeSkills(int recId) {
+		String getskillIds="SELECT * FROM `employeeskill` WHERE `employeedetails_id`="+recId;
+		try {
+			connection = (Connection) dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(getskillIds);	
+			ResultSet resultSet1 = preparedStatement.executeQuery();
+			List<Skill> skills = new ArrayList<>(); 
+			while (resultSet1.next()) {
+				Skill skill = new Skill();
+				skill.setSkill_id(resultSet1.getInt("skill_id"));
+				skill.setSkillefficiency_id(resultSet1.getInt("skillefficiency_id"));
+				skills.add(skill);
+			}
+			for (Skill skill : skills) {
+				String getskill = "SELECT skillname from skill where skill_id="+skill.getSkill_id();
+				PreparedStatement preparedStatement2 = connection.prepareStatement(getskill);
+				ResultSet resultSet = preparedStatement2.executeQuery();
+				while(resultSet.next()){
+					skill.setSkillName(resultSet.getString("skillname"));
+				}
+				String getefficiency = "SELECT efficiencyType FROM skillefficiency WHERE skillefficiency_id="+skill.getSkillefficiency_id();	
+				PreparedStatement preparedStatement3 = connection.prepareStatement(getefficiency);
+				ResultSet resultSet2 = preparedStatement3.executeQuery();
+				while(resultSet2.next()){
+					skill.setEfficiencyType(resultSet2.getString("efficiencyType"));
+				}
+			}
+			return skills;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public String deleteEmployeeSkill(int skillid, int efficiencyId, int recId) {
+		String query ="DELETE FROM employeeskill WHERE skill_id="+skillid+" AND `employeedetails_id`="+recId+" AND `skillefficiency_id`="+efficiencyId;
+		try {
+			connection = (Connection) dataSource.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.executeUpdate();
+			return "success";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "Error Performing delete , try again later";
+		} finally {
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		// TODO Auto-generated method stub
 	}
 }

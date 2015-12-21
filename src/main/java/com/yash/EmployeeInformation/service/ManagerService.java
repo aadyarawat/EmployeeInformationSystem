@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import com.yash.EmployeeInformation.dao.ManagerDao;
 import com.yash.EmployeeInformation.domain.Employee;
+import com.yash.EmployeeInformation.domain.Grade;
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
 
@@ -165,4 +166,17 @@ public class ManagerService implements ManagerServiceLocal {
              employees.removeAll(allocatedEmployees);
              return employees ;
       }
+
+	@Override
+	public List<Grade> getAllGrades() {
+		// TODO Auto-generated method stub
+		List<Grade>grades= managerDao.getAllGrades();
+		return grades;
+	}
+
+	@Override
+	public void assignEmployeeGrade(Employee employee) {
+		
+		managerDao.assignEmployeeGrade(employee);
+	}
 }

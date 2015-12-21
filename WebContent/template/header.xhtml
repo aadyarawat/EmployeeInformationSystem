@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:body>
 	<h:form prependId="false">
-	<div
-		style="width: 98.5%; height: 70px; font-size: 36px; line-height: 48px; background-color: #1B4D77; margin-top: 15px; color: white; border-radius: 15px 15px 0px 0px; padding-left: 20px; background-image: url('../images/header.jpg');">
-		
-		
-		<table width="100%">
-			<tr>
-				<td></td>
-				<td align="center">Employee Information System</td>
-				<td align="center" ><h:commandButton class="myButton" value="Logout" action="#{userBean.logout}"></h:commandButton></td>
-			</tr>
-		</table>
-		
-	</div>
+		<div style="color: white;">
+
+
+			<nav class="navbar navbar-default"
+				style="background:transparent; border: transparent;">
+			<div class="container-fluid"
+				style="background-image: url('../images/header.jpg');">
+
+				<div>
+
+					<h2 align="center">
+						Employee Information System
+						<h:commandButton style=" float : right;" class="myButton"
+							value="Logout" action="#{userBean.logout}"></h:commandButton>
+					</h2>
+
+				</div>
+
+				<div>
+					<ul class="nav navbar-nav">
+
+					</ul>
+				</div>
+			</div>
+			</nav>
+		</div>
 	</h:form>
 </h:body>
 </html>
