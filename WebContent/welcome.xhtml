@@ -9,13 +9,20 @@
 
 <ui:composition template="/template/template.xhtml">
 
+
 	<ui:define name="content">
-		<script type="text/javascript">
-			$(document).ready(function() {
-				if ('#{param.uploadmessage}' != '')
-					alert('#{param.uploadmessage}');
-			});
-		</script>
+		<h:outputScript>
+
+	if ('#{param.uploadmessage}' != '')
+		alert('#{param.uploadmessage}');
+		
+	if ('#{param.employeemessange}' != '')
+		alert('#{param.employeemessange}');
+		
+	if ('#{param.skillmessage}' != '')
+		alert('#{param.skillmessage}');
+	
+	</h:outputScript>
 		<div id="dialog" style="display: none;">
 			<h3>Guidelines</h3>
 			<div>
@@ -54,8 +61,7 @@
 					</tr>
 
 					<tr>
-						<td><h:commandButton value="Download from project"
-								action="#{userBean.downloadFile}"></h:commandButton>&nbsp;&nbsp;&nbsp;&nbsp;
+						<td>
 							<h:outputLink
 								value="https://raw.githubusercontent.com/deepak-vishwakarma-at-yash/sample/master/SampleResume.doc"> Sample Resume </h:outputLink></td>
 					</tr>
@@ -110,7 +116,7 @@
 								<td colspan="2" align="left"><h:inputText id="email"
 										size="43" required="true"
 										requiredMessage="Please enter your email id."
-										p:placeholder="Eg:xyz@yash.com" value="#{employeeBean.email}"></h:inputText></td>
+										p:placeholder="Eg:xyz@yash.com" value="#{employeeBean.email}" ></h:inputText></td>
 								<td><h:message for="email" style="color: red;"></h:message>
 								</td>
 							</tr>
@@ -215,13 +221,13 @@
 
 							<tr>
 								<td colspan="4" align="center"><h:commandButton
-										class="myButton" value="SAVE"
-										action="#{employeeBean.dataSave}"></h:commandButton></td>
+										class="myButton" value="#{employeeBean.checkEmployee}"
+										action="#{employeeBean.dataSave}" id="submitbtn"></h:commandButton></td>
 							</tr>
 						</table>
 					</h:form>
 				</div>
-				<h3>Upload</h3>
+				<h3 class="class-disabled #{employeeBean.disableTab}">Upload</h3>
 				<div>
 					<h:form enctype="multipart/form-data" prependId="false">
 						<table>
@@ -240,7 +246,7 @@
 					</h:form>
 				</div>
 
-				<h3 class="ui-state-disabled">Skills</h3>
+				<h3 class="class-disabled #{employeeBean.disableTab}">Skills</h3>
 				<div id="skills">
 					<h:form prependId="false">
 
@@ -251,14 +257,18 @@
 								<td>Select Your Skill</td>
 								<td><h:selectOneMenu value="#{employeeBean.skillName}">
 										<f:selectItem itemLabel="------------" itemValue="noskill"></f:selectItem>
-										<f:selectItems value="#{employeeBean.skillList}" var="skill" itemLabel="#{skill.skillName}" itemValue="#{skill.skill_id}"></f:selectItems>
+										<f:selectItems value="#{employeeBean.skillList}" var="skill"
+											itemLabel="#{skill.skillName}" itemValue="#{skill.skill_id}"></f:selectItems>
 
 									</h:selectOneMenu></td>
 								<td>Select Your Efficiency</td>
-								<td><h:selectOneMenu value="#{employeeBean.skillEfficiency}">
+								<td><h:selectOneMenu
+										value="#{employeeBean.skillEfficiency}">
 										<f:selectItem itemLabel="------------"
 											itemValue="noefficiency"></f:selectItem>
-										<f:selectItems value="#{employeeBean.skillEfficiencyList}" var="efficiency" itemLabel="#{efficiency.efficiencyType}" itemValue="#{efficiency.skillefficiency_id}"></f:selectItems>
+										<f:selectItems value="#{employeeBean.skillEfficiencyList}"
+											var="efficiency" itemLabel="#{efficiency.efficiencyType}"
+											itemValue="#{efficiency.skillefficiency_id}"></f:selectItems>
 
 									</h:selectOneMenu></td>
 								<td><h:commandButton value="SAVE"
@@ -273,6 +283,7 @@
 				</div>
 			</div>
 		</div>
+
 	</ui:define>
 
 </ui:composition>

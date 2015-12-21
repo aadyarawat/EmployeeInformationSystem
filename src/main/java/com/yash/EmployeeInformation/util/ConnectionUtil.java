@@ -1,8 +1,8 @@
 package com.yash.EmployeeInformation.util;
 
+
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 
 import javax.annotation.Resource;
@@ -13,16 +13,19 @@ public class ConnectionUtil {
 	@Resource(lookup = "java:jboss/datasources/EIS")
 	DataSource source;
 
+	Connection connection = null;
+	
 	/**
 	 * 
 	 * @return Connection
 	 * 
 	 *         This method will return connection from data source
+	 * @throws SQLException 
 	 *
 	 */
-	public Connection getConnection() {
+	public Connection getConnection() throws SQLException {
 
-		Connection connection = null;
+		
 
 		try {
 			connection = source.getConnection();
@@ -30,8 +33,16 @@ public class ConnectionUtil {
 
 			e.printStackTrace();
 		}
+		finally {
+			if(connection!=null)
+			connection.close();
+		}
 
 		return connection;
 	}
 
+	
+	
+	
+	
 }

@@ -31,4 +31,9 @@ public interface ManagerServiceLocal {
 
 	Employee updateFeedBack(Employee employee);
 
+	List<Employee> getUnallocatedProjectEmployees(int projectDetails_Id);
+	
+	
+	 
+
 }

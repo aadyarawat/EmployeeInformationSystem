@@ -18,6 +18,12 @@ public interface EmployeeDao {
  	public List<Skill> fetchSkillEfficiency();
 
  	public void saveSkillAndEfficiency(String skillName, String skillEfficiency, int recId);
+ 	
+ 	public Employee getEmployee(String emailID);
+
+	public void updateEmployeeDetail(Employee employee);
+
+	public void updateEmployeeAddress(int recId, Employee employee);
 
 	
 

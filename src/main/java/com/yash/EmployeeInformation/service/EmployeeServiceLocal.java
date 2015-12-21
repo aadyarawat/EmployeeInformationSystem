@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import com.yash.EmployeeInformation.domain.Address;
+
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Skill;
 
@@ -23,6 +23,9 @@ public interface EmployeeServiceLocal {
 	public List<Skill> getSkillList();
 	public List<Skill> getSkillEfficiencyList();
 	public void addEmployeeSkillAndEfficiency(String skillName, String skillEfficiency, int recId);
+	public Employee getEmployeeDetail(String emailID);
+	public void editEmployeeAddress(int recId, Employee employee);
+	public void updateEmployee(Employee employee);
 }
 
 

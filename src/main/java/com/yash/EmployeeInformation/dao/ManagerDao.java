@@ -1,6 +1,5 @@
 package com.yash.EmployeeInformation.dao;
 
-
 import java.util.List;
 
 import com.yash.EmployeeInformation.domain.Employee;
@@ -20,7 +19,7 @@ public interface ManagerDao {
 	void saveAllotedProject(String sql);
 
 	void addBaseLineInput(Employee employee);
-	
+
 	void saveFeedBack(Employee employee);
 
 	void updateFeedBack(Employee employee);

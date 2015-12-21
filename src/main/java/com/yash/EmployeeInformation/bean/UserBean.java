@@ -13,6 +13,7 @@ import java.util.Hashtable;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
@@ -75,9 +76,9 @@ public class UserBean {
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>hello" + name);
 				session.setAttribute("manager", manager);
 
-				return "welcomeManager.xhtml";
+				return "welcomeManager.xhtml?faces-redirect=true";
 			}
-			return "welcome.xhtml";
+			return "welcome.xhtml?faces-redirect=true";
 		}
 
 	}
@@ -120,7 +121,7 @@ public class UserBean {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		HttpSession httpSession = (HttpSession) facesContext.getExternalContext().getSession(false);
 		httpSession.invalidate();
-		return "index.xhtml";
+		return "index.xhtml?faces-redirect=true";
 	}
 
 	/***
