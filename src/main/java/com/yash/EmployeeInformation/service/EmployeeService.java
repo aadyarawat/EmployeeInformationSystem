@@ -26,8 +26,8 @@ public class EmployeeService implements EmployeeServiceLocal {
 	public EmployeeService(){
 	}
 	@Override
-	public void register(Employee employee) {
-		employeeDaoIntf.getRegister(employee);
+	public String register(Employee employee) {
+		return employeeDaoIntf.getRegister(employee);
 		
 	}
 	@Override
@@ -37,8 +37,8 @@ public class EmployeeService implements EmployeeServiceLocal {
 	}
 	
 	@Override
-	public void saveEmployeeAddress(int recId, Employee employee) {
-		employeeDaoIntf.saveAddressService(recId, employee);
+	public String saveEmployeeAddress(int recId, Employee employee) {
+		return employeeDaoIntf.saveAddressService(recId, employee);
 	}
 	@Override
 	public List<Skill> getSkillList() {
@@ -53,8 +53,8 @@ public class EmployeeService implements EmployeeServiceLocal {
 		
 	}
 	@Override
-	public void addEmployeeSkillAndEfficiency(String skillName, String skillEfficiency, int recId) {
-		employeeDaoIntf.saveSkillAndEfficiency(skillName,skillEfficiency,recId);
+	public String addEmployeeSkillAndEfficiency(int skillName, int skillEfficiency, int recId) {
+		return employeeDaoIntf.saveSkillAndEfficiency(skillName,skillEfficiency,recId);
 		
 	}
 	@Override
@@ -63,13 +63,21 @@ public class EmployeeService implements EmployeeServiceLocal {
 		
 	}
 	@Override
-	public void updateEmployee(Employee employee) {
-		employeeDaoIntf.updateEmployeeDetail(employee);
+	public String updateEmployee(Employee employee) {
+		return employeeDaoIntf.updateEmployeeDetail(employee);
 		
 	}
 	@Override
-	public void editEmployeeAddress(int recId, Employee employee) {
-		employeeDaoIntf.updateEmployeeAddress(recId,employee);
+	public String editEmployeeAddress(int recId, Employee employee) {
+		return employeeDaoIntf.updateEmployeeAddress(recId,employee);
+	}
+	@Override
+	public List<Skill> getEmployeeSkills(int recId) {
+		return employeeDaoIntf.getEmployeeSkills(recId);
+	}
+	@Override
+	public String deleteEmployeeSkill(int skillid, int efficiencyId, int recId) {
+		return employeeDaoIntf.deleteEmployeeSkill(skillid,efficiencyId,recId);
 	}
 
 }

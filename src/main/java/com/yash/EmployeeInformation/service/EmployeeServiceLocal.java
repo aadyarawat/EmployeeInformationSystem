@@ -17,15 +17,17 @@ import com.yash.EmployeeInformation.domain.Skill;
 @Local
 public interface EmployeeServiceLocal {
 
-	public void register(Employee employee);
+	public String register(Employee employee);
 	public int getRegisteredEmpid(String attribute);
-	public void saveEmployeeAddress(int recId, Employee employee);
+	public String saveEmployeeAddress(int recId, Employee employee);
 	public List<Skill> getSkillList();
 	public List<Skill> getSkillEfficiencyList();
-	public void addEmployeeSkillAndEfficiency(String skillName, String skillEfficiency, int recId);
+	public String addEmployeeSkillAndEfficiency(int skillNameId, int skillEfficiencyId, int recId);
 	public Employee getEmployeeDetail(String emailID);
-	public void editEmployeeAddress(int recId, Employee employee);
-	public void updateEmployee(Employee employee);
+	public String editEmployeeAddress(int recId, Employee employee);
+	public String updateEmployee(Employee employee);
+	public List<Skill> getEmployeeSkills(int recId);
+	public String deleteEmployeeSkill(int skillId, int efficiencyId, int recId);
 }
 
 
