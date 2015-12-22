@@ -163,9 +163,10 @@
 										#{skill.efficiencyType}
 									</td>
 									<td>
-										<h:commandLink action="#{managerBean.updateSkillEfficiency}">
+										<h:commandLink action="#{managerBean.updateSkillEfficiency}" class="tooltips">
 										<h:graphicImage value="images/Active_icon.jpg" width="30px" height="30px"/>
 										<f:setPropertyActionListener value="#{skill}" target="#{managerBean.skill}" />
+										<span>Update</span>
 										</h:commandLink>
 									</td>
 								</tr>
