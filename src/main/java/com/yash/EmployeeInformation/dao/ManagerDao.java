@@ -2,10 +2,12 @@ package com.yash.EmployeeInformation.dao;
 
 import java.util.List;
 
+import com.yash.EmployeeInformation.domain.Efficiency;
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Grade;
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
+import com.yash.EmployeeInformation.domain.Skill;
 
 public interface ManagerDao {
 
@@ -29,4 +31,15 @@ public interface ManagerDao {
 
 	void assignEmployeeGrade(Employee employee);
 
+	List<Efficiency> getAllEfficiencies();
+
+	void updateEmployeeEfficiency(Skill skill);
+
+	void updateEmployeeGrade(Employee employee);
+
+	List<Skill> getAllSkills();
+
+	void addNewSkill(Skill skill);
+
 }
+

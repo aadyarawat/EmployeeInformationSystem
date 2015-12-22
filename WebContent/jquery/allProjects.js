@@ -4,7 +4,8 @@ $(document).ready(function() {
 		$("#dialog").dialog({
 
 			height : 300,
-			width : 600
+			width : 600,
+			modal : true
 
 		});
 

@@ -14,12 +14,12 @@
 		<link rel="stylesheet" type="text/css" href="css/sweetalert.css" />
 		<h:outputScript>
        if('#{param.message}'!=''){
-        swal("Error!", "#{param.message}");
+        swal("Project Message!", "#{param.message}");
        
        }
 </h:outputScript>
 		<div align="center">
-			<div align="left">
+			<div align="left" style="margin-left: 1%;">
 				<h:form>
 					<h:commandButton value="Home" action="welcomeManager"
 						class="myButton" />

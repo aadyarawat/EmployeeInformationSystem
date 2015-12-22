@@ -22,18 +22,15 @@ public class UserDaoImpl implements UserDao {
 		try {
 			connection = dataSource.getConnection();
 			connection.prepareStatement(query).executeUpdate();
-			return "Uploaded succesfull";
+			return "Upload succesfull";
 		} catch (Exception e) {
-			//e.printStackTrace();
 			if(e.getClass().getName().equalsIgnoreCase("com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException"))
-			System.out.println("Already Existed File Updated for"+finalfilename);
-			return "Already Existed File Updated ";
+			return "File Updated ";else return "Error occured while upload please try again";
 		}finally {
 			try {
 				if(connection!=null)
 				connection.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -15,10 +15,12 @@ import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.yash.EmployeeInformation.domain.Efficiency;
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.Grade;
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Project;
+import com.yash.EmployeeInformation.domain.Skill;
 import com.yash.EmployeeInformation.service.ManagerServiceLocal;
 
 @ManagedBean
@@ -41,9 +43,85 @@ public class ManagerBean {
 	private String selectedProjectName;
 	private String[] selectedEmployees;
 	private List<Grade> grades;
+	private List<Efficiency> efficiencies;
+	private List<Skill> skills;
+	private Skill skill;
+	private int efficiency_id;
+	private int grade_id;
+	private int skill_id;
+	private int addEfficiency_id;
+	private String skillName;
 
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+
+	public String getSkillName() {
+		return skillName;
+	}
+
+	public void setSkillName(String skillName) {
+		this.skillName = skillName;
+	}
+
+	public int getAddEfficiency_id() {
+		return addEfficiency_id;
+	}
+
+	public void setAddEfficiency_id(int addEfficiency_id) {
+		this.addEfficiency_id = addEfficiency_id;
+	}
+
+	public int getSkill_id() {
+		return skill_id;
+	}
+
+	public void setSkill_id(int skill_id) {
+		this.skill_id = skill_id;
+	}
+
+	public List<Skill> getSkills() {
+		skills = managerService.getAllSkills();
+		List<Skill> employeeSkills = employee.getSkills();
+		skills.removeAll(employeeSkills);
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+
+	public int getGrade_id() {
+		return grade_id;
+	}
+
+	public void setGrade_id(int grade_id) {
+		this.grade_id = grade_id;
+	}
+
+	public int getEfficiency_id() {
+		return efficiency_id;
+	}
+
+	public void setEfficiency_id(int efficiency_id) {
+		this.efficiency_id = efficiency_id;
+	}
+
+	public Skill getSkill() {
+		return skill;
+	}
+
+	public void setSkill(Skill skill) {
+		this.skill = skill;
+	}
+
+	public List<Efficiency> getEfficiencies() {
+		efficiencies = managerService.getAllEfficiencies();
+		return efficiencies;
+	}
+
+	public void setEfficiencies(List<Efficiency> efficiencies) {
+		this.efficiencies = efficiencies;
+	}
 
 	public List<Grade> getGrades() {
 		grades = managerService.getAllGrades();
@@ -165,13 +243,19 @@ public class ManagerBean {
 	public String searchEmployeeByName() {
 		if (searchValueText.equalsIgnoreCase("")) {
 			employees = null;
+			return "welcomeManager.xhtml?faces-redirect=true&error=Please Enter the Search Value!";
 
 		} else {
 			employees = managerService.searchEmployeeByName(searchValueText);
+			
+			if(employees.isEmpty()){
+				return "welcomeManager.xhtml?faces-redirect=true&error=Sorry! No match found";
+				
+			}
 		}
 		projectDetails_Id = 0;
-		return null;
-
+		
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
 
 	/**
@@ -212,12 +296,7 @@ public class ManagerBean {
 	public String showAllEmployee() {
 		employees = managerService.getAllEmployees();
 		searchValueText = null;
-		return null;
-	}
-
-	public String addEmployeeToProject() {
-		System.out.println("hello");
-		return "#";
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
 
 	/**
@@ -316,7 +395,7 @@ public class ManagerBean {
 	 */
 	public String addBaseLineInput() {
 		managerService.addBaseLineInput(employee);
-		return null;
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
 
 	/**
@@ -342,15 +421,14 @@ public class ManagerBean {
 			employees = managerService.getAllEmployees();
 			feedbackcomment = "";
 		}
-		return null;
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
 
 	public String assignProjectToEmployee() {
 		System.out.println(projectDetails_Id + " " + employee.getEmail());
 		managerService.allocateProject(projectDetails_Id, employee.getEmployeedetails_id());
 		employees.remove(employee);
-		return null;
-
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
 
 	public void getUnallocatedProjectEmployees(ValueChangeEvent event) {
@@ -371,10 +449,43 @@ public class ManagerBean {
 	}
 
 	public String assignEmployeeGrade() {
-		managerService.assignEmployeeGrade(employee);
+		if (employee.getGrade().getGrade_id() == 0) {
+			employee.getGrade().setGrade_id(grade_id);
+			managerService.assignEmployeeGrade(employee);
+			employee = managerService.getEmployee(employee.getEmployeedetails_id());
+			employees = managerService.getAllEmployees();
+		} else {
+			employee.getGrade().setGrade_id(grade_id);
+			managerService.updateEmployeeGrade(employee);
+			employee = managerService.getEmployee(employee.getEmployeedetails_id());
+			employees = managerService.getAllEmployees();
+		}
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
+	}
+
+	public String updateSkillEfficiency() {
+		skill.setSkillefficiency_id(efficiency_id);
+		managerService.updateEmployeeSkill(skill);
 		employee = managerService.getEmployee(employee.getEmployeedetails_id());
 		employees = managerService.getAllEmployees();
-		return null;
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
+	}
+
+	public String addNewSkill() {
+		Skill skill = new Skill();
+		skill.setSkillName(skillName);
+		List<Skill> skills = managerService.getAllSkills();
+		if (skillName.equalsIgnoreCase("")) {
+
+			return "welcomeManager.xhtml?faces-redirect=true&error=Please Enter Skill!";
+		}
+		for (Skill skill2 : skills) {
+			if (skill2.getSkillName().equalsIgnoreCase(skill.getSkillName())) {
+				return "welcomeManager.xhtml?faces-redirect=true&error=Skill Already Exists!";
+			}
+		}
+		managerService.addNewSkill(skill);
+		return "welcomeManager.xhtml?faces-redirect=true&error=Skill Added Successfully!";
 	}
 
 }

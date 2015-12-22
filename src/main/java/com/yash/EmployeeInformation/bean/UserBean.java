@@ -75,7 +75,10 @@ public class UserBean {
 			if (manager != null) {
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>hello" + name);
 				session.setAttribute("manager", manager);
+				if (manager.getRole() == 1) {
 
+					return "adminHome.xhtml?faces-redirect=true";
+				}
 				return "welcomeManager.xhtml?faces-redirect=true";
 			}
 			return "welcome.xhtml?faces-redirect=true";
@@ -145,22 +148,6 @@ public class UserBean {
 		response.setHeader("Content-Disposition", "attachment;filename=" + "SampleResume.doc");
 		OutputStream responseOutputStream = response.getOutputStream();
 		String realpath = (String) FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-
-		// -----------------RND Begin-----------------
-
-		// String contextpathfilepath = (String)
-		// FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
-		URL realfilepath = this.getClass().getResource("");
-		String newpath = realfilepath.getPath().substring(0, realfilepath.getPath().length() - 1);
-		String newpath1 = newpath;
-		int i1 = 0;
-		if (-1 != newpath.lastIndexOf("\\"))
-			i1 = newpath.lastIndexOf("\\");
-		newpath1 = newpath.substring(0, i1);
-		// File newfile = new File(contextpathfilepath);
-		System.out.println("-------context path----->" + newpath1);
-
-		// -----------------RND End-----------------
 
 		int index = realpath.lastIndexOf("\\");
 		String path = realpath.substring(0, index + 1);

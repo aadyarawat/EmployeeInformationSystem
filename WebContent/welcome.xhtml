@@ -13,6 +13,12 @@
 	<ui:define name="content">
 		<script src="jquery/sweetalert.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/sweetalert.css" />
+		
+		<script type="text/javascript">
+ 		var index = '#{employeeBean.selectdefault}';
+		function getvalue(){return parseInt(index);}
+		</script>
+		
 		<h:outputScript>
 
 	if ('#{param.uploadmessage}' != '')
@@ -252,7 +258,7 @@
 								<td></td>
 								<td colspan="4" align="center"><h:commandButton
 										class="myButton" value="#{employeeBean.checkEmployee}"
-										action="#{employeeBean.dataSave}" id="submitbtn"></h:commandButton></td>
+										action="#{employeeBean.dataSave}" id="submitbtn"><f:setPropertyActionListener value="0" target="#{employeeBean.selectdefault}"/></h:commandButton></td>
 							</tr>
 						</table>
 
@@ -265,10 +271,10 @@
 						<table>
 							<tr>
 								<td>Upload here(NOTE - Upload Only Word Document):</td>
-								<td><h:inputFile value="#{userBean.file}">
+								<td><h:inputFile value="#{userBean.file}" >
 									</h:inputFile></td>
-								<td><h:commandButton action="#{userBean.uploadFile}"
-										value="Upload"></h:commandButton></td>
+								<td><h:commandButton action="#{userBean.uploadFile}" class="myButton"
+										value="Upload"><f:setPropertyActionListener value="1" target="#{employeeBean.selectdefault}"/></h:commandButton></td>
 							</tr>
 							<tr>
 								<td colspan="3"><h:outputText
@@ -282,11 +288,11 @@
 				<div id="skills">
 					<h:form prependId="false">
 
-						<table>
+						<table class="CSSEmployeeDetailsTable">
 
 							<tr>
 								<td>Select Your Skill</td>
-								<td><h:selectOneMenu value="#{employeeBean.skillNameId}">
+								<td><h:selectOneMenu value="#{employeeBean.skillNameId}" style="color:black;font-weight:normal;">
 										<f:selectItem itemLabel="------------" itemValue="0"></f:selectItem>
 										<f:selectItems value="#{employeeBean.skillList}" var="skill"
 											itemLabel="#{skill.skillName}" itemValue="#{skill.skill_id}"></f:selectItems>
@@ -294,31 +300,34 @@
 									</h:selectOneMenu></td>
 								<td>Select Your Efficiency</td>
 								<td><h:selectOneMenu
-										value="#{employeeBean.skillEfficiencyId}">
+										value="#{employeeBean.skillEfficiencyId}" style="color:black;font-weight:normal;">
 										<f:selectItem itemLabel="------------" itemValue="0"></f:selectItem>
 										<f:selectItems value="#{employeeBean.skillEfficiencyList}"
 											var="efficiency" itemLabel="#{efficiency.efficiencyType}"
 											itemValue="#{efficiency.skillefficiency_id}"></f:selectItems>
 
 									</h:selectOneMenu></td>
-								<td><h:commandButton value="SAVE"
+								<td><h:commandButton value="SAVE" class="myButton"
 										action="#{employeeBean.addSkillAndEfficiency}">
+										<f:setPropertyActionListener value="2" target="#{employeeBean.selectdefault}"/>
 									</h:commandButton></td>
 
 							</tr>
-						</table>
+						</table >
 						<br />
-						<table>
+						<table class="CSSEmployeeDetailsTable" align="center">
 							<tr>
-								<th>Skill</th>
-								<th>Efficiency</th>
+								<td>Skill</td>
+								<td>Efficiency</td>
+								<td>Action</td>
 							</tr>
 							<ui:repeat var="empskill" value="#{employeeBean.employeeSkills}">
 								<tr>
 									<td>#{empskill.skillName}</td>
 									<td>#{empskill.efficiencyType}</td>
-									<td><h:commandButton value="Delete"
+									<td><h:commandButton value="Delete" class="myButton"
 											action="#{employeeBean.deleteEmployeeSkill}">
+											<f:setPropertyActionListener value="2" target="#{employeeBean.selectdefault}"/>
 											<f:param name="skillid" value="#{empskill.skill_id}"></f:param>
 											<f:param name="efficiencyid"
 												value="#{empskill.skillefficiency_id}"></f:param>

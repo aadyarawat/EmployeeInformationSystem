@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 import com.yash.EmployeeInformation.domain.Address;
 import com.yash.EmployeeInformation.domain.BaseLineInput;
+import com.yash.EmployeeInformation.domain.Efficiency;
 import com.yash.EmployeeInformation.domain.Employee;
 import com.yash.EmployeeInformation.domain.FeedBack;
 import com.yash.EmployeeInformation.domain.Grade;
@@ -45,11 +46,13 @@ public class ManagerDaoImpl implements ManagerDao {
 	 * @return
 	 */
 	public FeedBack getEmployeeFeedback(int employeedetails_id) {
+		
 		FeedBack feedBack = new FeedBack();
 		String sql = "SELECT * FROM  `feedbackdetails` fb INNER JOIN `managerdetails` md ON fb.`lastUpdatedManagerId`=md.`managerDetails_Id` WHERE employeedetails_id="
 				+ employeedetails_id;
+		ResultSet resultSet=null;
 		try {
-			ResultSet resultSet = select(sql);
+			resultSet = select(sql);
 			while (resultSet.next()) {
 				feedBack.setFeedback_id(resultSet.getInt(1));
 				feedBack.setFeedbackComment(resultSet.getString(2));
@@ -64,6 +67,10 @@ public class ManagerDaoImpl implements ManagerDao {
 			try {
 				if (connection != null)
 					connection.close();
+				if(resultSet!=null){
+					resultSet.close();
+				}
+					
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -84,8 +91,9 @@ public class ManagerDaoImpl implements ManagerDao {
 	public BaseLineInput getBaseLineInputDetails(int employeedetails_id) {
 		BaseLineInput baseLineInput = new BaseLineInput();
 		String sql = "SELECT * FROM baselineinputdetails WHERE employeedetails_id=" + employeedetails_id;
+		ResultSet resultSet=null;
 		try {
-			ResultSet resultSet = select(sql);
+			resultSet = select(sql);
 			while (resultSet.next()) {
 				baseLineInput.setBaselineInputdetail(resultSet.getString(2));
 				baseLineInput.setEmployeedetails_id(resultSet.getInt(3));
@@ -97,6 +105,9 @@ public class ManagerDaoImpl implements ManagerDao {
 			try {
 				if (connection != null)
 					connection.close();
+				if(resultSet!=null){
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -117,9 +128,9 @@ public class ManagerDaoImpl implements ManagerDao {
 	public Address getEmployeeAddress(int employeedetails_id) {
 		Address address = new Address();
 		String sql = "SELECT * FROM ADDRESS WHERE employeedetails_id=" + employeedetails_id;
-
+		ResultSet resultSet=null;
 		try {
-			ResultSet resultSet = select(sql);
+			 resultSet = select(sql);
 			while (resultSet.next()) {
 				address.setAddress_id(resultSet.getInt(1));
 				address.setHouseNo(resultSet.getInt(2));
@@ -135,6 +146,9 @@ public class ManagerDaoImpl implements ManagerDao {
 			try {
 				if (connection != null)
 					connection.close();
+				if(resultSet!=null){
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -174,6 +188,9 @@ public class ManagerDaoImpl implements ManagerDao {
 			try {
 				if (connection != null)
 					connection.close();
+				if(resultSet!=null){
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -193,8 +210,8 @@ public class ManagerDaoImpl implements ManagerDao {
 	public List<Employee> getAllEmployees(String sql) {
 		List<Employee> employees = new ArrayList<>();
 		Employee employee = null;
+		ResultSet resultSet = select(sql);
 		try {
-			ResultSet resultSet = select(sql);
 			while (resultSet.next()) {
 				employee = new Employee();
 				employee.setEmployeedetails_id(resultSet.getInt(1));
@@ -219,6 +236,9 @@ public class ManagerDaoImpl implements ManagerDao {
 			try {
 				if (connection != null)
 					connection.close();
+				if(resultSet!=null){
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -246,6 +266,9 @@ public class ManagerDaoImpl implements ManagerDao {
 			try {
 				if (connection != null)
 					connection.close();
+				if(resultSet!=null){
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -264,20 +287,23 @@ public class ManagerDaoImpl implements ManagerDao {
 		List<Skill> skills = new ArrayList<>();
 		Skill skill;
 		String sql = "SELECT * FROM employeeskill where employeedetails_id=" + employeedetails_id;
+		ResultSet resultSet = select(sql);
 		try {
-			ResultSet resultSet = select(sql);
 			while (resultSet.next()) {
 				skill = new Skill();
+				skill.setEmployeedetails_id(employeedetails_id);
 				sql = "SELECT * FROM skill where skill_id=" + resultSet.getInt(2);
 				ResultSet resultSet2 = select(sql);
 				while (resultSet2.next()) {
 					skill.setSkillName(resultSet2.getString(2));
+					skill.setSkill_id(resultSet.getInt(2));
 				}
 
 				sql = "SELECT * FROM skillefficiency where skillefficiency_id=" + resultSet.getInt(4);
 				ResultSet resultSet3 = select(sql);
 				while (resultSet3.next()) {
 					skill.setEfficiencyType(resultSet3.getString(2));
+					skill.setSkillefficiency_id(resultSet.getInt(4));
 				}
 				skills.add(skill);
 			}
@@ -288,6 +314,9 @@ public class ManagerDaoImpl implements ManagerDao {
 			try {
 				if (connection != null)
 					connection.close();
+				if(resultSet!=null){
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -372,7 +401,7 @@ public class ManagerDaoImpl implements ManagerDao {
 	@Override
 	public Manager checkAuthorization(String name) {
 		// TODO Auto-generated method stub
-		int check = 0;
+		//int check = 0;
 		String sql = "select * from managerdetails where managerEmailId='" + name + "'";
 		ResultSet resultSet = select(sql);
 		Manager manager = null;
@@ -427,6 +456,9 @@ public class ManagerDaoImpl implements ManagerDao {
 			try {
 				if (connection != null)
 					connection.close();
+				if(resultSet!=null){
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -559,6 +591,9 @@ public class ManagerDaoImpl implements ManagerDao {
 			try {
 				if (connection != null)
 					connection.close();
+				if(resultSet!=null){
+					resultSet.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -573,4 +608,83 @@ public class ManagerDaoImpl implements ManagerDao {
 		update(sql);
 	}
 
+	@Override
+	public List<Efficiency> getAllEfficiencies() {
+		List<Efficiency> efficiencies=new ArrayList<>();
+		String sql="Select * from skillefficiency";
+		ResultSet resultSet= select(sql);
+		Efficiency efficiency=null;
+		try {
+			while (resultSet.next()) {
+				efficiency=new Efficiency();
+				efficiency.setSkillefficiency_id(resultSet.getInt(1));
+				efficiency.setEfficiencyType(resultSet.getString(2));
+				efficiencies.add(efficiency);
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if (connection != null)
+					connection.close();
+				if(resultSet!=null){
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	return efficiencies;
+}
+
+	@Override
+	public void updateEmployeeEfficiency(Skill skill) {
+		String sql="Update employeeskill set skillefficiency_id="+skill.getSkillefficiency_id()+" where skill_id="+skill.getSkill_id()+" and employeedetails_id="+skill.getEmployeedetails_id();
+		update(sql);
+	}
+
+	@Override
+	public void updateEmployeeGrade(Employee employee) {
+		String sql="UPDATE gradedetails set gradeId="+employee.getGrade().getGrade_id()+" Where employeedetails_id="+employee.getEmployeedetails_id();
+		update(sql);
+	}
+
+	@Override
+	public List<Skill> getAllSkills() {
+		List<Skill> skills=new ArrayList<>();
+		String sql="Select * from skill";
+		ResultSet resultSet=select(sql);
+		try {
+			while (resultSet.next()) {
+				Skill skill=new Skill();
+				skill.setSkill_id(resultSet.getInt(1));
+				skill.setSkillName(resultSet.getString(2));
+				skills.add(skill);
+			}
+		} catch (SQLException e) {
+			try {
+					if(connection!=null)
+						connection.close();
+					if(resultSet!=null){
+						resultSet.close();
+					}
+				
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+			}
+		}
+		return skills;
+	}
+
+	 @Override
+	    public void addNewSkill(Skill skill) {
+	        String query= "insert into skill (skillName) values ('"+skill.getSkillName()+"')";
+	        System.out.println(query);
+	       // update(query);
+	        
+	    }
 }
