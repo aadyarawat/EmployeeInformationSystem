@@ -27,7 +27,7 @@
 					</div>
 				</div>
 				<center>
-					<span style="display: none;"> #{param.message}</span>
+					<span style="display: none;" id="adminMessageSpan"> #{param.message}</span>
 				</center>
 				<table class="CSSTableGenerator tableSection">
 					<thead>
@@ -61,19 +61,21 @@
 					<thead>
 						<tr align="center"
 							style="background-color: rgb(4, 82, 134); color: white; height: 46px;">
-							<th colspan="2">Add Manager</th>
+							<th colspan="2" align="center" style="padding-left: 40%;">Add Manager</th>
 						</tr>
 					</thead>
 					<tbody style="height: 5%;">
 						<tr>
-							<th>Name:</th>
-							<td style="text-align: left;"><h:inputText
-									value="#{adminBean.managerName}" /></td>
+							<th align="center">Name:</th>
+							<td style="text-align: left;">
+							<h:inputText class="adminInputText" value="#{adminBean.managerName}" /></td>
 						</tr>
 						<tr>
 							<th>Email:</th>
-							<td style="text-align: left;"><h:inputText
-									value="#{adminBean.managerEmail}" size="28" /></td>
+							<td style="text-align: left;">
+							<h:inputText id="email"	value="#{adminBean.managerEmail}" size="28" />
+							<span id="spanEmail"></span>
+							</td>
 						</tr>
 						<tr>
 							<th>Role:</th>

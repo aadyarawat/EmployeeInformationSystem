@@ -41,5 +41,7 @@ public interface ManagerDao {
 
 	void addNewSkill(Skill skill);
 
+	void addEmployeeSkill(Skill skill);
+
 }
 
