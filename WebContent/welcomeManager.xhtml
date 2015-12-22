@@ -10,6 +10,33 @@
 <ui:composition template="/template/template.xhtml">
 
 	<ui:define name="content">
+		<script src="jquery/sweetalert.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/sweetalert.css" />
+		<h:outputScript>
+       if('#{param.error}'!=''){
+        swal("Alert!", "#{param.error}");
+       
+       }
+</h:outputScript>
+		<div id="addSkillsDialog" style="display: none;" title="Add Skills">
+			<h:form prependId="false">
+				<table align="center">
+
+					<tr>
+						<th align="right">Skills:</th>
+						<td><h:inputText value="#{managerBean.skillName}"
+							id="skillEnterText">
+								
+							</h:inputText></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+						<h:commandButton value="Add" action="#{managerBean.addNewSkill}" /></td>
+					</tr>
+				</table>
+			</h:form>
+		</div>
+
 		<h:form prependId="false">
 
 
@@ -28,14 +55,19 @@
 					<td>&nbsp;&nbsp;</td>
 					<td><h:commandButton value="Project list"
 							action="#{managerBean.projectAllocation}" class="myButton" /></td>
+					<td>&nbsp;&nbsp;</td>
+					<td><h:commandButton value="Add Skills" class="myButton"
+							type="button" id="addSkillsButton" /></td>
+					<td>&nbsp;&nbsp;</td>
+
 				</tr>
 				<tr>
-					<td style="color: red; text-align: center;" colspan="4"><span
-						id="spanSearchValueText" />#{param.error}</td>
+					<td style="color: red;display:none; text-align: center;" colspan="4" ><span
+						id="spanSearchValueText"   />#{param.error}</td>
 				</tr>
 			</table>
 
-			<table class="CSSTableGenerator tableSection" >
+			<table class="CSSTableGenerator tableSection">
 				<thead>
 					<tr align="center"
 						style="background-color: rgb(4, 82, 134); color: white; height: 46px;">
@@ -56,14 +88,14 @@
 									width="18%" />
 								<f:setPropertyActionListener value="#{employees.email}"
 									target="#{managerBean.fileName}"></f:setPropertyActionListener>
-							</h:commandLink> 
-							<h:commandLink action="ShowEmployeeDetails.xhtml" class="tooltipsAssign">
+							</h:commandLink> <h:commandLink action="ShowEmployeeDetails.xhtml"
+								class="tooltipsAssign">
 								&nbps;
 								<span>Details</span>
 								<h:graphicImage value="images/Details_Icon.png" height="10%"
 									width="18%" />
 								<f:setPropertyActionListener target="#{managerBean.employee}"
-									value="#{employees}"  />
+									value="#{employees}" />
 							</h:commandLink></td>
 						<td style="text-align: center; width: 20%;">#{employees.yashEmployeeId}</td>
 						<td style="text-align: center; width: 20%;">#{employees.firstName}

@@ -680,9 +680,11 @@ public class ManagerDaoImpl implements ManagerDao {
 		return skills;
 	}
 
-	@Override
-	public void addEmployeeSkill(Skill skill) {
-		String sql="INSERT INTO employeeskill(skill_id,employeedetails_id,skillefficiency_id) Values("+skill.getSkill_id()+","+skill.getEmployeedetails_id()+","+skill.getSkillefficiency_id()+")";
-		update(sql);
-	}
+	 @Override
+	    public void addNewSkill(Skill skill) {
+	        String query= "insert into skill (skillName) values ('"+skill.getSkillName()+"')";
+	        System.out.println(query);
+	       // update(query);
+	        
+	    }
 }

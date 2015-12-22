@@ -48,7 +48,7 @@ public interface ManagerServiceLocal {
 
 	List<Skill> getAllSkills();
 
-	void addEmployeeSkill(Skill skill);
+	void addNewSkill(Skill skill);
 	
 	
 	 

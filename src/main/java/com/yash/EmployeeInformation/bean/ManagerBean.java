@@ -50,14 +50,19 @@ public class ManagerBean {
 	private int grade_id;
 	private int skill_id;
 	private int addEfficiency_id;
-	
+	private String skillName;
+
 	FacesContext facesContext = FacesContext.getCurrentInstance();
 	HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-	
-	
-	
-	
-	
+
+	public String getSkillName() {
+		return skillName;
+	}
+
+	public void setSkillName(String skillName) {
+		this.skillName = skillName;
+	}
+
 	public int getAddEfficiency_id() {
 		return addEfficiency_id;
 	}
@@ -75,8 +80,8 @@ public class ManagerBean {
 	}
 
 	public List<Skill> getSkills() {
-		skills=managerService.getAllSkills();
-		List<Skill> employeeSkills=employee.getSkills();
+		skills = managerService.getAllSkills();
+		List<Skill> employeeSkills = employee.getSkills();
 		skills.removeAll(employeeSkills);
 		return skills;
 	}
@@ -238,13 +243,19 @@ public class ManagerBean {
 	public String searchEmployeeByName() {
 		if (searchValueText.equalsIgnoreCase("")) {
 			employees = null;
+			return "welcomeManager.xhtml?faces-redirect=true&error=Please Enter the Search Value!";
 
 		} else {
 			employees = managerService.searchEmployeeByName(searchValueText);
+			
+			if(employees.isEmpty()){
+				return "welcomeManager.xhtml?faces-redirect=true&error=Sorry! No match found";
+				
+			}
 		}
 		projectDetails_Id = 0;
-		return null;
-
+		
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
 
 	/**
@@ -281,15 +292,11 @@ public class ManagerBean {
 		}
 
 	}
+
 	public String showAllEmployee() {
 		employees = managerService.getAllEmployees();
 		searchValueText = null;
-		return null;
-	}
-
-	public String addEmployeeToProject() {
-		System.out.println("hello");
-		return "#";
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
 
 	/**
@@ -388,7 +395,7 @@ public class ManagerBean {
 	 */
 	public String addBaseLineInput() {
 		managerService.addBaseLineInput(employee);
-		return null;
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
 
 	/**
@@ -414,15 +421,14 @@ public class ManagerBean {
 			employees = managerService.getAllEmployees();
 			feedbackcomment = "";
 		}
-		return null;
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
 
 	public String assignProjectToEmployee() {
 		System.out.println(projectDetails_Id + " " + employee.getEmail());
 		managerService.allocateProject(projectDetails_Id, employee.getEmployeedetails_id());
 		employees.remove(employee);
-		return null;
-
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
 
 	public void getUnallocatedProjectEmployees(ValueChangeEvent event) {
@@ -443,37 +449,43 @@ public class ManagerBean {
 	}
 
 	public String assignEmployeeGrade() {
-		if(employee.getGrade().getGrade_id()==0){
-		employee.getGrade().setGrade_id(grade_id);
-		managerService.assignEmployeeGrade(employee);
-		employee = managerService.getEmployee(employee.getEmployeedetails_id());
-		employees = managerService.getAllEmployees();
-		}else{
-		employee.getGrade().setGrade_id(grade_id);
-		managerService.updateEmployeeGrade(employee);
-		employee = managerService.getEmployee(employee.getEmployeedetails_id());
-		employees = managerService.getAllEmployees();
+		if (employee.getGrade().getGrade_id() == 0) {
+			employee.getGrade().setGrade_id(grade_id);
+			managerService.assignEmployeeGrade(employee);
+			employee = managerService.getEmployee(employee.getEmployeedetails_id());
+			employees = managerService.getAllEmployees();
+		} else {
+			employee.getGrade().setGrade_id(grade_id);
+			managerService.updateEmployeeGrade(employee);
+			employee = managerService.getEmployee(employee.getEmployeedetails_id());
+			employees = managerService.getAllEmployees();
 		}
-		return null;
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
-	
-	public String updateSkillEfficiency(){
+
+	public String updateSkillEfficiency() {
 		skill.setSkillefficiency_id(efficiency_id);
 		managerService.updateEmployeeSkill(skill);
-		employee=managerService.getEmployee(employee.getEmployeedetails_id());
-		employees=managerService.getAllEmployees();
-		return null;
+		employee = managerService.getEmployee(employee.getEmployeedetails_id());
+		employees = managerService.getAllEmployees();
+		return "welcomeManager.xhtml?faces-redirect=true&error=";
 	}
-	
-	public String addEmployeeSkill(){
-		skill=new Skill();
-		skill.setSkill_id(skill_id);
-		skill.setSkillefficiency_id(addEfficiency_id);
-		skill.setEmployeedetails_id(employee.getEmployeedetails_id());
-		managerService.addEmployeeSkill(skill);
-		employee=managerService.getEmployee(employee.getEmployeedetails_id());
-		employees=managerService.getAllEmployees();
-		return null;
+
+	public String addNewSkill() {
+		Skill skill = new Skill();
+		skill.setSkillName(skillName);
+		List<Skill> skills = managerService.getAllSkills();
+		if (skillName.equalsIgnoreCase("")) {
+
+			return "welcomeManager.xhtml?faces-redirect=true&error=Please Enter Skill!";
+		}
+		for (Skill skill2 : skills) {
+			if (skill2.getSkillName().equalsIgnoreCase(skill.getSkillName())) {
+				return "welcomeManager.xhtml?faces-redirect=true&error=Skill Already Exists!";
+			}
+		}
+		managerService.addNewSkill(skill);
+		return "welcomeManager.xhtml?faces-redirect=true&error=Skill Added Successfully!";
 	}
 
 }

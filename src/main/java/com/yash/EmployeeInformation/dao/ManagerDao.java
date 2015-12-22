@@ -39,7 +39,7 @@ public interface ManagerDao {
 
 	List<Skill> getAllSkills();
 
-	void addEmployeeSkill(Skill skill);
+	void addNewSkill(Skill skill);
 
 }
 

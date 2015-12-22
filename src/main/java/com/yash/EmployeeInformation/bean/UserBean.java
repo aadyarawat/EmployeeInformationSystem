@@ -75,7 +75,10 @@ public class UserBean {
 			if (manager != null) {
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>hello" + name);
 				session.setAttribute("manager", manager);
+				if (manager.getRole() == 1) {
 
+					return "adminHome.xhtml?faces-redirect=true";
+				}
 				return "welcomeManager.xhtml?faces-redirect=true";
 			}
 			return "welcome.xhtml?faces-redirect=true";
