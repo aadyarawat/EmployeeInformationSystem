@@ -18,8 +18,6 @@ $(document)
 													|| (key == 46)
 													|| (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
 
-												$('#spanSearchValueText')
-														.fadeOut(1000);
 												e.preventDefault();
 
 											}
@@ -28,6 +26,9 @@ $(document)
 											{
 												$('#spanSearchValueText').text(
 														'Enter Alphabets');
+											} else {
+												$('#spanSearchValueText').text(
+														'');
 											}
 										}
 									});
