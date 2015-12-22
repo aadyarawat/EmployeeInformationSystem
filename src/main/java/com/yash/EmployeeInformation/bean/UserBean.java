@@ -146,22 +146,6 @@ public class UserBean {
 		OutputStream responseOutputStream = response.getOutputStream();
 		String realpath = (String) FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
 
-		// -----------------RND Begin-----------------
-
-		// String contextpathfilepath = (String)
-		// FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
-		URL realfilepath = this.getClass().getResource("");
-		String newpath = realfilepath.getPath().substring(0, realfilepath.getPath().length() - 1);
-		String newpath1 = newpath;
-		int i1 = 0;
-		if (-1 != newpath.lastIndexOf("\\"))
-			i1 = newpath.lastIndexOf("\\");
-		newpath1 = newpath.substring(0, i1);
-		// File newfile = new File(contextpathfilepath);
-		System.out.println("-------context path----->" + newpath1);
-
-		// -----------------RND End-----------------
-
 		int index = realpath.lastIndexOf("\\");
 		String path = realpath.substring(0, index + 1);
 		File dir = new File(path + "sample");
