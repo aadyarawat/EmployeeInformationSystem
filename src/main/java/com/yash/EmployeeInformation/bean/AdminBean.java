@@ -6,7 +6,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-
 import com.yash.EmployeeInformation.domain.Manager;
 import com.yash.EmployeeInformation.domain.Role;
 import com.yash.EmployeeInformation.service.AdminServiceLocal;
@@ -22,11 +21,9 @@ public class AdminBean {
 	private String managerEmail;
 	private int role;
 
-
 	@EJB
 	AdminServiceLocal adminService;
-	
-	
+
 	public int getRole() {
 		return role;
 	}
@@ -81,26 +78,41 @@ public class AdminBean {
 		System.out.println("add>>>>>>>>" + manager);
 		System.out.println(managers.contains(manager));
 
-		for (Manager manager1 : managers) {
-			if (manager1.getManagerEmailId().equals(managerEmail)) {
-				return "registerManager.xhtml?faces-redirect=true & message=Manager Already Exists! ";
+		if (managerName.equalsIgnoreCase("") || managerEmail.equalsIgnoreCase("")) {
+			if (managerName.equalsIgnoreCase("")) {
+				if (managerEmail.equalsIgnoreCase("")) {
+					return "adminHome.xhtml?faces-redirect=true & message=Manager EmailId and Manager Name Required ! ";
+				} else {
+					return "adminHome.xhtml?faces-redirect=true & message=Manager Name Required! ";
+				}
+			} else {
+				return "adminHome.xhtml?faces-redirect=true & message=Manager Email-Id Required! ";
 			}
+
+		} else {
+
+			for (Manager manager1 : managers) {
+				if (manager1.getManagerEmailId().equals(managerEmail)) {
+					return "adminHome.xhtml?faces-redirect=true & message=Manager Already Exists! ";
+				}
+			}
+			Manager manager = new Manager();
+			manager.setManagerEmailId(managerEmail);
+			manager.setManagerName(managerName);
+			manager.setRole(role);
+			adminService.saveManager(manager);
+
+			return "adminHome.xhtml?faces-redirect=true&message=Manager Added Successfuly!";
 		}
-		Manager manager=new Manager();
-		manager.setManagerEmailId(managerEmail);
-		manager.setManagerName(managerName);
-		manager.setRole(role);
-		adminService.saveManager(manager);
-		
-		return "registerManager.xhtml?faces-redirect=true&message=Manager Added Successfuly!";
+
 	}
 
 	public String deleteManager() {
 		System.out.println("delete");
 		adminService.removeManager(manager);
-		managerEmail="";
-		managerName="";
-		
+		managerEmail = "";
+		managerName = "";
+
 		return "registerManager.xhtml?faces-redirect=true&message=Manager Deleted Successfuly!";
 	}
 }

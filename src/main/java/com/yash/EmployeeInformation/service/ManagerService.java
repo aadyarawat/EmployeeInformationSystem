@@ -211,4 +211,10 @@ public class ManagerService implements ManagerServiceLocal {
 		// TODO Auto-generated method stub
 	managerDao.addNewSkill(skill);	
 	}
+	
+	@Override
+	public void addEmployeeSkill(Skill skill) {
+		managerDao.addEmployeeSkill(skill);
+		
+	}
 }

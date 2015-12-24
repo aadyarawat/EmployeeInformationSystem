@@ -296,7 +296,7 @@ public class ManagerBean {
 	public String showAllEmployee() {
 		employees = managerService.getAllEmployees();
 		searchValueText = null;
-		return "welcomeManager.xhtml?faces-redirect=true&error=";
+		return null;
 	}
 
 	/**
@@ -395,7 +395,7 @@ public class ManagerBean {
 	 */
 	public String addBaseLineInput() {
 		managerService.addBaseLineInput(employee);
-		return "welcomeManager.xhtml?faces-redirect=true&error=";
+		return null;
 	}
 
 	/**
@@ -407,7 +407,7 @@ public class ManagerBean {
 	public String saveFeedBack() {
 		if (employee.getFeedBack().getFeedbackComment() == null) {
 			Manager manager = (Manager) session.getAttribute("manager");
-			employee.getFeedBack().setFeedbackComment(feedbackcomment);
+			employee.getFeedBack().setFeedbackComment(feedbackcomment+" @"+manager.getManagerName());
 			employee.getFeedBack().setLastUpdatedManagerId(manager.getManagerId());
 			employee = managerService.saveFeedBack(employee);
 			employees = managerService.getAllEmployees();
@@ -415,20 +415,20 @@ public class ManagerBean {
 		} else {
 			Manager manager = (Manager) session.getAttribute("manager");
 			employee.getFeedBack()
-					.setFeedbackComment(employee.getFeedBack().getFeedbackComment().concat(", " + feedbackcomment));
+					.setFeedbackComment(employee.getFeedBack().getFeedbackComment().concat("| " + feedbackcomment+" @"+manager.getManagerName()));
 			employee.getFeedBack().setLastUpdatedManagerId(manager.getManagerId());
 			employee = managerService.updateFeedBack(employee);
 			employees = managerService.getAllEmployees();
 			feedbackcomment = "";
 		}
-		return "welcomeManager.xhtml?faces-redirect=true&error=";
+		return null;
 	}
 
 	public String assignProjectToEmployee() {
 		System.out.println(projectDetails_Id + " " + employee.getEmail());
 		managerService.allocateProject(projectDetails_Id, employee.getEmployeedetails_id());
 		employees.remove(employee);
-		return "welcomeManager.xhtml?faces-redirect=true&error=";
+		return null;
 	}
 
 	public void getUnallocatedProjectEmployees(ValueChangeEvent event) {
@@ -460,7 +460,7 @@ public class ManagerBean {
 			employee = managerService.getEmployee(employee.getEmployeedetails_id());
 			employees = managerService.getAllEmployees();
 		}
-		return "welcomeManager.xhtml?faces-redirect=true&error=";
+		return null;
 	}
 
 	public String updateSkillEfficiency() {
@@ -468,7 +468,7 @@ public class ManagerBean {
 		managerService.updateEmployeeSkill(skill);
 		employee = managerService.getEmployee(employee.getEmployeedetails_id());
 		employees = managerService.getAllEmployees();
-		return "welcomeManager.xhtml?faces-redirect=true&error=";
+		return null;
 	}
 
 	public String addNewSkill() {
@@ -487,5 +487,20 @@ public class ManagerBean {
 		managerService.addNewSkill(skill);
 		return "welcomeManager.xhtml?faces-redirect=true&error=Skill Added Successfully!";
 	}
+	
+	public String addEmployeeSkill(){
+		skill=new Skill();
+		skill.setSkill_id(skill_id);
+		skill.setSkillefficiency_id(addEfficiency_id);
+		skill.setEmployeedetails_id(employee.getEmployeedetails_id());
+		managerService.addEmployeeSkill(skill);
+		employee=managerService.getEmployee(employee.getEmployeedetails_id());
+		employees=managerService.getAllEmployees();
+		return null;
+		}
 
+	
+	
+	
+	
 }
