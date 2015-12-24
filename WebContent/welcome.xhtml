@@ -16,6 +16,9 @@
 		
 		<script type="text/javascript">
  		var index = '#{employeeBean.selectdefault}';
+ 		$('#empdetails').on('click',function(){
+ 			index = 0;
+ 		});
 		function getvalue(){return parseInt(index);}
 		</script>
 		
