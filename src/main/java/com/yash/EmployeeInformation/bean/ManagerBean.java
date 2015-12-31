@@ -499,7 +499,10 @@ public class ManagerBean {
 		return null;
 		}
 
-	
+	public String BackToWelcomeManager(){
+		employees=null;
+		return "welcomeManager.xhtml?faces-redirect=true";
+	}
 	
 	
 	
